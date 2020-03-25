@@ -83,6 +83,12 @@ If you want to train/test Pix2Vox-F, you need to checkout to `Pix2Vox-F` branch 
 git checkout -b Pix2Vox-F origin/Pix2Vox-F
 ```
 
+# Caius' commands:
+```
+train: python3 runner.py
+test: python3 runner.py --test --weights=/home/caius/Documents/Datasets/pretrained_models/Pix2Vox-A-ShapeNet.pth
+```
+
 ## License
 
 This project is open sourced under MIT license.

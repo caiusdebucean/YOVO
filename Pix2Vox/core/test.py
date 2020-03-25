@@ -13,6 +13,7 @@ import utils.binvox_visualization
 import utils.data_loaders
 import utils.data_transforms
 import utils.network_utils
+from tensorboardX import SummaryWriter
 
 from datetime import datetime as dt
 
@@ -21,7 +22,6 @@ from models.decoder import Decoder
 from models.refiner import Refiner
 from models.merger import Merger
 
-from tensorboardX import SummaryWriter
 
 def test_net(cfg,
              epoch_idx=-1,
@@ -34,6 +34,12 @@ def test_net(cfg,
              merger=None):
     # Enable the inbuilt cudnn auto-tuner to find the best algorithm to use
     torch.backends.cudnn.benchmark = True
+
+    #added image outputs
+    output_dir = os.path.join(cfg.DIR.OUT_PATH, '%s', dt.now().isoformat())
+    log_dir = 'logs'
+    test_writer = SummaryWriter(os.path.join(log_dir, 'test'))
+    #also TensorboardX writer
 
     # Load taxonomies of dataset
     taxonomies = []
@@ -56,15 +62,10 @@ def test_net(cfg,
         dataset_loader = utils.data_loaders.DATASET_LOADER_MAPPING[cfg.DATASET.TEST_DATASET](cfg)
         test_data_loader = torch.utils.data.DataLoader(dataset=dataset_loader.get_dataset(
             utils.data_loaders.DatasetType.TEST, cfg.CONST.N_VIEWS_RENDERING, test_transforms),
-                                                       batch_size=2,
+                                                       batch_size=1,
                                                        num_workers=1,
                                                        pin_memory=True,
                                                        shuffle=False)
-
-    #CAIUS
-    output_dir = cfg.DIR.OUT_PATH 
-    test_writer = SummaryWriter(os.path.join(output_dir, 'images'))
-    #CAIUS
 
     # Set up networks
     if decoder is None or encoder is None:
@@ -72,6 +73,7 @@ def test_net(cfg,
         decoder = Decoder(cfg)
         refiner = Refiner(cfg)
         merger = Merger(cfg)
+
         if torch.cuda.is_available():
             encoder = torch.nn.DataParallel(encoder).cuda()
             decoder = torch.nn.DataParallel(decoder).cuda()
@@ -146,23 +148,20 @@ def test_net(cfg,
                 test_iou[taxonomy_id] = {'n_samples': 0, 'iou': []}
             test_iou[taxonomy_id]['n_samples'] += 1
             test_iou[taxonomy_id]['iou'].append(sample_iou)
-            print(f"this is out {output_dir} and is sample_idx {sample_idx}")
-
+            print(sample_idx)
             # Append generated volumes to TensorBoard
-            if output_dir and sample_idx < 3:
-                img_dir = output_dir + 'images'
+            if output_dir and sample_idx < 3: #Only prints 3 images - remove second condition for all dataset
+                img_dir = output_dir % 'images'
                 # Volume Visualization
                 gv = generated_volume.cpu().numpy()
-                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'),
-                                                                              epoch_idx)
-
-                rendering_views = utils.binvox_visualization.get_volume_views(gv, img_dir,
-                                                                              epoch_idx)
-
+                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx)
+                rendering_views = np.transpose(rendering_views,(2,0,1))
+                #Supported type is (C x W x H) and current one is (W x H x C)         
                 test_writer.add_image('Test Sample#%02d/Volume Reconstructed' % sample_idx, rendering_views, epoch_idx)
                 gtv = ground_truth_volume.cpu().numpy()
-                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test'),
-                                                                              epoch_idx)
+                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx)
+                #Supported type is (C x W x H) and current one is (W x H x C)
+                rendering_views = np.transpose(rendering_views,(2,0,1))
                 test_writer.add_image('Test Sample#%02d/Volume GroundTruth' % sample_idx, rendering_views, epoch_idx)
 
             # Print sample loss and IoU

@@ -128,6 +128,7 @@ def train_net(cfg):
         decoder = torch.nn.DataParallel(decoder).cuda()
         refiner = torch.nn.DataParallel(refiner).cuda()
         merger = torch.nn.DataParallel(merger).cuda()
+
     # Set up loss functions
     bce_loss = torch.nn.BCELoss()
 
@@ -158,6 +159,7 @@ def train_net(cfg):
     ckpt_dir = output_dir % 'checkpoints'
     train_writer = SummaryWriter(os.path.join(log_dir, 'train'))
     val_writer = SummaryWriter(os.path.join(log_dir, 'test'))
+
     # Training loop
     for epoch_idx in range(init_epoch, cfg.TRAIN.NUM_EPOCHES):
         # Tick / tock

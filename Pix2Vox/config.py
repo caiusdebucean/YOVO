@@ -14,9 +14,9 @@ __C.DATASETS                                = edict()
 __C.DATASETS.SHAPENET                       = edict()
 __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH    = './datasets/ShapeNet.json'
 # __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH  = './datasets/PascalShapeNet.json'
-__C.DATASETS.SHAPENET.RENDERING_PATH        = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetRendering/ShapeNetRendering/%s/%s/rendering/%02d.png'
+__C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/caius/Documents/Datasets/ShapeNetRendering/%s/%s/rendering/%02d.png'
 # __C.DATASETS.SHAPENET.RENDERING_PATH      = '/home/hzxie/Datasets/ShapeNet/PascalShapeNetRendering/%s/%s/render_%04d.jpg'
-__C.DATASETS.SHAPENET.VOXEL_PATH            = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetVox32/ShapeNetVox32/%s/%s/model.binvox'
+__C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/caius/Documents/Datasets/ShapeNetVox32/%s/%s/model.binvox'
 __C.DATASETS.PASCAL3D                       = edict()
 __C.DATASETS.PASCAL3D.TAXONOMY_FILE_PATH    = './datasets/Pascal3D.json'
 __C.DATASETS.PASCAL3D.ANNOTATION_PATH       = '/home/hzxie/Datasets/PASCAL3D/Annotations/%s_imagenet/%s.mat'
@@ -48,7 +48,7 @@ __C.CONST.RNG_SEED                          = 0
 __C.CONST.IMG_W                             = 224       # Image width for input
 __C.CONST.IMG_H                             = 224       # Image height for input
 __C.CONST.N_VOX                             = 32
-__C.CONST.BATCH_SIZE                        = 4
+__C.CONST.BATCH_SIZE                        = 8
 __C.CONST.N_VIEWS_RENDERING                 = 1         # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_W                        = 128       # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_H                        = 128       # Dummy property for Pascal 3D
@@ -58,7 +58,7 @@ __C.CONST.CROP_IMG_H                        = 128       # Dummy property for Pas
 #
 __C.DIR                                     = edict()
 __C.DIR.OUT_PATH                            = './output'
-__C.DIR.RANDOM_BG_PATH                      = '/home/hzxie/Datasets/SUN2012/JPEGImages'
+__C.DIR.RANDOM_BG_PATH                      = ''
 
 #
 # Network
