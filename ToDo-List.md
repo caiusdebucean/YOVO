@@ -11,10 +11,11 @@ General improvement *ideas*:
 * Research PapersWithCode for similar tasks
 
 Specific things *to do* in the future:
-* Implement RANGER optimizer
+* Implement RANGER & Ralamb & RangerLars & Lars optimizers (https://github.com/mgrankin/over9000/blob/master/README.md)
 * Implement HR-Net or U-net alternative for backbone
 * Add regularization method DropBlock
 * Try out Pix2Vox-F
+* Try Mish/Swish activation Function
 
 Things which I have *done*:
 * Corrected Pix2Vox-A and made it *Work*
