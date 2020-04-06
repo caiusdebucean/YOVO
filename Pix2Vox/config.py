@@ -14,9 +14,9 @@ __C.DATASETS                                = edict()
 __C.DATASETS.SHAPENET                       = edict()
 __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH    = './datasets/ShapeNet.json'
 # __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH  = './datasets/PascalShapeNet.json'
-__C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/caius/Documents/Datasets/ShapeNetRendering/%s/%s/rendering/%02d.png'
+__C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/amuresan/Documents/CaiusD/ShapeNetRendering/%s/%s/rendering/%02d.png'
 # __C.DATASETS.SHAPENET.RENDERING_PATH      = '/home/hzxie/Datasets/ShapeNet/PascalShapeNetRendering/%s/%s/render_%04d.jpg'
-__C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/caius/Documents/Datasets/ShapeNetVox32/%s/%s/model.binvox'
+__C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/amuresan/Documents/CaiusD/ShapeNetVox32/%s/%s/model.binvox'
 __C.DATASETS.PASCAL3D                       = edict()
 __C.DATASETS.PASCAL3D.TAXONOMY_FILE_PATH    = './datasets/Pascal3D.json'
 __C.DATASETS.PASCAL3D.ANNOTATION_PATH       = '/home/hzxie/Datasets/PASCAL3D/Annotations/%s_imagenet/%s.mat'
@@ -48,7 +48,7 @@ __C.CONST.RNG_SEED                          = 0
 __C.CONST.IMG_W                             = 224       # Image width for input
 __C.CONST.IMG_H                             = 224       # Image height for input
 __C.CONST.N_VOX                             = 32
-__C.CONST.BATCH_SIZE                        = 8
+__C.CONST.BATCH_SIZE                        = 64
 __C.CONST.N_VIEWS_RENDERING                 = 1         # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_W                        = 128       # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_H                        = 128       # Dummy property for Pascal 3D
@@ -68,20 +68,22 @@ __C.NETWORK.LEAKY_VALUE                     = .2
 __C.NETWORK.TCONV_USE_BIAS                  = False
 __C.NETWORK.USE_REFINER                     = True
 __C.NETWORK.USE_MERGER                      = True
-
+__C.NETWORK.ALTERNATIVE_ACTIVATION_A          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
+__C.NETWORK.ALTERNATIVE_ACTIVATION_B          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
 #
 # Training
 #
 __C.TRAIN                                   = edict()
 __C.TRAIN.RESUME_TRAIN                      = False
 __C.TRAIN.NUM_WORKER                        = 4             # number of data workers
-__C.TRAIN.NUM_EPOCHES                       = 250
+__C.TRAIN.NUM_EPOCHES                       = 20 #250
 __C.TRAIN.BRIGHTNESS                        = .4
 __C.TRAIN.CONTRAST                          = .4
 __C.TRAIN.SATURATION                        = .4
 __C.TRAIN.NOISE_STD                         = .1
 __C.TRAIN.RANDOM_BG_COLOR_RANGE             = [[225, 255], [225, 255], [225, 255]]
-__C.TRAIN.POLICY                            = 'adam'        # available options: sgd, adam
+#__C.TRAIN.POLICY                            = 'adam'        # available options: sgd, adam, ranger
+__C.TRAIN.POLICY                            = 'adam'
 __C.TRAIN.EPOCH_START_USE_REFINER           = 0
 __C.TRAIN.EPOCH_START_USE_MERGER            = 0
 __C.TRAIN.ENCODER_LEARNING_RATE             = 1e-3

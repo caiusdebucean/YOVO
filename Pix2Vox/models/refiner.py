@@ -4,11 +4,31 @@
 
 import torch
 
+from echoAI.Activation.Torch.mish import Mish
 
 class Refiner(torch.nn.Module):
     def __init__(self, cfg):
         super(Refiner, self).__init__()
         self.cfg = cfg
+
+        # Activation choice - default = 3 x leaky relu, 4 x relu + sigmoid
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
+            activation_A = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'elu':
+            activation_A = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'leaky relu':
+            activation_A = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
+            activation_A = Mish()
+
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'relu':
+            activation_B = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'elu':
+            activation_B = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'leaky relu':
+            activation_B = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'mish':
+            activation_B = Mish()
 
         # Layer Definition
         self.layer1 = torch.nn.Sequential(

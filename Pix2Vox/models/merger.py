@@ -4,11 +4,22 @@
 
 import torch
 
+from echoAI.Activation.Torch.mish import Mish
 
 class Merger(torch.nn.Module):
     def __init__(self, cfg):
         super(Merger, self).__init__()
         self.cfg = cfg
+
+        # Activation choice - default = 5 x leaky relu + softmax
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
+            activation_A = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'elu':
+            activation_A = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'leaky relu':
+            activation_A = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
+            activation_A = Mish()
 
         # Layer Definition
         self.layer1 = torch.nn.Sequential(
@@ -24,7 +35,7 @@ class Merger(torch.nn.Module):
         self.layer3 = torch.nn.Sequential(
             torch.nn.Conv3d(8, 4, kernel_size=3, padding=1),
             torch.nn.BatchNorm3d(4),
-            torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+            activation_A
         )
         self.layer4 = torch.nn.Sequential(
             torch.nn.Conv3d(4, 2, kernel_size=3, padding=1),

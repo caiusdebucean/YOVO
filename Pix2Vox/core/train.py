@@ -23,6 +23,7 @@ from models.decoder import Decoder
 from models.refiner import Refiner
 from models.merger import Merger
 
+from Optimizers.ranger import Ranger
 
 def train_net(cfg):
     # Enable the inbuilt cudnn auto-tuner to find the best algorithm to use
@@ -106,6 +107,12 @@ def train_net(cfg):
         merger_solver = torch.optim.SGD(merger.parameters(),
                                         lr=cfg.TRAIN.MERGER_LEARNING_RATE,
                                         momentum=cfg.TRAIN.MOMENTUM)
+    elif cfg.TRAIN.POLICY == 'ranger':
+        enc_params = filter(lambda p: p.requires_grad, encoder.parameters())
+        encoder_solver = Ranger(enc_params, k = 5)
+        decoder_solver = Ranger(decoder.parameters(), k = 5)
+        refiner_solver = Ranger(refiner.parameters(), k = 5)
+        merger_solver = Ranger(merger.parameters(), k = 5)
     else:
         raise Exception('[FATAL] %s Unknown optimizer %s.' % (dt.now(), cfg.TRAIN.POLICY))
 

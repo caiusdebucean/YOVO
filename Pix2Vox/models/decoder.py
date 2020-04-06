@@ -3,12 +3,23 @@
 # Developed by Haozhe Xie <cshzxie@gmail.com>
 
 import torch
+from echoAI.Activation.Torch.mish import Mish
 
 
 class Decoder(torch.nn.Module):
     def __init__(self, cfg):
         super(Decoder, self).__init__()
         self.cfg = cfg
+
+        # Activation choice - default = 4 x relu, sigmoid
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
+            activation_A = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'elu':
+            activation_A = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'leaky relu':
+            activation_A = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
+            activation_A = Mish()
 
         # Layer Definition
         self.layer1 = torch.nn.Sequential(
@@ -29,7 +40,7 @@ class Decoder(torch.nn.Module):
         self.layer4 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(32, 8, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             torch.nn.BatchNorm3d(8),
-            torch.nn.ReLU()
+            activation_A
         )
         self.layer5 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(8, 1, kernel_size=1, bias=cfg.NETWORK.TCONV_USE_BIAS),

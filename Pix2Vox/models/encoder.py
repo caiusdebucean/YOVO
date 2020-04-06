@@ -8,11 +8,23 @@
 import torch
 import torchvision.models
 
+from echoAI.Activation.Torch.mish import Mish
 
 class Encoder(torch.nn.Module):
     def __init__(self, cfg):
         super(Encoder, self).__init__()
         self.cfg = cfg
+
+        # Activation choice - default = 3 x elu
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
+            activation_A = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'elu':
+            activation_A = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'leaky relu':
+            activation_A = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
+            activation_A = Mish()
+
 
         # Layer Definition
         vgg16_bn = torchvision.models.vgg16_bn(pretrained=True)
@@ -20,18 +32,18 @@ class Encoder(torch.nn.Module):
         self.layer1 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 512, kernel_size=3),
             torch.nn.BatchNorm2d(512),
-            torch.nn.ELU(),
+            torch.nn.ELU()
         )
         self.layer2 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 512, kernel_size=3),
             torch.nn.BatchNorm2d(512),
-            torch.nn.ELU(),
+             torch.nn.ELU(),
             torch.nn.MaxPool2d(kernel_size=3)
         )
         self.layer3 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 256, kernel_size=1),
             torch.nn.BatchNorm2d(256),
-            torch.nn.ELU()
+             torch.nn.ELU()
         )
 
         # Don't update params in VGG16
