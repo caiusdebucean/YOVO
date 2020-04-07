@@ -14,11 +14,12 @@ Specific things *to do* in the future:
 * **REPAIR** and improve the function activation alternatives
 * Better understand and tweak **Ranger** optimizer (_-> RMSProp -> Momentum -> Adam -> RAdam -> Lookahead_)
 * Try **RangerLARS** optimizer
-* Implement HR-Net or U-net alternative for backbone
+* Implement HR-Net or U-net alternative for backbone (possibly Darknet-19)
 * Add regularization method **DropBlock**
 * Try out **Pix2Vox-F**
 * Find a **good combination** between variations of _relu_ and _Mish/Swish_
 * Learn to use **TensorboardX**
+* Try _K3D_ package, for visualization (feasability test)
 
 Things which I have *done*:
 * Corrected Pix2Vox-A and made it *Work*
