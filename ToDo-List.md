@@ -2,14 +2,14 @@ This is a file tracking the of improvements and modifications I want to add to t
 _Minor changes, such as code modifications or small improvements will not be tracked in this document_
 
 General improvement *ideas*:
-* Try out different optimizers (https://github.com/mgrankin/over9000)
+* Try out different [optimizers](https://github.com/mgrankin/over9000)
 * Try different backbone architecture (HR-Net, SqueezeNet, MobileNetV2, ResNet, etc.)
 * Study what modules can be improved
 * Try out and research personal super secret activation function
 * Try out different augmentation and regularization methods
 * Research photogrammetry (from DL research or apps like canvas.io or occipital projects)
 * Research PapersWithCode for similar tasks
-
+* Research posibility to add improvements by generating depth maps with ![MonoDepthNN](https://github.com/intel-isl/MiDaS/blob/master/run.py) from the [3D Photo Inpaiting](https://github.com/vt-vl-lab/3d-photo-inpainting)
 Specific things *to do* in the future:
 * **REPAIR** and improve the function activation alternatives
 * Better understand and tweak **Ranger** optimizer (_-> RMSProp -> Momentum -> Adam -> RAdam -> Lookahead_)
