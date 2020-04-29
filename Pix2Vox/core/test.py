@@ -8,7 +8,7 @@ import os
 import torch
 import torch.backends.cudnn
 import torch.utils.data
-
+import kaolin as kal
 import utils.binvox_visualization
 import utils.data_loaders
 import utils.data_transforms
@@ -163,11 +163,22 @@ def test_net(cfg,
                 img_dir = output_dir % 'images_from_test'
                 # Volume Visualization
                 gv = generated_volume.cpu().numpy()
+                print(type(gv))
+                print(gv.shape)
+                kaolin_gv = np.squeeze(gv,axis=0)
+                #kaolin visualization is meant to run locally
+                # kal.visualize.show(kaolin_gv, mode='voxels')
                 rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
+
                 #Supported type is (C x W x H) and current one is (W x H x C)         
                 test_writer.add_image('Test Sample#%02d/Volume Reconstructed' % sample_idx, rendering_views, epoch_idx)
                 gtv = ground_truth_volume.cpu().numpy()
+                print(type(gtv))
+                print(gtv.shape)
+                kaolin_gtv = np.squeeze(gtv,axis=0)
+                #kaolin visualization is meant to run locally
+                # kal.visualize.show(kaolin_gtv, mode='voxels')
                 rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx)
                 #Supported type is (C x W x H) and current one is (W x H x C)
                 rendering_views = np.transpose(rendering_views,(2,0,1))

@@ -5,5 +5,6 @@ numpy
 opencv-python
 pprint
 scipy
+echoAI
 torchvision
 tensorboardX
