@@ -161,7 +161,15 @@ def train_net(cfg):
               (dt.now(), init_epoch, best_iou, best_epoch))
 
     # Summary writer for TensorBoard
-    output_dir = os.path.join(cfg.DIR.OUT_PATH, '%s', dt.now().isoformat())
+    save_path = cfg.DIR.OUT_PATH + '/' + cfg.DIR.NAME
+    orig_save_path = save_path
+    save_index = 0
+    save_len = len(save_path)
+    while os.path.exists(save_path):
+        save_path = orig_save_path
+        save_path = save_path + '_V' + str(save_index)
+        save_index += 1
+    output_dir = os.path.join(save_path, '%s', dt.now().isoformat())
     log_dir = output_dir % 'logs'
     ckpt_dir = output_dir % 'checkpoints'
     train_writer = SummaryWriter(os.path.join(log_dir, 'train'))
@@ -274,7 +282,6 @@ def train_net(cfg):
         if (epoch_idx + 1) % cfg.TRAIN.SAVE_FREQ == 0:
             if not os.path.exists(ckpt_dir):
                 os.makedirs(ckpt_dir)
-
             utils.network_utils.save_checkpoints(cfg, os.path.join(ckpt_dir, 'ckpt-epoch-%04d.pth' % (epoch_idx + 1)),
                                                  epoch_idx + 1, encoder, encoder_solver, decoder, decoder_solver,
                                                  refiner, refiner_solver, merger, merger_solver, best_iou, best_epoch)

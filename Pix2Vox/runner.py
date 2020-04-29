@@ -38,6 +38,7 @@ def get_args_from_command_line():
     parser.add_argument('--epoch', dest='epoch', help='number of epoches', default=cfg.TRAIN.NUM_EPOCHES, type=int)
     parser.add_argument('--weights', dest='weights', help='Initialize network from the weights file', default=None)
     parser.add_argument('--out', dest='out_path', help='Set output path', default=cfg.DIR.OUT_PATH)
+    parser.add_argument('--name', dest='name', help='name of training instance', default=None, type=str)
     args = parser.parse_args()
     return args
 
@@ -45,7 +46,11 @@ def get_args_from_command_line():
 def main():
     # Get args from command line
     args = get_args_from_command_line()
-
+    if args.name is not None:
+        cfg.DIR.NAME = args.name
+    else:
+        print('[FATAL] Please specify the training instance name')
+        sys.exit(3)
     if args.gpu_id is not None:
         cfg.CONST.DEVICE = args.gpu_id
     if not args.randomize:

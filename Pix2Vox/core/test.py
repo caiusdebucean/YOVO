@@ -36,8 +36,17 @@ def test_net(cfg,
     torch.backends.cudnn.benchmark = True
 
     #added image outputs
-    output_dir = os.path.join(cfg.DIR.OUT_PATH, '%s', dt.now().isoformat())
-    log_dir = 'logs'
+    save_path = cfg.DIR.OUT_PATH + '/' + cfg.DIR.NAME
+    orig_save_path = save_path
+    save_index = 0
+    save_len = len(save_path)
+    while os.path.exists(save_path):
+        save_path = orig_save_path
+        save_path = save_path + '_V' + str(save_index)
+        save_index += 1
+
+    output_dir = os.path.join(save_path, '%s', dt.now().isoformat())
+    log_dir = output_dir % 'logs'
     test_writer = SummaryWriter(os.path.join(log_dir, 'test'))
     #also TensorboardX writer
 
@@ -151,7 +160,7 @@ def test_net(cfg,
             print(sample_idx)
             # Append generated volumes to TensorBoard
             if output_dir and sample_idx < 3: #Only prints 3 images - remove second condition for all dataset
-                img_dir = output_dir % 'images'
+                img_dir = output_dir % 'images_from_test'
                 # Volume Visualization
                 gv = generated_volume.cpu().numpy()
                 rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx)

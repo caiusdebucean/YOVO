@@ -25,17 +25,17 @@ class Decoder(torch.nn.Module):
         self.layer1 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(2048, 512, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             torch.nn.BatchNorm3d(512),
-            torch.nn.ReLU()
+            activation_A
         )
         self.layer2 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(512, 128, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             torch.nn.BatchNorm3d(128),
-            torch.nn.ReLU()
+            activation_A
         )
         self.layer3 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(128, 32, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             torch.nn.BatchNorm3d(32),
-            torch.nn.ReLU()
+            activation_A
         )
         self.layer4 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(32, 8, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),

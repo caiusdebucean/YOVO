@@ -32,18 +32,18 @@ class Encoder(torch.nn.Module):
         self.layer1 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 512, kernel_size=3),
             torch.nn.BatchNorm2d(512),
-            torch.nn.ELU()
+            activation_A
         )
         self.layer2 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 512, kernel_size=3),
             torch.nn.BatchNorm2d(512),
-             torch.nn.ELU(),
+            activation_A,
             torch.nn.MaxPool2d(kernel_size=3)
         )
         self.layer3 = torch.nn.Sequential(
             torch.nn.Conv2d(512, 256, kernel_size=1),
             torch.nn.BatchNorm2d(256),
-             torch.nn.ELU()
+            activation_A
         )
 
         # Don't update params in VGG16
