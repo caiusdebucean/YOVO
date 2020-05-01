@@ -159,26 +159,24 @@ def test_net(cfg,
             test_iou[taxonomy_id]['iou'].append(sample_iou)
             print(sample_idx)
             # Append generated volumes to TensorBoard
-            if output_dir and sample_idx < 3: #Only prints 3 images - remove second condition for all dataset
+            if output_dir and sample_idx < cfg.TEST.N_VIEW: #Only prints 3 images - remove second condition for all dataset
                 img_dir = output_dir % 'images_from_test'
                 # Volume Visualization
                 gv = generated_volume.cpu().numpy()
-                print(type(gv))
-                print(gv.shape)
-                kaolin_gv = np.squeeze(gv,axis=0)
-                #kaolin visualization is meant to run locally
-                # kal.visualize.show(kaolin_gv, mode='voxels')
+                if cfg.TEST.VIEW_KAOLIN == True:
+                    kaolin_gv = np.copy(gv)
+                    kaolin_gv = np.squeeze(kaolin_gv,axis=0)
+                    kal.visualize.show(kaolin_gv, mode='voxels')
                 rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
 
                 #Supported type is (C x W x H) and current one is (W x H x C)         
                 test_writer.add_image('Test Sample#%02d/Volume Reconstructed' % sample_idx, rendering_views, epoch_idx)
                 gtv = ground_truth_volume.cpu().numpy()
-                print(type(gtv))
-                print(gtv.shape)
-                kaolin_gtv = np.squeeze(gtv,axis=0)
-                #kaolin visualization is meant to run locally
-                # kal.visualize.show(kaolin_gtv, mode='voxels')
+                if cfg.TEST.VIEW_KAOLIN == True:
+                    kaolin_gtv = np.copy(gtv)
+                    kaolin_gtv = np.squeeze(kaolin_gtv,axis=0)
+                    kal.visualize.show(kaolin_gtv, mode='voxels')
                 rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx)
                 #Supported type is (C x W x H) and current one is (W x H x C)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
@@ -218,6 +216,7 @@ def test_net(cfg,
         print()
     # Print mean IoU for each threshold
     print('Overall ', end='\t\t\t\t')
+    print(mean_iou)
     for mi in mean_iou:
         print('%.4f' % mi, end='\t')
     print('\n')

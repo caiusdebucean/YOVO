@@ -23,7 +23,7 @@ _Minor changes, such as code modifications or small improvements will not be tra
 - [ ] Try out **Pix2Vox-F**
 - [ ] Find a **good combination** between variations of _relu_ and _Mish/Swish_
 - [ ] Learn to use **TensorboardX**
-- [ ] Try _K3D_ package, for visualization (feasability test)
+- [ ] _(OPTIONAL):_ Try _K3D_ package, for visualization (feasability test)
 
 **Things which I have *done*:**
 
@@ -31,3 +31,5 @@ _Minor changes, such as code modifications or small improvements will not be tra
 - [x] Add and tested **Ranger** optimizer (along with _RAdam_ and _Lookahead_)
 - [x] Add and teste the **Mish** activation function (with crude all-throughout replacement)
 - [x] Code adaptive save mechanism to isolate training instances more easily
+- [x] Add 3D interactive representation using [kaolin](https://github.com/NVIDIAGameWorks/kaolin) 
+- [x] Implement beta-MobileNetV2 architecture

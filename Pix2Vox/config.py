@@ -14,9 +14,12 @@ __C.DATASETS                                = edict()
 __C.DATASETS.SHAPENET                       = edict()
 __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH    = './datasets/ShapeNet.json'
 # __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH  = './datasets/PascalShapeNet.json'
-__C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/amuresan/Documents/CaiusD/ShapeNetRendering/%s/%s/rendering/%02d.png'
-# __C.DATASETS.SHAPENET.RENDERING_PATH      = '/home/hzxie/Datasets/ShapeNet/PascalShapeNetRendering/%s/%s/render_%04d.jpg'
-__C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/amuresan/Documents/CaiusD/ShapeNetVox32/%s/%s/model.binvox'
+
+# __C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/amuresan/Documents/CaiusD/ShapeNetRendering/%s/%s/rendering/%02d.png'
+__C.DATASETS.SHAPENET.RENDERING_PATH        = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetRendering/ShapeNetRendering/%s/%s/rendering/%02d.png'
+# __C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/amuresan/Documents/CaiusD/ShapeNetVox32/%s/%s/model.binvox'
+__C.DATASETS.SHAPENET.VOXEL_PATH            = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetVox32/ShapeNetVox32/%s/%s/model.binvox'
+
 __C.DATASETS.PASCAL3D                       = edict()
 __C.DATASETS.PASCAL3D.TAXONOMY_FILE_PATH    = './datasets/Pascal3D.json'
 __C.DATASETS.PASCAL3D.ANNOTATION_PATH       = '/home/hzxie/Datasets/PASCAL3D/Annotations/%s_imagenet/%s.mat'
@@ -48,7 +51,7 @@ __C.CONST.RNG_SEED                          = 0
 __C.CONST.IMG_W                             = 224       # Image width for input
 __C.CONST.IMG_H                             = 224       # Image height for input
 __C.CONST.N_VOX                             = 32
-__C.CONST.BATCH_SIZE                        = 64
+__C.CONST.BATCH_SIZE                        = 1 #64
 __C.CONST.N_VIEWS_RENDERING                 = 1         # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_W                        = 128       # Dummy property for Pascal 3D
 __C.CONST.CROP_IMG_H                        = 128       # Dummy property for Pascal 3D
@@ -63,13 +66,20 @@ __C.CONST.NAME                              = 'Test'
 #
 # Network
 #
+
 __C.NETWORK                                 = edict()
+__C.NETWORK.ENCODER                         = 'mobilenet' # What architecture to use: ['original', 'darknet19', 'mobilenet']
+__C.NETWORK.DECODER                         = 'original' # What architecture to use: ['original']
+__C.NETWORK.MERGER                          = 'original' # What architecture to use: ['original']
+__C.NETWORK.REFINER                         = 'original' # What architecture to use: ['original']
 __C.NETWORK.LEAKY_VALUE                     = .2
 __C.NETWORK.TCONV_USE_BIAS                  = False
 __C.NETWORK.USE_REFINER                     = True
 __C.NETWORK.USE_MERGER                      = True
 __C.NETWORK.ALTERNATIVE_ACTIVATION_A          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
 __C.NETWORK.ALTERNATIVE_ACTIVATION_B          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
+
+
 #
 # Training
 #
@@ -106,3 +116,5 @@ __C.TRAIN.UPDATE_N_VIEWS_RENDERING          = False
 __C.TEST                                    = edict()
 __C.TEST.RANDOM_BG_COLOR_RANGE              = [[240, 240], [240, 240], [240, 240]]
 __C.TEST.VOXEL_THRESH                       = [.2, .3, .4, .5]
+__C.TEST.VIEW_KAOLIN                        = False  # Rendering during training with kaolin. This should be done locally, not through ssh
+__C.TEST.N_VIEW                             = 3 # How many images should we save and render at test/validation time
