@@ -36,16 +36,16 @@ def test_net(cfg,
     torch.backends.cudnn.benchmark = True
 
     #added image outputs
-    save_path = cfg.DIR.OUT_PATH + '/' + cfg.DIR.NAME
-    orig_save_path = save_path
-    save_index = 0
-    save_len = len(save_path)
-    while os.path.exists(save_path):
-        save_path = orig_save_path
-        save_path = save_path + '_V' + str(save_index)
-        save_index += 1
-
-    output_dir = os.path.join(save_path, '%s', dt.now().isoformat())
+    if output_dir is None:
+        save_path = cfg.DIR.OUT_PATH + '/' + cfg.DIR.NAME
+        orig_save_path = save_path
+        save_index = 0
+        save_len = len(save_path)
+        while os.path.exists(save_path):
+            save_path = orig_save_path
+            save_path = save_path + '_V' + str(save_index)
+            save_index += 1
+        output_dir = os.path.join(save_path, '%s', dt.now().isoformat())
     log_dir = output_dir % 'logs'
     test_writer = SummaryWriter(os.path.join(log_dir, 'test'))
     #also TensorboardX writer
@@ -216,7 +216,7 @@ def test_net(cfg,
         print()
     # Print mean IoU for each threshold
     print('Overall ', end='\t\t\t\t')
-    print(mean_iou)
+    # print(mean_iou)
     for mi in mean_iou:
         print('%.4f' % mi, end='\t')
     print('\n')

@@ -6,5 +6,6 @@ opencv-python
 pprint
 scipy
 echoAI
+pyglet
 torchvision
 tensorboardX

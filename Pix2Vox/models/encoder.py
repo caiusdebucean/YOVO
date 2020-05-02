@@ -80,7 +80,9 @@ class Encoder(torch.nn.Module):
                 activation_A
             )
             print(self.mobilenet)
-            # print(len(list(mobilenet_v2.features.children()))[:14])
+            # Don't update params in MobileNetV2
+            for param in mobilenet_v2.parameters():
+                param.requires_grad = False
             print('MobileNet_V2 model is loaded')
     def forward(self, rendering_images):
         # print(rendering_images.size())  # torch.Size([batch_size, n_views, img_c, img_h, img_w])
@@ -103,13 +105,13 @@ class Encoder(torch.nn.Module):
         if self.architecture == 'mobilenet':
             for img in rendering_images:
                 features = self.mobilenet(img.squeeze(dim=0))
-                print(features.size())
+                # print(features.size())
                 features = self.layer1(features)
-                print(features.size())
+                # print(features.size())
                 features = self.layer2(features)
-                print(features.size())
+                # print(features.size())
                 features = self.layer3(features)
-                print(features.size())
+                # print(features.size())
                 # exit()
                 image_features.append(features)
         image_features = torch.stack(image_features).permute(1, 0, 2, 3, 4).contiguous()
