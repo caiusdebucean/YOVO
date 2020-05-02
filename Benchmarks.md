@@ -8,6 +8,16 @@ ___
 ___
 ___
 
+**Pix2Vox-A fully trained with MobileNet-V2 pretrained Encoder, Mish activations and Ranger optimizer**
+
+_**This particular architecture breaks the current overall SotA held by the original Pix2Vox**_
+
+_I trained this at 32 batch size, at average batch time = 0.37s_
+
+![Results](https://i.imgur.com/zATbeXO.png)
+
+___
+
 For the sake of time saving, I will try comparing the following methods after **only 20 epochs**, so as to avoid catastrophic failures for intensive trainings.
 
 **Original Pix2Vox-A**
@@ -15,16 +25,6 @@ For the sake of time saving, I will try comparing the following methods after **
 *   average _batch time:_ 0.6s
 
 ![Results](https://i.imgur.com/FaW8XbJ.png)
-
-___
-
-**Pix2Vox-A with MobileNet-V2 pretrained Encoder, Mish activations and Ranger optimizer**
-
-_**This particular architecture breaks the current overall SotA held by the original Pix2Vox**_
-
-_I trained this at 32 batch size, at average batch time = 0.37s_
-
-![Results](https://i.imgur.com/zATbeXO.png)
 
 ___
 
