@@ -10,7 +10,7 @@ _Minor changes, such as code modifications or small improvements will not be tra
 * Try out different augmentation and regularization methods
 * Research photogrammetry (from DL research or apps like canvas.io or occipital projects)
 * Research PapersWithCode for similar tasks
-* Research posibility to add improvements by generating depth maps with ![MonoDepthNN](https://github.com/intel-isl/MiDaS/blob/master/run.py) from the [3D Photo Inpaiting](https://github.com/vt-vl-lab/3d-photo-inpainting)
+* Research posibility to add improvements by generating depth maps with [MonoDepthNN](https://github.com/intel-isl/MiDaS/blob/master/run.py) from the [3D Photo Inpaiting](https://github.com/vt-vl-lab/3d-photo-inpainting)
 
 
 **Specific things *to do* in the future:**
@@ -23,7 +23,8 @@ _Minor changes, such as code modifications or small improvements will not be tra
 - [ ] Try out **Pix2Vox-F**
 - [ ] Find a **good combination** between variations of _relu_ and _Mish/Swish_
 - [ ] Learn to use **TensorboardX**
-- [ ] Explore the other ![YOLOV4](https://arxiv.org/pdf/2004.10934v1.pdf) improvements techniques 
+- [ ] Explore the other [YOLOV4](https://arxiv.org/pdf/2004.10934v1.pdf) improvements techniques 
+- [ ] Try [https://arxiv.org/pdf/1901.05555.pdf](Class-Balanced Loss Based on Effective Number of Samples)
 - [ ] _(OPTIONAL):_ Try _K3D_ package, for visualization (feasability test)
 
 **Things which I have *done*:**
