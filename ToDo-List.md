@@ -24,7 +24,7 @@ _Minor changes, such as code modifications or small improvements will not be tra
 - [ ] Find a **good combination** between variations of _relu_ and _Mish/Swish_
 - [ ] Learn to use **TensorboardX**
 - [ ] Explore the other [YOLOV4](https://arxiv.org/pdf/2004.10934v1.pdf) improvements techniques 
-- [ ] Try [https://arxiv.org/pdf/1901.05555.pdf](Class-Balanced Loss Based on Effective Number of Samples)
+- [ ] Try [Class-Balanced Loss Based on Effective Number of Samples](https://arxiv.org/pdf/1901.05555.pdf)
 - [ ] _(OPTIONAL):_ Try _K3D_ package, for visualization (feasability test)
 
 **Things which I have *done*:**
