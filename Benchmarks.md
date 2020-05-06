@@ -14,7 +14,7 @@ _**This particular architecture breaks the current overall SotA held by the orig
 
 _I trained this at 32 batch size, at average batch time = 0.37s_
 
-![Results](https://i.imgur.com/zATbeXO.png)
+<div style="text-align:center"><img src="https://i.imgur.com/zATbeXO.png"/width = 100%></div> 
 
 ___
 
