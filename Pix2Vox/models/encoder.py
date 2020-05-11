@@ -81,8 +81,8 @@ class Encoder(torch.nn.Module):
             )
             print(self.mobilenet)
             # Don't update params in MobileNetV2
-            for param in mobilenet_v2.parameters():
-                param.requires_grad = False
+            # for param in mobilenet_v2.parameters():
+            #     param.requires_grad = False
             print('MobileNet_V2 model is loaded')
     def forward(self, rendering_images):
         # print(rendering_images.size())  # torch.Size([batch_size, n_views, img_c, img_h, img_w])
