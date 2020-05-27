@@ -1,0 +1,470 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{hyperref}
+\usepackage[linesnumbered,ruled,vlined,algochapter]{algorithm2e}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\textit{\nouppercase{\leftmark}}}
+\fancyhead[RE]{\textit{\nouppercase{\leftmark}}}
+
+\renewcommand{\rmdefault}{ptm}
+
+\renewenvironment{proof}{{\flushleft\itshape Rezolvare.}}{\qed}
+
+
+\usepackage{babel}
+  \providecommand{\proofname}{Rezolvare}
+  \providecommand{\algorithmname}{Algoritmul}
+  \providecommand{\definitionname}{Defini\c{t}ia}
+  \providecommand{\examplename}{Exemplul}
+  \providecommand{\factname}{Faptul}
+  \providecommand{\lemmaname}{Lema}
+  \providecommand{\corollaryname}{Corolarul}
+  \providecommand{\theoremname}{Teorema}
+  \providecommand{\problemname}{Exerci\c{t}iul}
+\end_preamble
+\use_default_options false
+\begin_modules
+eqs-within-sections
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\language romanian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type numerical
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style polish
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle empty
+\bullet 1 1 34 -1
+\bullet 2 2 35 -1
+\bullet 3 2 7 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Învățare prin consolidare pentru locomoția agenților 3D
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+mbox{} 
+\backslash
+thispagestyle{empty} 
+\backslash
+newpage
+\backslash
+setcounter{page}{3}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introducere
+\end_layout
+
+\begin_layout Section
+Contextul problemei
+\end_layout
+
+\begin_layout Standard
+Reconstituirea digitala al unui obiect reprezinta o problema propusa de
+ cateva decenii si este activ tratata in domeniul Viziunii Artificiale si
+ al Graficii Computerizate, avand ca scop final obtinerea unei forme cat
+ mai fidele al obiectulor reale.
+ Procedeele existente se folosesc de varii tipuri de date pentru obtinerea
+ unei reconstructii, acestea fiind obtinute prin uzul de tehnologii precum:
+ Camere clasice, Camere RGB-D, LiDaR, Raze X, Ultrasunete, RMN, CT etc.
+ Considerand costul aferent fiecarei alternative prin hardware-ul dedicat
+ necesar, se poate deduce ca cea mai ieftina solutie ar necesita o simpla
+ camera RGB, cu viziune monotipica, pentru a creea imagini 2D.
+ Acest fapt concretizeaza dorinta 
+\end_layout
+
+\begin_layout Standard
+Recuperarea dimensiunii a 3-a din poze 2D a fost telul multor studii in
+ ultimii ani.
+ Prima generatie de metode au tratat perspectiva geometrica din punct de
+ vedere matematic, observand proiectia 2D al obiecteor 3D, si incercand
+ sa creeze un proces reversibil.
+ Solutiile cele mai bune ale acestei abordari necesita multiple cadre ce
+ capturau diferite unghiuri ale obiectelor, acestea avand nevoie de o calibrare
+ meticuloasa.
+ A doua generatie de metode a folosit o memorie ce continea cunostinte anterioar
+e despre obiecte.
+ Se poate trage o paralela la capabilitatea umana prin care este posibila
+ deducerea formei si geometriei unui obiect folosind si doar un singur ochi,
+ cu ajutorul cunostintelor precedente despre obiecte asemanatoare celui
+ in cauza.
+ Din acest punct de vedere, problema de reconstructie al obiectelor 3D devine
+ o problema de recunoastere.
+ Considerand in prezent eficienta solutilor de Invatare Profunda pentru
+ problemele de recunoastere, cat si cresterea cuantumului de noi date ce
+ pot fi folosite drept date de antrenare, se justifica tendinta comunitatii
+ stiintifice de a folosi ramuri ale Invatarii Profunde precum Retelele Neuronale
+ Convolutionale sau Retele Neuronale Recurente pentru obtinerea geometriei
+ si structurii 3D al obiectelor.
+\end_layout
+
+\begin_layout Section
+Soluția propusa
+\end_layout
+
+\begin_layout Standard
+Aceasta lucrare abordeaza reconstructia 3D a obietelor print intermediul
+ retelelor neuronale, folosind doar una sau mai multe imagini 2D.
+ Deoarece natura acestei probleme face parte din domeniul Viziunii Artificiale,
+ sunt folosite preponderent Retele Neuronale Convolutionale.
+ De asemenea, exista 3 mari tipuri de volume ce pot fi reconstruite: ansamblu
+ de fasii, ansamblu de puncte si ansamblu de voxeli.
+ Solutia actuala se foloseste de ultimul tip de volum prezentat.
+\end_layout
+
+\begin_layout Standard
+Arhitectura propusa este compusa din 3 module: 
+\end_layout
+
+\begin_layout Itemize
+Auto-codificator: format dintr-un codificator ce extrage diferite trasaturi
+ ale imaginii primite si un decodificator ce interpreteaza trasaturile extrase
+ in volume voxelizate
+\end_layout
+
+\begin_layout Itemize
+Unificator: realizeaza contopirea multiplelor volume deduse intr-un volum
+ mai robust
+\end_layout
+
+\begin_layout Itemize
+Rafinor: realizeaza cizelarea volumului unificat
+\end_layout
+
+\begin_layout Standard
+Spre deosebire de solutii din aceeasi familie precum Pix2Vox , ce aloca
+ un Auto-Codificator complet convolutional clasic, 3D-R2N2 , ce introduce
+ aspecte recurente pentru tratarea cazurilor cu multiple poze, prin blocuri
+ LSTM 3D Convolutionale si GRU 3D Convolutionale, solutia prezentata introduce,
+ din punct de vedere arhitectural, nivele aditionale de convolutie al hartilor
+ de caracteristici la ultimele 3 trepte ale Codificatorului, rezultand in
+ 3 volume voxelizate ce captureaza diferite reconstructii are obiectului
+ real.
+ Dupa trecerea prin celelalte module ale arhitecturii, rezultatul final
+ este un singur volum.
+ Aditional, adaugarea si integrarea procedeelor precum extractor de caracteristi
+ci MobileNet V2, functii de activare Mish, regularizare DropBlock si optimizator
+ Ranger aduc rezultatele lui YOVO peste SotA-ul actual pe datasetul Data3D−R2N2.
+\end_layout
+
+\begin_layout Standard
+Cu ajutorul bibliotecii kaolin, volumele pot fi vizualizate intr-un mediu
+ 3D interactiv, in care se poate analiza din orice unghi volumul voxelizat
+ reconstruit.
+ De asemenea, este posibila reprezentarea acestuia sub forma unui ansamblu
+ de plase, pentru o reprezentare mai neteda.
+\end_layout
+
+\begin_layout Chapter
+Fundamente teoretice
+\end_layout
+
+\begin_layout Section
+Inteligenta Artificiala si subdomeniile ei
+\end_layout
+
+\begin_layout Standard
+Odata cu cresterea popularitatii solutiilor de Inteligenta Artificiala s-a
+ creat un nivel ridicat de confuzie despre cum se defineste si diferentiaza
+ Inteligenta Artificiala de alte precum Invatare Automata, Invatare Profunda,
+ Viziune Artificiala si 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/AI_ML_DP.png
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Divizarea Inteligentei Artificiale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Tipuri de Invatare Automata
+\end_layout
+
+\begin_layout Section
+Rețele neuronale
+\end_layout
+
+\begin_layout Standard
+Rețelele neuronale sunt o formă de învățare automată.
+ Unitățile fundamentale ale unei rețele se numesc noduri, care sunt adesea
+ asemănate cu neuronii creierului uman.
+ O rețea neuronală învață prin antrenamente care duc la formarea conexiunilor
+ între noduri.
+ 
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere structural, rețelele neuronale sunt formate din mai
+ multe straturi care procesează date de intrare.
+ Fiecare strat este reprezentat de o transformare non-liniară care conduce
+ la învățarea unor caracteristici care aparțin de un anumit nivel de abstractiza
+re.
+\end_layout
+
+\begin_layout Standard
+Cel mai simplu exemplu de strat al unei rețele neuronale este stratul dens.
+ Acesta are ca scop transformarea datelor de intrare printr-o funcție non-liniar
+ă parametrizată, dată de următoarea formulă:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+h=A\cdot(W\cdot x+b)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+În cazul de mai sus, 
+\begin_inset Formula $W$
+\end_inset
+
+ este o pondere de mărime 
+\begin_inset Formula $n_{h}\times n_{x}$
+\end_inset
+
+ și 
+\begin_inset Formula $b$
+\end_inset
+
+ este un bias de mărime 
+\begin_inset Formula $n_{h}$
+\end_inset
+
+, unde 
+\begin_inset Formula $x$
+\end_inset
+
+ este dimensiunea datelor de intrare, iar 
+\begin_inset Formula $h$
+\end_inset
+
+ este dimensiunea datelor de ieșire.
+ Funcția 
+\begin_inset Formula $A$
+\end_inset
+
+ se numește funcție de activare, și este elementul care oferă caracteristica
+ de non-liniaritate stratului.
+ Această funcție este aleasă în funcție de sarcina stratului.
+ În funcție de problema pe care o rezolvă, o rețea poate avea un numar arbitrar
+ de straturi înlănțuite precum în Figura 2.2.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exemplu de rețea neuronală simplă cu trei straturi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pentru ca rețeaua să poată învăța, aceasta trebuie să poată face diferența
+ dintre rezultatele corecte și cele greșite.
+ În acest scop, se definește funcția de cost.
+ Valorile obținute pe baza acestei funcții denotă diferența dintre estimările
+ făcute de către rețea și rezultatul așteptat.
+ Un exemplu simplu și des întâlnit de funcție de cost este abaterea pătratică
+ medie, care este definită prin următoarea formulă 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-7"
+literal "true"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F=\frac{1}{n}\sum(x_{i}-x'_{i})^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Odată ce funcția de cost a fost aleasă, rețeaua va învăța încercând să își
+ optimizeze parametrii în mod iterativ astfel încât să minimizeze erorile
+ rezultate.
+ Cea mai populară metodă de optimizare este algoritmul de backpropagation
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-6"
+literal "true"
+
+\end_inset
+
+, bazat pe direcția gradienților funcției de cost.
+ 
+\end_layout
+
+\begin_layout Section
+Învățare prin consolidare
+\end_layout
+
+\begin_layout Subsection
+Introducere
+\end_layout
+
+\end_body
+\end_document
