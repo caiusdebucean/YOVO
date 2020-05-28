@@ -32,7 +32,42 @@ class Encoder(torch.nn.Module):
             activation_A = Mish()
 
         self.architecture = cfg.NETWORK.ENCODER
+        self.multi_level = cfg.NETWORK.MULTI_LEVEL_TRAIN
         # Layer Definition
+
+        if self.multi_level == True:
+            self.multi_conv6_1 = torch.nn.Sequential(
+                torch.nn.Conv2d(96, 192, kernel_size=3),
+                torch.nn.BatchNorm2d(192),
+                activation_A
+            )
+            self.multi_conv6_2 = torch.nn.Sequential(
+                torch.nn.Conv2d(192, 384, kernel_size=3),
+                torch.nn.BatchNorm2d(384),
+                activation_A
+            )
+            self.multi_conv6_3 = torch.nn.Sequential(
+                torch.nn.Conv2d(384, 256, kernel_size=3),
+                torch.nn.BatchNorm2d(256),
+                activation_A
+            )
+
+            self.multi_conv4_1 = torch.nn.Sequential(
+                torch.nn.Conv2d(128, 320, kernel_size=3),
+                torch.nn.BatchNorm2d(320),
+                activation_A
+            )
+            self.multi_conv4_2 = torch.nn.Sequential(
+                torch.nn.Conv2d(320, 256, kernel_size=3),
+                torch.nn.BatchNorm2d(256),
+                activation_A
+            )
+            # self.multi_conv3 = torch.nn.Sequential(
+            #     torch.nn.Conv2d(128, 256, kernel_size=3),
+            #     torch.nn.BatchNorm2d(128),
+            #     activation_A
+            # )
+
 
         if self.architecture == 'original':
             vgg16_bn = torchvision.models.vgg16_bn(pretrained=True)
@@ -89,6 +124,9 @@ class Encoder(torch.nn.Module):
         rendering_images = rendering_images.permute(1, 0, 2, 3, 4).contiguous()
         rendering_images = torch.split(rendering_images, 1, dim=0)
         image_features = []
+
+
+
         if self.architecture == 'original':
             for img in rendering_images:
                 features = self.vgg(img.squeeze(dim=0))
@@ -106,14 +144,21 @@ class Encoder(torch.nn.Module):
             for img in rendering_images:
                 features = self.mobilenet(img.squeeze(dim=0))
                 # print(features.size())
+                if self.multi_level == True:
+                    new_features_6 = self.multi_conv6_1(features)
+                    new_features_6 = self.multi_conv6_2(new_features_6)
+                    new_features_6 = self.multi_conv6_3(new_features_6)
+                    image_features.append(new_features_6)
+
                 features = self.layer1(features)
                 # print(features.size())
+                if self.multi_level == True:
+                    new_features_4 = self.multi_conv4_1(features)
+                    new_features_4 = self.multi_conv4_2(new_features_4)
+                    image_features.append(new_features_4)
                 features = self.layer2(features)
-                # print(features.size())
                 features = self.layer3(features)
-                # print(features.size())
-                # exit()
                 image_features.append(features)
-        image_features = torch.stack(image_features).permute(1, 0, 2, 3, 4).contiguous()
-        # print(image_features.size())  # torch.Size([batch_size, n_views, 256, 8, 8])
+        image_features = torch.stack(image_features)
+        image_features = image_features.permute(1, 0, 2, 3, 4).contiguous()
         return image_features

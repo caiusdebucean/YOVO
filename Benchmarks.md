@@ -8,6 +8,16 @@ ___
 ___
 ___
 
+**Pix2Vox-A fully trained MobileNet-V2 with Multi-Head 3-output Encoder, Mish activations and Ranger optimizer**
+
+_**This is the current overall SotA**_
+
+_I trained this at 32 batch size, at average batch time = 0.45s_
+
+<div style="text-align:center"><img src="https://i.imgur.com/xpiRget.png"/width = 100%></div> 
+
+___
+
 **Pix2Vox-A fully trained with MobileNet-V2 pretrained Encoder, Mish activations and Ranger optimizer**
 
 _**This particular architecture breaks the current overall SotA held by the original Pix2Vox**_
