@@ -121,7 +121,7 @@ theorems-chap-bytype
 \begin_body
 
 \begin_layout Title
-Învățare prin consolidare pentru locomoția agenților 3D
+YOVO: You Only Voxelize Once
 \end_layout
 
 \begin_layout Standard
@@ -270,8 +270,45 @@ Inteligenta Artificiala si subdomeniile ei
 \begin_layout Standard
 Odata cu cresterea popularitatii solutiilor de Inteligenta Artificiala s-a
  creat un nivel ridicat de confuzie despre cum se defineste si diferentiaza
- Inteligenta Artificiala de alte precum Invatare Automata, Invatare Profunda,
- Viziune Artificiala si 
+ Inteligenta Artificiala de alte concepte precum Invatare Automata, Invatare
+ Profunda si Viziune Artificiala.
+\end_layout
+
+\begin_layout Standard
+Inteligenta artificiala poate fi interpretata drept incorporarea inteligentei
+ umane in masini.
+ Aceasta include si cele mai simple exemple de solutii implementate pe un
+ calculator, cum ar fi sistemele definite de reguli simple.
+\end_layout
+
+\begin_layout Standard
+Invatarea Automata reprezinta un subdomeniu al Inteligentei Artificiale,
+ reprezentand abilitatea calculatoarelor de a 
+\begin_inset Quotes pld
+\end_inset
+
+invata
+\begin_inset Quotes prd
+\end_inset
+
+ sa rezolve o problema fara sa a avea explicit programate fiecare instructiune.
+ Cu cat sistemul este mai expus la un cuantum mai mare de date, cu atat
+ mai mult algoritmul de invatare automata se auto-regleaza.
+\end_layout
+
+\begin_layout Standard
+Invatarea Profunda este la randul sau un subdomeniu al Invatarii Automate
+ si descrie o tehnica de rezolvare a problemelor cu retele neuronale, structuri
+ inspirate de sistemul cerebral umana.
+ Spre deosebire de celelalte tehnici alternative, invatarea profunda necesita
+ mai multe resurse hardware, in functie de profunzimea si densitatea retelelor
+ folosite.
+\end_layout
+
+\begin_layout Standard
+Viziunea Artificiala este un domeniu al Informaticii ce are ca scop dezvoltarea
+ abilitatilor calculatoarelor de a identifica, procesa si interpreta imaginile
+ primite.
 \end_layout
 
 \begin_layout Standard
@@ -286,7 +323,7 @@ status open
 \begin_inset Graphics
 	filename Illustrations/AI_ML_DP.png
 	lyxscale 30
-	scale 30
+	scale 25
 
 \end_inset
 
@@ -297,7 +334,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Divizarea Inteligentei Artificiale
+Divizarea domeniilor Inteligentei Artificiale
 \end_layout
 
 \end_inset
@@ -312,6 +349,31 @@ Divizarea Inteligentei Artificiale
 
 \begin_layout Section
 Tipuri de Invatare Automata
+\end_layout
+
+\begin_layout Standard
+Solutiile invatarii automate au nevoie de cantitati semnitifcative de date
+ pentru a putea oferi raspunsuri la probleme.
+ Deoarece exista multiple tipuri de probleme precum Clasificare, Detectie,
+ Regresie, Reconstructie etc., formatul in care datele aferente problemei
+ difera.
+ Ergo, exista 3 tipuri de Invatare Automata.
+\end_layout
+
+\begin_layout Subsection
+Invatarea supravegheata
+\end_layout
+
+\begin_layout Subsection
+Invatarea nesupravegheata
+\end_layout
+
+\begin_layout Subsection
+Invatarea prin intarire
+\end_layout
+
+\begin_layout Subsection
+Invatarea colaborativa
 \end_layout
 
 \begin_layout Section
