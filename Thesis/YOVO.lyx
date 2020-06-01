@@ -174,7 +174,9 @@ Reconstituirea digitala al unui obiect reprezinta o problema propusa de
  Considerand costul aferent fiecarei alternative prin hardware-ul dedicat
  necesar, se poate deduce ca cea mai ieftina solutie ar necesita o simpla
  camera RGB, cu viziune monotipica, pentru a creea imagini 2D.
- Acest fapt concretizeaza dorinta 
+ Cu toate ca celelalte tipuri de date pot conduce la reproduceri volumetrice
+ mai robuste, economisirea resurselor este un aspect ce concretizeaza interesul
+ existent in solutii ce folosesc doar imagini.
 \end_layout
 
 \begin_layout Standard
@@ -197,9 +199,10 @@ e despre obiecte.
  Considerand in prezent eficienta solutilor de Invatare Profunda pentru
  problemele de recunoastere, cat si cresterea cuantumului de noi date ce
  pot fi folosite drept date de antrenare, se justifica tendinta comunitatii
- stiintifice de a folosi ramuri ale Invatarii Profunde precum Retelele Neuronale
+ stiintifice de a folosi ramuri ale Invatarii Profunde precum Retele Neuronale
  Convolutionale sau Retele Neuronale Recurente pentru obtinerea geometriei
  si structurii 3D al obiectelor.
+ 
 \end_layout
 
 \begin_layout Section
@@ -272,6 +275,17 @@ Odata cu cresterea popularitatii solutiilor de Inteligenta Artificiala s-a
  creat un nivel ridicat de confuzie despre cum se defineste si diferentiaza
  Inteligenta Artificiala de alte concepte precum Invatare Automata, Invatare
  Profunda si Viziune Artificiala.
+ Se poate observa in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "IA_domenii"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ structura subdomeniilor Inteligentei Artificiale.
 \end_layout
 
 \begin_layout Standard
@@ -303,12 +317,14 @@ Invatarea Profunda este la randul sau un subdomeniu al Invatarii Automate
  Spre deosebire de celelalte tehnici alternative, invatarea profunda necesita
  mai multe resurse hardware, in functie de profunzimea si densitatea retelelor
  folosite.
+ 
 \end_layout
 
 \begin_layout Standard
 Viziunea Artificiala este un domeniu al Informaticii ce are ca scop dezvoltarea
  abilitatilor calculatoarelor de a identifica, procesa si interpreta imaginile
  primite.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -331,10 +347,17 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "IA_domenii"
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Divizarea domeniilor Inteligentei Artificiale
+Definirea domeniilor Inteligentei Artificiale
 \end_layout
 
 \end_inset
@@ -356,117 +379,210 @@ Solutiile invatarii automate au nevoie de cantitati semnitifcative de date
  pentru a putea oferi raspunsuri la probleme.
  Deoarece exista multiple tipuri de probleme precum Clasificare, Detectie,
  Regresie, Reconstructie etc., formatul in care datele aferente problemei
- difera.
- Ergo, exista 3 tipuri de Invatare Automata.
+ difera, precum si modul de abordare.
+ Ergo, exista 3 tipuri importante de Invatare Automata.
 \end_layout
 
 \begin_layout Subsection
 Invatarea supravegheata
 \end_layout
 
+\begin_layout Standard
+\begin_inset Quotes pld
+\end_inset
+
+Învățarea supravegheată presupune învățarea unei corelări între un set de
+ variabile de intrare X și o variabilă de ieșire Y, cat și aplicarea acestei
+ mapări pentru a prezice ieșirile pentru date nevăzute
+\begin_inset Quotes prd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-2"
+literal "false"
+
+\end_inset
+
+.
+ In alte cuvinte, aceasta tehnica necesita date adnotate drept reper pentru
+ rezultatele dorite in functie de datele de intrare respective.
+ Pentru a asigura verosimilitatea modelului antrenat este nevoie de un set
+ de date abundent si divers impreuna impreuna cu adnotarile de rigoare.
+ Invatarea supravegheata este folosita preponderent in probleme de clasificare,
+ detectie si regresie.
+\end_layout
+
 \begin_layout Subsection
 Invatarea nesupravegheata
+\end_layout
+
+\begin_layout Standard
+Spre deosebire de tipologia anterioara, Invatarea nesupravegheata are scopul
+ de a determina tipare prezente in setul de date, fara a avea acces la etichetar
+i ale setului de date.
+ Principalele tehnici aferente invatarii nesupravegheate sunt clusterizarea
+ si asocierea.
+ In domeniul Invatarii profunde, una dintre cele mai populare arhitecturi
+ folosite sunt Auto-Codificatoarele, cu scopul de a extrage caracteristicile
+ unei imagini si a le decodifica si readuce la dimensiunile originale.
+ Aceste arhitecturi sunt folosite si in domeniul procesarilor de imagini.
 \end_layout
 
 \begin_layout Subsection
 Invatarea prin intarire
 \end_layout
 
+\begin_layout Standard
+In aceasta tipologie este vizata recompensa interpretatorului bazata pe
+ interactiunea dintre mediul si agentul ce interactioneaza cu acesta.
+ Invatarea prin intarire este orientata pe rezultate finale.
+ Din aceste motive, este acceptata diversitatea de solutii pe care le aplica
+ agentul, atata timp cat rezultatul final este mai aroape de cel dorit.
+ Astfel, aceasta metoda de invatare rezolva o problema corelarii imediate
+ dintre actiunile efectualte si rezultatele intarziate ce sunt produse ce
+ acestea.
+ Necesitatea de a astepta pentru a observa rezultatele finale ale actiunilor
+ efectuate reprezinta unul din punctele definitorii ale acestei forme de
+ invatare automata, trasatura asemanatoare cu efectele actiunilor umane
+ in mediul inconjurator.
+\end_layout
+
 \begin_layout Subsection
 Invatarea colaborativa
 \end_layout
 
-\begin_layout Section
-Rețele neuronale
-\end_layout
-
 \begin_layout Standard
-Rețelele neuronale sunt o formă de învățare automată.
- Unitățile fundamentale ale unei rețele se numesc noduri, care sunt adesea
- asemănate cu neuronii creierului uman.
- O rețea neuronală învață prin antrenamente care duc la formarea conexiunilor
- între noduri.
- 
-\end_layout
-
-\begin_layout Standard
-Din punct de vedere structural, rețelele neuronale sunt formate din mai
- multe straturi care procesează date de intrare.
- Fiecare strat este reprezentat de o transformare non-liniară care conduce
- la învățarea unor caracteristici care aparțin de un anumit nivel de abstractiza
-re.
-\end_layout
-
-\begin_layout Standard
-Cel mai simplu exemplu de strat al unei rețele neuronale este stratul dens.
- Acesta are ca scop transformarea datelor de intrare printr-o funcție non-liniar
-ă parametrizată, dată de următoarea formulă:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-h=A\cdot(W\cdot x+b)
-\]
+Aceasta forma de invatare este o idee relativ recent adoptata in domeniul
+ inteligentei artificiale, diferentiandu-se fata de celelate 3 tipuri de
+ invatare importante prin faptul ca solutia adoptata este antrenata pe mai
+ multe dispozitive, cu date diferite ce nu pot fi impartasite intern cu
+ alte dispozitive.
+ Rezultatul este un sistem decentralizat, cu un server ce agregeaza si comaseaza
+ trasaturile antrenate de dispozitive, dupa care reinitializeaza aceleasi
+ dispozitivele cu o solutie imbunatatita.
+ Aceasta tehnica faciliteaza securitatea datelor intrucat nu exista o sursa
+ centralizata a acestora.
+ Structura unui asemenea sistem poate fi observata in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Federated_Learning"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-În cazul de mai sus, 
-\begin_inset Formula $W$
-\end_inset
-
- este o pondere de mărime 
-\begin_inset Formula $n_{h}\times n_{x}$
-\end_inset
-
- și 
-\begin_inset Formula $b$
-\end_inset
-
- este un bias de mărime 
-\begin_inset Formula $n_{h}$
-\end_inset
-
-, unde 
-\begin_inset Formula $x$
-\end_inset
-
- este dimensiunea datelor de intrare, iar 
-\begin_inset Formula $h$
-\end_inset
-
- este dimensiunea datelor de ieșire.
- Funcția 
-\begin_inset Formula $A$
-\end_inset
-
- se numește funcție de activare, și este elementul care oferă caracteristica
- de non-liniaritate stratului.
- Această funcție este aleasă în funcție de sarcina stratului.
- În funcție de problema pe care o rezolvă, o rețea poate avea un numar arbitrar
- de straturi înlănțuite precum în Figura 2.2.
+.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement h
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset CommandInset label
+LatexCommand label
+name "Federated_Learning"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Illustrations/Federated_Learning.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Exemplu de rețea neuronală simplă cu trei straturi
+Sistem Invatarea colaborativa
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Rețele Neuronale
+\end_layout
+
+\begin_layout Standard
+Retelele Neuronale reprezinta tehnica ce sta la baza Invatarii profunde,
+ fiind definita de structura sub forma de graf (noduri si muchii) ce poate
+ fi asociata cu sinapsele si neuronii creierului uman.
+ Din aceste motive, nodurile sunt referite ca neuroni, iar muchiile ca ponderi.
+ Aspectul adanc al retelelor neuronale este denotat de prezenta multiplelor
+ straturi ascunse.
+ Este de mentionat faptul ca exista o pondere intre fiecare neuron din straturi
+ diferite alaturate.
+ O reprezentare simpla poate fi observata in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Neural_Network"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "Neural_Network"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Illustrations/NN_ex.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exemplu Retea Neuronala
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -476,28 +592,38 @@ Exemplu de rețea neuronală simplă cu trei straturi
 \end_layout
 
 \begin_layout Standard
-Pentru ca rețeaua să poată învăța, aceasta trebuie să poată face diferența
- dintre rezultatele corecte și cele greșite.
- În acest scop, se definește funcția de cost.
- Valorile obținute pe baza acestei funcții denotă diferența dintre estimările
- făcute de către rețea și rezultatul așteptat.
- Un exemplu simplu și des întâlnit de funcție de cost este abaterea pătratică
- medie, care este definită prin următoarea formulă 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "key-7"
-literal "true"
+In mod normal, o retea neuronala contine un strat de intrare, un numar pozitiv
+ intreg de straturi ascunse si un strat de iesire.
+ Din punct de vedere matematic, ponderile sunt numere ce transforma datele
+ de intrare in trecerea lor prin retea, iar neuronii reprezinta functii
+ de activare.
+ De asemenea, exista si parametrul numit bias, cu rolul de a ajusta suma
+ ponderata la intrarea intr-un neuron.
+ 
+\end_layout
+
+\begin_layout Standard
+Un strat des folosit in Retelele Neuronale este cel dens, ce transforma
+ datele de intrare unui strat prin intermediul ponderilor si al functii
+ de activare, cu formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Formula Neuron"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-:
+.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-F=\frac{1}{n}\sum(x_{i}-x'_{i})^{2}
-\]
+\begin{equation}
+\hat{y}=\sigma(Wx+b)\label{eq:Formula Neuron}
+\end{equation}
 
 \end_inset
 
@@ -505,28 +631,483 @@ F=\frac{1}{n}\sum(x_{i}-x'_{i})^{2}
 \end_layout
 
 \begin_layout Standard
-Odată ce funcția de cost a fost aleasă, rețeaua va învăța încercând să își
- optimizeze parametrii în mod iterativ astfel încât să minimizeze erorile
- rezultate.
- Cea mai populară metodă de optimizare este algoritmul de backpropagation
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "key-6"
-literal "true"
+In formula de mai sus 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\hat{y}$
+\end_inset
+
+ este iesirea dintr-un neuron, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ reprezinta functia de activare (neuronul), W sunt ponderile aferente neuronului
+ respectiv, b este bias-ul iar x sunt datele de intrare pentru neuron.
+ Pentru ca o retea sa deduca cat de departe este predictia fata de rezultatul
+ dorit, este folosita o functie de cost.
+ Un exemplu este o functie de cost des intalnita: Cross-Entropia Binara,
+ ce are formula:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E=-\frac{1}{n}\sum_{k=1}^{n}((1-y_{k})ln(1-\hat{y}_{k})+y_{k}ln(\hat{y}_{k}))\label{eq:Cross-Entropy-Loss}
+\end{equation}
 
 \end_inset
 
-, bazat pe direcția gradienților funcției de cost.
+
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Cross-Entropy-Loss"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $\hat{y}$
+\end_inset
+
+ este predictia retelei iar y este raspunsul corect.
+ Aceasta metrica este folosita in probleme de invatare supravegheata precum
+ clasificarea.
+\end_layout
+
+\begin_layout Standard
+Scopul retelei este de a minimiza functia de cost pentru a produce rezultate
+ cat mai corecte.
  
 \end_layout
 
-\begin_layout Section
-Învățare prin consolidare
+\begin_layout Subsection
+Gradient Descent
+\end_layout
+
+\begin_layout Standard
+Gradient Descent este o metoda de optimizare consacrata in Invatarea Profunda,
+ cu scopul de a minimiza functia de cost prin actualizarea ponderilor modelului
+ in directia celei mai 
+\begin_inset Quotes pld
+\end_inset
+
+abrupte
+\begin_inset Quotes prd
+\end_inset
+
+ pante.
+ 
+\end_layout
+
+\begin_layout Standard
+Considerand 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Formula Neuron"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, putem dezvolta in:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{y}=\sigma(w_{1}x_{1}+w_{2}x_{2}+\ldots+w_{n}x_{n}b)\label{eq:Dezvoltare Formula Neuron}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pentru a actualiza ponderile, avem nevoie de gradientul functii de eroare,
+ definit prin:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla E=(\frac{\delta E}{\delta w_{1}},\frac{\delta E}{\delta w_{2}},\cdots,\frac{\delta E}{\delta w_{n}},\frac{\delta E}{\delta b})\label{eq:Gradient Functia de cost}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Intr-un final, devinim o rata de invatare 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ Avand toate valorile acestea, se poate efectual un pas de Gradient Descent:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+w_{k}^{*}=w_{k}-\alpha\frac{\delta E}{\delta w_{k}}\label{eq:Actualizare pondere}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+b^{*}=b-\alpha\frac{\delta E}{\delta b}\label{eq:Actualizare bias}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-Introducere
+Feedforward
+\end_layout
+
+\begin_layout Standard
+In Retele Neuronale, procesul de Feedforward este folosit pentru a transforma
+ datele de intrare in date de iesire ale retelei.
+ Pentru a putea defini mai bine acest concept, fie 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Retea Multi-Layer"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ cu functia de activare 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, ponderile 
+\begin_inset Formula $W^{(i)}$
+\end_inset
+
+pentru stratul i, valoarea iesirii unui neuron 
+\begin_inset Formula $h_{ij}$
+\end_inset
+
+ si predictia sistemului 
+\begin_inset Formula $\hat{y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "Retea Multi-Layer"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Illustrations/Multi-Layer network.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Retea Neuronala cu 2 straturi ascunse
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Aplicand 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Formula Neuron"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+pentru toate straturile, avem formula:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{y}=\sigma\ocircle W^{(3)}\ocircle\sigma\ocircle W^{(2)}\ocircle\sigma\ocircle W^{(1)}(x)\label{eq:Feedforward}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+cu 
+\begin_inset Formula $\ocircle$
+\end_inset
+
+ drept operatorul pentru compozitia de functii.
+\end_layout
+
+\begin_layout Subsection
+Backpropagation
+\end_layout
+
+\begin_layout Standard
+Metoda folosita in Retele Neuronale pentru a calcula gradientii functiei
+ de cost necesari metodei de optimizare Gradient Descent se numeste Backpropagat
+ion.
+ Aceasta are la baza folosirea Regulii Lantului pentru a calcula derivatele
+ partiale 
+\begin_inset Formula $\delta$
+\end_inset
+
+ ale unori functii compuse.
+ Pentru 
+\begin_inset Formula $A=f(x)$
+\end_inset
+
+ si 
+\begin_inset Formula $B=g\ocircle f(x)$
+\end_inset
+
+, Regula Lantului defineste:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\delta B}{\delta x}=\frac{\delta B}{\delta A}\frac{\delta A}{\delta x}\label{eq:Chain Rule}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Prin folosirea recursiva a acestei reguli, Backpropagation reuseste 
+\begin_inset Quotes pld
+\end_inset
+
+sa produca o expresie algebraica pentru gradientul unui scalar, cu respect
+ la fiecare nod din graful computational produs de acel scalar
+\begin_inset Quotes prd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-3"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Framework-uri
+\end_layout
+
+\begin_layout Section
+Retele Neuronale Convolutionale
+\end_layout
+
+\begin_layout Subsection
+Extractorul de caracteristici (backbone)
+\end_layout
+
+\begin_layout Subsection
+Tipuri de arhitecturi
+\end_layout
+
+\begin_layout Standard
+Autoencoder, FPN, Multi-Level, Deformable Convolutions
+\end_layout
+
+\begin_layout Subsection
+Metode de Augumentare
+\end_layout
+
+\begin_layout Section
+Hiperparametrizarea unei retele
+\end_layout
+
+\begin_layout Subsection
+Hiperparametrii uzuali
+\end_layout
+
+\begin_layout Subsection
+Batch Norm
+\end_layout
+
+\begin_layout Section
+Optimizatori Moderni
+\end_layout
+
+\begin_layout Subsection
+SGD
+\end_layout
+
+\begin_layout Subsection
+RMS-PROP
+\end_layout
+
+\begin_layout Subsection
+Momentum
+\end_layout
+
+\begin_layout Subsection
+ADAM
+\end_layout
+
+\begin_layout Subsection
+Rectified ADAM
+\end_layout
+
+\begin_layout Subsection
+Lookahead
+\end_layout
+
+\begin_layout Subsection
+RANGER
+\end_layout
+
+\begin_layout Section
+Problemele Retelelor Neuronale si Solutii
+\end_layout
+
+\begin_layout Subsection
+Variance and Bias
+\end_layout
+
+\begin_layout Subsection
+Explozia Gradientilor
+\end_layout
+
+\begin_layout Subsection
+Functii de Activare si Moartea lui ReLU
+\end_layout
+
+\begin_layout Subsection
+Regularizare
+\end_layout
+
+\begin_layout Chapter
+Specificatiile proiectului
+\end_layout
+
+\begin_layout Section
+Cerinte
+\end_layout
+
+\begin_layout Section
+Biblioteci folosite
+\end_layout
+
+\begin_layout Section
+Instalare si Utilizare
+\end_layout
+
+\begin_layout Chapter
+Detalii de Implementare
+\end_layout
+
+\begin_layout Chapter
+Experimente si Rezultate
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+literal "false"
+
+\end_inset
+
+Cunningham, Padraig & Cord, Matthieu & Delany, Sarah.
+ (2008).
+ Supervised Learning.
+ 10.1007/978-3-540-75171-7_2.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+Goodfellow, Bengio & Courville (2016, 6.5 Back-Propagation and Other Differentiat
+ion Algorithms, pp.
+ 200–220)
 \end_layout
 
 \end_body
