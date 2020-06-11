@@ -10,7 +10,8 @@ class Merger(torch.nn.Module):
     def __init__(self, cfg):
         super(Merger, self).__init__()
         self.cfg = cfg
-
+        self.dropblock = cfg.NETWORK.USE_DROPBLOCK
+        
         # Activation choice - default = 5 x leaky relu + softmax
         if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
             activation_A = torch.nn.ReLU()
@@ -20,6 +21,11 @@ class Merger(torch.nn.Module):
             activation_A = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
         elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
             activation_A = Mish()
+
+        if self.dropblock == True:
+            drop_prob = cfg.NETWORK.DROPBLOCK_VALUE_3D
+        else:
+            drop_prob = 0
 
         # Layer Definition
         self.layer1 = torch.nn.Sequential(
@@ -47,6 +53,7 @@ class Merger(torch.nn.Module):
             torch.nn.BatchNorm3d(1),
             activation_A
         )
+
 
     def forward(self, raw_features, coarse_volumes):
         n_views_rendering = coarse_volumes.size(1)

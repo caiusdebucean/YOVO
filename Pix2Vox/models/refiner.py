@@ -5,11 +5,18 @@
 import torch
 
 from echoAI.Activation.Torch.mish import Mish
+from dropblock import DropBlock3D
 
 class Refiner(torch.nn.Module):
     def __init__(self, cfg):
         super(Refiner, self).__init__()
         self.cfg = cfg
+        self.dropblock = cfg.NETWORK.USE_DROPBLOCK
+        #If use dropblock regularization, get drop value from cfg, else 0
+        if self.dropblock == True:
+            drop_prob = cfg.NETWORK.DROPBLOCK_VALUE_3D
+        else:
+            drop_prob = 0
 
         # Activation choice - default = 3 x leaky relu, 4 x relu + sigmoid
         if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
@@ -33,12 +40,14 @@ class Refiner(torch.nn.Module):
         # Layer Definition
         self.layer1 = torch.nn.Sequential(
             torch.nn.Conv3d(1, 32, kernel_size=4, padding=2),
+            #DropBlock3D(block_size=3, drop_prob=drop_prob),
             torch.nn.BatchNorm3d(32),
             activation_A,
             torch.nn.MaxPool3d(kernel_size=2)
         )
         self.layer2 = torch.nn.Sequential(
             torch.nn.Conv3d(32, 64, kernel_size=4, padding=2),
+            #DropBlock3D(block_size=3, drop_prob=drop_prob),
             torch.nn.BatchNorm3d(64),
             activation_A,
             torch.nn.MaxPool3d(kernel_size=2)
@@ -51,19 +60,28 @@ class Refiner(torch.nn.Module):
         )
         self.layer4 = torch.nn.Sequential(
             torch.nn.Linear(8192, 2048),
+            torch.nn.Dropout(p=0.1, inplace=False),
             activation_A
         )
+        self.layer4_5 = torch.nn.Sequential(
+            torch.nn.Linear(2048, 2048),
+            activation_A
+        )
+
         self.layer5 = torch.nn.Sequential(
             torch.nn.Linear(2048, 8192),
+            torch.nn.Dropout(p=0.1, inplace=False),
             activation_A
         )
         self.layer6 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(128, 64, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+            #DropBlock3D(block_size=3, drop_prob=drop_prob),
             torch.nn.BatchNorm3d(64),
             activation_A
         )
         self.layer7 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(64, 32, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+            #DropBlock3D(block_size=2, drop_prob=drop_prob),
             torch.nn.BatchNorm3d(32),
             activation_A
         )
@@ -83,6 +101,10 @@ class Refiner(torch.nn.Module):
         # print(volumes_4_l.size())        # torch.Size([batch_size, 128, 4, 4, 4])
         flatten_features = self.layer4(volumes_4_l.view(-1, 8192))
         # print(flatten_features.size())   # torch.Size([batch_size, 2048])
+
+
+        flatten_features = self.layer4_5(flatten_features)
+
         flatten_features = self.layer5(flatten_features)
         # print(flatten_features.size())   # torch.Size([batch_size, 8192])
         volumes_4_r = volumes_4_l + flatten_features.view(-1, 128, 4, 4, 4)

@@ -77,9 +77,11 @@ __C.NETWORK.LEAKY_VALUE                     = .2
 __C.NETWORK.TCONV_USE_BIAS                  = False
 __C.NETWORK.USE_REFINER                     = True
 __C.NETWORK.USE_MERGER                      = True
-__C.NETWORK.ALTERNATIVE_ACTIVATION_A          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
-__C.NETWORK.ALTERNATIVE_ACTIVATION_B          = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
-
+__C.NETWORK.ALTERNATIVE_ACTIVATION_A        = 'mish' # ['relu', 'elu', 'leaky relu', 'mish']
+__C.NETWORK.ALTERNATIVE_ACTIVATION_B        = 'elu' # ['relu', 'elu', 'leaky relu', 'mish']
+__C.NETWORK.USE_DROPBLOCK                   = True
+__C.NETWORK.DROPBLOCK_VALUE_2D              = 0.05 # what is the probability that a block is dropped
+__C.NETWORK.DROPBLOCK_VALUE_3D              = 0.05 # what is the probability that a block is dropped
 
 #
 # Training

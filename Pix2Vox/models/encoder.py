@@ -11,6 +11,7 @@ import torch.utils.model_zoo as model_zoo
 from echoAI.Activation.Torch.mish import Mish
 from collections import OrderedDict
 
+from dropblock import DropBlock2D
 
 model_paths = {
     'darknet19': 'https://s3.ap-northeast-2.amazonaws.com/deepbaksuvision/darknet19-deepBakSu-e1b3ec1e.pth'
@@ -31,20 +32,38 @@ class Encoder(torch.nn.Module):
         elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
             activation_A = Mish()
 
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'relu':
+            activation_B = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'elu':
+            activation_B = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'leaky relu':
+            activation_B = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'mish':
+            activation_B = Mish()
+
         self.architecture = cfg.NETWORK.ENCODER
         self.multi_level = cfg.NETWORK.MULTI_LEVEL_TRAIN
+        self.dropblock = cfg.NETWORK.USE_DROPBLOCK 
         # Layer Definition
+
+        #If use dropblock regularization, get drop value from cfg, else 0
+        if self.dropblock == True:
+            drop_prob = cfg.NETWORK.DROPBLOCK_VALUE_2D
+        else:
+            drop_prob = 0
 
         if self.multi_level == True:
             self.multi_conv6_1 = torch.nn.Sequential(
                 torch.nn.Conv2d(96, 192, kernel_size=3),
+                DropBlock2D(block_size=1, drop_prob=drop_prob),
                 torch.nn.BatchNorm2d(192),
-                activation_A
+                activation_B
             )
             self.multi_conv6_2 = torch.nn.Sequential(
                 torch.nn.Conv2d(192, 384, kernel_size=3),
+                DropBlock2D(block_size=2, drop_prob=drop_prob),
                 torch.nn.BatchNorm2d(384),
-                activation_A
+                activation_B
             )
             self.multi_conv6_3 = torch.nn.Sequential(
                 torch.nn.Conv2d(384, 256, kernel_size=3),
@@ -54,8 +73,9 @@ class Encoder(torch.nn.Module):
 
             self.multi_conv4_1 = torch.nn.Sequential(
                 torch.nn.Conv2d(128, 320, kernel_size=3),
+                DropBlock2D(block_size=1, drop_prob=drop_prob),
                 torch.nn.BatchNorm2d(320),
-                activation_A
+                activation_B
             )
             self.multi_conv4_2 = torch.nn.Sequential(
                 torch.nn.Conv2d(320, 256, kernel_size=3),
@@ -101,13 +121,15 @@ class Encoder(torch.nn.Module):
             self.mobilenet = torch.nn.Sequential(*list(mobilenet_v2.features.children()))[:14]
             self.layer1 = torch.nn.Sequential(
                 torch.nn.Conv2d(96, 128, kernel_size=3),
+                DropBlock2D(block_size=1, drop_prob=drop_prob),
                 torch.nn.BatchNorm2d(128),
-                activation_A
+                activation_B
             )
             self.layer2 = torch.nn.Sequential(
                 torch.nn.Conv2d(128, 128, kernel_size=3),
+                DropBlock2D(block_size=2, drop_prob=drop_prob),
                 torch.nn.BatchNorm2d(128),
-                activation_A
+                activation_B
             )
             self.layer3 = torch.nn.Sequential(
                 torch.nn.Conv2d(128, 256, kernel_size=3),
@@ -156,9 +178,13 @@ class Encoder(torch.nn.Module):
                     new_features_4 = self.multi_conv4_1(features)
                     new_features_4 = self.multi_conv4_2(new_features_4)
                     image_features.append(new_features_4)
+
                 features = self.layer2(features)
                 features = self.layer3(features)
-                image_features.append(features)
+                image_features.append(features) #[32, 256, 8 ,8]
+
         image_features = torch.stack(image_features)
         image_features = image_features.permute(1, 0, 2, 3, 4).contiguous()
+        # print(image_features.size())  # torch.Size([batch_size, n_views, 256, 8, 8])
+        # exit()
         return image_features

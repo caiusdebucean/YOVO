@@ -4,13 +4,13 @@
 
 import torch
 from echoAI.Activation.Torch.mish import Mish
-
+from dropblock import DropBlock3D
 
 class Decoder(torch.nn.Module):
     def __init__(self, cfg):
         super(Decoder, self).__init__()
         self.cfg = cfg
-
+        self.dropblock = cfg.NETWORK.USE_DROPBLOCK
         # Activation choice - default = 4 x relu, sigmoid
         if cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'relu':
             activation_A = torch.nn.ReLU()
@@ -21,6 +21,20 @@ class Decoder(torch.nn.Module):
         elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_A == 'mish':
             activation_A = Mish()
 
+        if cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'relu':
+            activation_B = torch.nn.ReLU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'elu':
+            activation_B = torch.nn.ELU()
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'leaky relu':
+            activation_B = torch.nn.LeakyReLU(cfg.NETWORK.LEAKY_VALUE)
+        elif cfg.NETWORK.ALTERNATIVE_ACTIVATION_B == 'mish':
+            activation_B = Mish()
+         
+        #If use dropblock regularization, get drop value from cfg, else 0
+        if self.dropblock == True:
+            drop_prob = cfg.NETWORK.DROPBLOCK_VALUE_3D
+        else:
+            drop_prob = 0
         # Layer Definition
         self.layer1 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(2048, 512, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
@@ -39,6 +53,7 @@ class Decoder(torch.nn.Module):
         )
         self.layer4 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(32, 8, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+            DropBlock3D(block_size=1, drop_prob=drop_prob),
             torch.nn.BatchNorm3d(8),
             activation_A
         )
