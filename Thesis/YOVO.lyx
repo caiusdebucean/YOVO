@@ -7,7 +7,7 @@
 \textclass book
 \begin_preamble
 \usepackage{hyperref}
-\usepackage[linesnumbered,ruled,vlined,algochapter]{algorithm2e}
+\usepackage[linesnumbered,ruled,vlined,algochapter]{}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -214,9 +214,7 @@ Aceasta lucrare abordeaza reconstructia 3D a obietelor print intermediul
  retelelor neuronale, folosind doar una sau mai multe imagini 2D.
  Deoarece natura acestei probleme face parte din domeniul Viziunii Artificiale,
  sunt folosite preponderent Retele Neuronale Convolutionale.
- De asemenea, exista 3 mari tipuri de volume ce pot fi reconstruite: ansamblu
- de fasii, ansamblu de puncte si ansamblu de voxeli.
- Solutia actuala se foloseste de ultimul tip de volum prezentat.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -224,25 +222,24 @@ Arhitectura propusa este compusa din 3 module:
 \end_layout
 
 \begin_layout Itemize
-Auto-codificator: format dintr-un codificator ce extrage diferite trasaturi
- ale imaginii primite si un decodificator ce interpreteaza trasaturile extrase
- in volume voxelizate
+Autoencoder: format dintr-un Encoder ce extrage diferite trasaturi ale imaginii
+ primite si un Decoder ce interpreteaza trasaturile extrase in volume voxelizate
 \end_layout
 
 \begin_layout Itemize
-Unificator: realizeaza contopirea multiplelor volume deduse intr-un volum
- mai robust
+Merger: realizeaza contopirea multiplelor volume deduse intr-un volum mai
+ robust
 \end_layout
 
 \begin_layout Itemize
-Rafinor: realizeaza cizelarea volumului unificat
+Refiner: realizeaza cizelarea volumului unificat
 \end_layout
 
 \begin_layout Standard
 Spre deosebire de solutii din aceeasi familie precum Pix2Vox , ce aloca
- un Auto-Codificator complet convolutional clasic, 3D-R2N2 , ce introduce
- aspecte recurente pentru tratarea cazurilor cu multiple poze, prin blocuri
- LSTM 3D Convolutionale si GRU 3D Convolutionale, solutia prezentata introduce,
+ un Autoencoder complet convolutional clasic, 3D-R2N2 , ce introduce aspecte
+ recurente pentru tratarea cazurilor cu multiple poze, prin blocuri LSTM
+ 3D Convolutionale si GRU 3D Convolutionale, solutia prezentata introduce,
  din punct de vedere arhitectural, nivele aditionale de convolutie al hartilor
  de caracteristici la ultimele 3 trepte ale Codificatorului, rezultand in
  3 volume voxelizate ce captureaza diferite reconstructii are obiectului
@@ -258,12 +255,12 @@ ci MobileNet V2, functii de activare Mish, regularizare DropBlock si optimizator
 Cu ajutorul bibliotecii kaolin, volumele pot fi vizualizate intr-un mediu
  3D interactiv, in care se poate analiza din orice unghi volumul voxelizat
  reconstruit.
- De asemenea, este posibila reprezentarea acestuia sub forma unui ansamblu
+ De asemenea, este posibila vizualizarea acestuia sub forma unui ansamblu
  de plase, pentru o reprezentare mai neteda.
 \end_layout
 
 \begin_layout Chapter
-Fundamente teoretice
+Fundamente teoretice (TODO MBV2)
 \end_layout
 
 \begin_layout Section
@@ -347,16 +344,15 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
 name "IA_domenii"
 
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
 Definirea domeniilor Inteligentei Artificiale
 \end_layout
 
@@ -400,7 +396,7 @@ Invatarea supravegheata
 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-2"
+key "SupervisedLearning"
 literal "false"
 
 \end_inset
@@ -464,7 +460,7 @@ Aceasta forma de invatare este o idee relativ recent adoptata in domeniul
  dispozitivele cu o solutie imbunatatita.
  Aceasta tehnica faciliteaza securitatea datelor intrucat nu exista o sursa
  centralizata a acestora.
- Structura unui asemenea sistem poate fi observata in 
+ Structura unui asemenea sistem poate fi observata in figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "Federated_Learning"
@@ -486,13 +482,6 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset CommandInset label
-LatexCommand label
-name "Federated_Learning"
-
-\end_inset
-
-
 \begin_inset Graphics
 	filename Illustrations/Federated_Learning.png
 	lyxscale 40
@@ -504,6 +493,12 @@ name "Federated_Learning"
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "Federated_Learning"
+
+\end_inset
+
 Sistem Invatarea colaborativa
 \end_layout
 
@@ -526,15 +521,16 @@ Rețele Neuronale
 \end_layout
 
 \begin_layout Standard
-Retelele Neuronale reprezinta tehnica ce sta la baza Invatarii profunde,
+Retelele Neuronale reprezinta tehnica ce sta la baza Invatarii Profunde,
  fiind definita de structura sub forma de graf (noduri si muchii) ce poate
  fi asociata cu sinapsele si neuronii creierului uman.
- Din aceste motive, nodurile sunt referite ca neuroni, iar muchiile ca ponderi.
+ Din aceste motive, nodurile sunt referite ca neuroni, iar muchiile ca ponderi
+ sau parametrii.
  Aspectul adanc al retelelor neuronale este denotat de prezenta multiplelor
  straturi ascunse.
  Este de mentionat faptul ca exista o pondere intre fiecare neuron din straturi
  diferite alaturate.
- O reprezentare simpla poate fi observata in 
+ O reprezentare simpla poate fi observata in figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "Neural_Network"
@@ -556,13 +552,6 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset CommandInset label
-LatexCommand label
-name "Neural_Network"
-
-\end_inset
-
-
 \begin_inset Graphics
 	filename Illustrations/NN_ex.png
 	lyxscale 40
@@ -574,6 +563,12 @@ name "Neural_Network"
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "Neural_Network"
+
+\end_inset
+
 Exemplu Retea Neuronala
 \end_layout
 
@@ -699,6 +694,13 @@ Scopul retelei este de a minimiza functia de cost pentru a produce rezultate
 
 \begin_layout Subsection
 Gradient Descent
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Gradient-Descent"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -788,6 +790,22 @@ b^{*}=b-\alpha\frac{\delta E}{\delta b}\label{eq:Actualizare bias}
 
 \end_layout
 
+\begin_layout Standard
+unde 
+\begin_inset Formula $w_{k}^{*}$
+\end_inset
+
+ si 
+\begin_inset Formula $b^{*}$
+\end_inset
+
+ sunt noile valori pentru ponderea 
+\begin_inset Formula $k$
+\end_inset
+
+ si bias.
+\end_layout
+
 \begin_layout Subsection
 Feedforward
 \end_layout
@@ -795,17 +813,17 @@ Feedforward
 \begin_layout Standard
 In Retele Neuronale, procesul de Feedforward este folosit pentru a transforma
  datele de intrare in date de iesire ale retelei.
- Pentru a putea defini mai bine acest concept, fie 
+ Pentru a putea defini mai bine acest concept, fie reteaua din figura 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "Retea Multi-Layer"
+reference "fig:Retea Multi-Layer"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- cu functia de activare 
+ cu functii de activare 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -813,11 +831,7 @@ noprefix "false"
 \begin_inset Formula $W^{(i)}$
 \end_inset
 
-pentru stratul i, valoarea iesirii unui neuron 
-\begin_inset Formula $h_{ij}$
-\end_inset
-
- si predictia sistemului 
+pentru stratul i si predictia sistemului 
 \begin_inset Formula $\hat{y}$
 \end_inset
 
@@ -833,13 +847,6 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset CommandInset label
-LatexCommand label
-name "Retea Multi-Layer"
-
-\end_inset
-
-
 \begin_inset Graphics
 	filename Illustrations/Multi-Layer network.png
 	lyxscale 40
@@ -854,7 +861,13 @@ name "Retea Multi-Layer"
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Retea Neuronala cu 2 straturi ascunse
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Retea Multi-Layer"
+
+\end_inset
+
+Retea Neuronala cu multiple straturi ascunse
 \end_layout
 
 \end_inset
@@ -882,7 +895,17 @@ noprefix "false"
 
 \end_inset
 
-pentru toate straturile, avem formula:
+pentru toate straturile din 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Retea Multi-Layer"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, avem formula:
 \end_layout
 
 \begin_layout Standard
@@ -910,8 +933,7 @@ Backpropagation
 
 \begin_layout Standard
 Metoda folosita in Retele Neuronale pentru a calcula gradientii functiei
- de cost necesari metodei de optimizare Gradient Descent se numeste Backpropagat
-ion.
+ de cost necesari metodelor de optimizare se numeste Backpropagation.
  Aceasta are la baza folosirea Regulii Lantului pentru a calcula derivatele
  partiale 
 \begin_inset Formula $\delta$
@@ -953,7 +975,7 @@ sa produca o expresie algebraica pentru gradientul unui scalar, cu respect
 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-3"
+key "Backpropagation"
 literal "false"
 
 \end_inset
@@ -965,100 +987,3484 @@ literal "false"
 Framework-uri
 \end_layout
 
+\begin_layout Standard
+Un framework pentru Invatarea Profunda este o biblioteca ce simplifica procesul
+ de creare al unui model prin folosirea unor sintaxe mai inteligibile.
+ Acestea sunt create pentru a interpreta si optimiza interactiunea dintre
+ utilizator si dispozitivele de calcul precum Placi Video sau Procesoare.
+ De exemplu, un framework va integra transformarile si operatiile cu matrici,
+ va face posibila paralelizarea procesului computational sau va usura vizualizar
+ea si inregistrarea de parametrii.
+ Doua dintre cele mai populare frameworkuri sunt:
+\end_layout
+
+\begin_layout Standard
+1.
+ Tensorflow
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Tensorflow"
+literal "false"
+
+\end_inset
+
+: ofera instrumente utile precum Tensorboard pentru vizualizarea clara a
+ pipeline-ului unui model, permite RT-serving, un proces de optimizare sami-auto
+mata al modelelor prin tehnici precum prunizare, cuantizare, impartasire
+ de ponderi.
+ Din aceste motive, Tensorflow aduce avantaje in creearea de modele pentru
+ productie, dar are dezavantajul de a prezenta o sintaxa mai dificilia si
+ complexa.
+\end_layout
+
+\begin_layout Standard
+2.
+ Pytorch
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Pytorch"
+literal "false"
+
+\end_inset
+
+: bazat pe biblioteca Torch, ofera claritate si usurinta in folosire, avand
+ tendinte 
+\begin_inset Quotes pld
+\end_inset
+
+Pythonice".
+ De asemenea, este un framework ce simplifica procesul depanarii de cod.
+ Din aceste motive, comunitatea academica prefera PyTorch tinde inspre folosirea
+ acestui framework, intrucat experimentele sunt usor de realizat, avand
+ avantajul unei sintaxe usoara.
+\end_layout
+
 \begin_layout Section
 Retele Neuronale Convolutionale
 \end_layout
 
-\begin_layout Subsection
-Extractorul de caracteristici (backbone)
-\end_layout
+\begin_layout Standard
+\begin_inset Quotes pld
+\end_inset
 
-\begin_layout Subsection
-Tipuri de arhitecturi
+Retelele Neuronale Convolutionale sunt un tip de invatare profunda pentru
+ a procesa date ce au structura in forma de grila, precum imaginile, ce
+ este inspirata de organizarea cortexului vizual si este proiectata sa invete
+ in mod automat si adaptabil ierarhii spatiale de caracteristici, de la
+ tipare de nivel mic la cele de nivel mai mare.
+ Retelele Neuronale Convolutionale sunt un crez matematic ce este compus
+ de trei tipuri de straturi (sau blocuri): convolutie, pooling si strat
+ dens."
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ReteleConvDef"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Autoencoder, FPN, Multi-Level, Deformable Convolutions
+Convolutia este o operatie matematica, care, in domeniul Viziunii Artificiale
+ si a Invatarii profunde este folosita pentru a aplica filtre asupra imaginilor
+ si de a antrena aceste filtre.
+ In urma aplicarii unui set de filtre, rezultatul este un ansamblu de harti
+ de caracteristici(canale).
+ Acesta ansamblu se mai numeste strat.
+ Din punct de vedere matematic, aceste sunt reprezentate in forma de tensori,
+ ce reprezinta o forma generalizata a unei matrici.
+ Tensorii pot fi atat 0-dimensionali (un singur numar), cat si pluridimensionali.
 \end_layout
 
 \begin_layout Subsection
-Metode de Augumentare
+Convolutii Multidimensionale si Termniologii
+\end_layout
+
+\begin_layout Standard
+Un strat contine o multitudine de canale.
+ Kernel-ul este o matrice de ponderi ce se inmulteste cu portiuni ale stratului
+ de intrare, valorile rezultate fiind insumate intr-o singura valoare finala
+ reprezentativa pentru portiunea respectiva.
+ Un filtru de convolutie reprezinta un ansamblu de kernel-uri stivuite.
+ Pasul unei convolutii reprezinta din cate in cate puncte se aplica filtrele.
+ Folosirea unui pas mai mare de 1 duce la reducerea exponentiala a dimensionalit
+atii.
+ O reprezentare a diferitelor tipuri de kerneluri este prezentata in figura
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Kerneluri Multidimensionale"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/kernels.png
+	lyxscale 70
+	scale 85
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Kerneluri Multidimensionale"
+
+\end_inset
+
+Kernel-uri de convolutie
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pentru aplicarea unei convolutii 2D, un kernel este aplicat fiecarui canal,
+ in adancimea stratului, iar rezultatele sunt adunate si agregate intr-un
+ nou canal.
+ Numarul de kerneluri din filtru reprezinta numarul de canale pe care il
+ va rezulta convolutia.
+ Convolutiile 2D pot deplasa filtrele doar pe inaltimea si latimea stratului.
+ Figura
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convolutie normala"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ prezinta o convolutie simpla, cu un kernel de 2x2 si 6 canale de iesire.
+ Convolutiile 3D contin kernel-uri 3D, ce se aplica independent in adancimea
+ stratului de intrare.
+ Astfel, convolutiile 3D deplasa filtrele atat pe inaltimea si latimea stratului
+, cat si pe adancimea acestuia.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Convolutie Normala.png
+	lyxscale 50
+	scale 55
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Convolutie normala"
+
+\end_inset
+
+Convolutie 2D cu 6 canale de iesire
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+Operatia opusa convolutiei, din punct de vedere al dimensionalitatii, este
+ convolutia transpusa.
+ Daca o convolutie clasica are ca rezultat un strat cu dimensiuni egale
+ sau mai mici decat cele ale stratului de intrare, convolutia transpusa
+ are scopul de a mari stratul de intrare, prin adaugarea de padding sau
+ prin dilatarea stratului de intrare.
+ 
+\end_layout
+
+\begin_layout Standard
+In aceasta lucrare ne vom referi la reducerea sau cresterea dimensionalitatii
+ drept downsampling, respectiv upsampling.
+ 
+\end_layout
+
+\begin_layout Standard
+De asemenea, operatia de convolutie se poate aplica cu pas diferit, pentru
+ a reduce dimensionalitatea datelor.
+ Pentru a mari dimensionalitatea, se folosesc convolutii transpuse.
+\end_layout
+
+\begin_layout Subsection
+Convolutii separabile
+\end_layout
+
+\begin_layout Standard
+Un alt concept folosit in diverse arhitecturi este eficientizarea operatiei
+ de convolutie prin convolutii separabile
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Separable_Conv"
+literal "false"
+
+\end_inset
+
+.
+ Acestea impart procesul unei convolutii intr-o convolutie depthwise, ce
+ doar reduce dimensiunile stratului de intrare, si alta pointwise, ce prelungest
+e numarul de canale.
+ Rezultatul este un numar substantial redus de operatii.
+ Un exemplu este prezentat in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convolutie separabila"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ drept alternativa la convolutia prezenta in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convolutie normala"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Convolutie_Separabila.png
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Convolutie separabila"
+
+\end_inset
+
+Convolutie separabila
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In cazul din figura
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convolutie normala"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, pe stratul de intrare se aplica filtre de 
+\begin_inset Formula $2\vartimes2\vartimes3$
+\end_inset
+
+, de 
+\begin_inset Formula $4\vartimes4$
+\end_inset
+
+ ori pentru a avea un singur strat de iesire.
+ Se aplica de 6 ori pasii precedenti, dimensiunile rezultatului final avand
+ 
+\begin_inset Formula $4\vartimes4\vartimes3$
+\end_inset
+
+.
+ In total avem 
+\begin_inset Formula $2*2*3*4*4*6=1152$
+\end_inset
+
+ de inmultiri.
+ Aplicand convolutia separabila prezentata la 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convolutie separabila"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, pe stratul de intrare se folosesc 3 filtre de 
+\begin_inset Formula $2\vartimes2\vartimes1$
+\end_inset
+
+, de 
+\begin_inset Formula $4\vartimes4$
+\end_inset
+
+ ori.
+ Acest pas se numeste convolutie depthwise si efectueaza doar o singura
+ data.
+ Numarul de operatii pentru aceasta tehnica este 
+\begin_inset Formula $3*2*2*1*4*4=192$
+\end_inset
+
+ de inmultiri.
+ Rezultatului intermediar dupa convolutia depthwise ii este aplicata o convoluti
+e pointwise, cu un filtru de 
+\begin_inset Formula $1\vartimes1\vartimes3$
+\end_inset
+
+, de 
+\begin_inset Formula $4\vartimes4$
+\end_inset
+
+ ori.
+ Acest pas este repetat de 6 ori.
+ In total, convolutia pointwise prezinta 
+\begin_inset Formula $1*1*3*4*4*6=288$
+\end_inset
+
+ de inmultiri.
+ Astfel, convolutia separabila are in total 
+\begin_inset Formula $192+288=480$
+\end_inset
+
+ de inmultiri fata de cele 
+\begin_inset Formula $1152$
+\end_inset
+
+ ale unei convolutii clasice.
+ Aceasta diferenta devine mai semnificativa la date de intrare mari.
+ Dezavantajul convolutilor separabile este reducerea numarului de ponderi
+ din convolutie, posibil limitand capacitatea de invatare fata de o convolutie
+ normala.
+ Cu toate acestea, eficienta rezultata din convolutiile separabile compenseaza
+ pentru potentialele aspecte negative.
+\end_layout
+
+\begin_layout Subsection
+Blocuri Reziduale
+\end_layout
+
+\begin_layout Standard
+Un strat Rezidual clasic, prezentat in 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Residual 1"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Residual 2"
+literal "false"
+
+\end_inset
+
+, este format dintr-o convolutie 2D cu kernel 1x1 ce reduce numarul de filtre,
+ o a doua convolutie 2D cu kernel 3x3 ce nu reduce dimensionalitatea, urmat
+ de a 3-a convolutie 2D cu kernel 1x1 ce readuce numarul de filtre la cel
+ initial, elementele iesirii ultimei convolutii fiind adunate cu elementele
+ intrarii in din prima convolutie.
+ Aceasta conexiune dintre Input si Output se numeste skip connection, si
+ se poate aplica doar cand dimensiunile acestora sunt identice.
+ Toate convolutile au ReLU ca functie de activare.
+ Blocul rezidual este reprezentat in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bloc-Rezidual"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Aceste blocuri au fost create pentru a combate problema gradientilor cu
+ valori foarte mici.
+ Deoarece acest block nu adauga un nou nivel de abstractie, ci doar rafineaza
+ informatia, folosirea a mai multor blocuri reziduale pot spori puterea
+ computationala, astfel modelul reusind sa invete mai bine caracteristicile.
+ Aceast concept poate fi vazut ca si cum iesirea din aceasta structura poate
+ fi influentata doar de caracteristicile intermediare, dar nu poate fi anulata.
+ Denumirea 
+\begin_inset Quotes pld
+\end_inset
+
+reziduala
+\begin_inset Quotes prd
+\end_inset
+
+ provine din faptul iesirea din acest bloc este egala cu intrarea plus informati
+a reziduala captata.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Residual.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bloc-Rezidual"
+
+\end_inset
+
+Bloc Rezidual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Blocuri Reziduale Inversate cu Linear Bottleneck
+\end_layout
+
+\begin_layout Standard
+Introduse in 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Inverted Residuals and Linear Bottlenecks"
+literal "false"
+
+\end_inset
+
+, acestea au pornit de la premiza ca hartile de caracteristici pot fi codificate
+ in straturi cu dimensiune redusa (cu mai putine canale) si ca activarile
+ non-liniare (e.g.
+ ReLU) provoaca pierderi de informatie, chiar daca au abilitatea de reprezentare
+ a complexitatii datelor.
+ In aceasta structura sunt folosite activari liniare 
+\begin_inset Formula $f(x)=x$
+\end_inset
+
+ (functia identitate) si activari non-liniare ReLU6, ce sunt defapt activari
+ ReLU cu limita superioara 6.
+ 
+\end_layout
+
+\begin_layout Standard
+Acest bloc primeste ca un input un tensor cu putine canale si aplica in
+ primul rand o convolutie pointwise ce creste numarul de canale pentru a
+ se pregati urmatoarelor operatii non-liniare, ce necesita aceasta crestere
+ in dimensiunea tensorului.
+ Dupa o activare ReLU6 este aplicata a doua convolutie: una depthwise cu
+ kernel de 
+\begin_inset Formula $3\vartimes3$
+\end_inset
+
+, urmata de o alta activare ReLU6, cu rolul de a filtra dimensiunile marite
+ ale tensorului.
+ A treia convolutie este una pointwise ce proiecteaza numarul mare de canale
+ intr-o dimensiune redusa, egala cu cea a datelor de intrare.
+ Intrucat dupa a treia convolutie am revenit la spatiul redus din punct
+ de vedere dimensional, aplicarea unei activari non-liniare ar cauza prea
+ multa pierdere de informatii.
+ In consecinta, se foloseste activarea liniara 
+\begin_inset Formula $f(x)=x$
+\end_inset
+
+.
+ Intr-un final, daca nu se doreste reducerea dimensiunilor principale ale
+ hartilor de caracteristici (lungimea si latimea), este efectuat un skip
+ connection dintre input si output.
+ In caz contrar, nu este aplicata o asemenea conexiune.
+ Structura acestui bloc este prezentata in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bloc Rezidual Inversat cu Linear Bottleneck"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Inverted Residual.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bloc Rezidual Inversat cu Linear Bottleneck"
+
+\end_inset
+
+Block Rezidual Inversat cu Linear Bottleneck
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Alte tipuri de straturi des folosite
+\end_layout
+
+\begin_layout Standard
+Unul dintre cel mai comun strat folosit pentru reducerea dimensionalitatii
+ este stratul de pooling.
+ Acesta aplica la randul lui un filtru de kernel-uri pe datele de intrare.
+ In functie de tipul stratului de pooling, aceste kerneluri pot comasa datele
+ de intrare dupa valorile medii, sau dupa valoriile maximale.
+\end_layout
+
+\begin_layout Standard
+O caracteristica ce poate fi asociata unei multimi de straturi este padding-ul,
+ ce extinde dimensiunile straturilor.
+ Aceasta extindere se poate realiza cu valori nule sau cu media valorilor
+ vecine.
+ Aplicarea padding-ului poate evita reducerea dimensionalitatii la operatii
+ cu kernel.
+\end_layout
+
+\begin_layout Standard
+Un alt strat des folosit in Retelele Neuronale Convolutionale este cel de
+ Batch Normalization, pentru cresterea stabilitatii.
+ Acesta este aplicat dupa functia de activare si functioneaza prin normalizarea
+ valorilor de intrare 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Valorile normalizate 
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+ sunt obtinute prin scaderea mediei lotului respectiv si impartirea la deviatia
+ standard a lotului.
+ Normalizarea are efectul de a preveni situatile in care o activare produce
+ valori foarte mari sau foarte mici.
+ Pentru a evita potentialele situatii destabilizante ale acestei normalizari,
+ se adauga doi parametrii antrenabili: 
+\begin_inset Formula $\gamma-(gamma)$
+\end_inset
+
+ pentru deviatia standard si 
+\begin_inset Formula $\beta-(beta)$
+\end_inset
+
+ pentru medie.
+ Formula simplificata a stratului de Batch Normalization este:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y=\gamma*\hat{x}+\beta\label{eq:Batch Normalization}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Astfel, in cazul in care un optimizator trebuie sa denormalizeze valorile,
+ se vor modifica doar acesti parametri.
+ De asemenea, folosirea acestui strat anuleaza valorile de bias din stratul
+ respectiv, acestea fiind echivalente cu 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Un alt tip de straturi folosite sunt cele de regularizare.
+ Acestea sunt definite de metoda de regularizare aleasa, si au rolul de
+ a evita cazurile in care o retea memoreaza setul de date si nu poate generaliza
+ pe date noi.
+\end_layout
+
+\begin_layout Subsection
+Backbone
+\end_layout
+
+\begin_layout Standard
+Backbone-ul are rolul de a extrage caracteristicile dintr-o imagine si este
+ structurat prin suprapunerea de straturi de convolutie, pooling si alte
+ operatii.
+ Acesta este deobicei folosit pentru transferul de cunostiinte, intrucat
+ un backbone preantrenat sa detecteze caracteristici generale poate imbunatati
+ considerabil viteza de invatare a unei retele.
+ Printre cele mai populare arhitecturi se numara AlexNet, VGG si ResNet.
+\end_layout
+
+\begin_layout Subsection
+Arhitecturi folosite in Retele Neuronale Convolutionale
+\end_layout
+
+\begin_layout Standard
+Primele arhitecturi folosite in domeniu aveau structura secventiala.
+ Aparitia solutiilor moderne a adus o multitudine de structuri arhitecturale
+ ce reusesc sa extraga informatia captata in imagini si sa mentina caracteristic
+i atat mai generale, cat si mai concrete.
+ 
+\end_layout
+
+\begin_layout Standard
+Una dintre aceste structuri este Autoencoder-ul
+\begin_inset CommandInset citation
+LatexCommand citep
+key "AutoEncoder"
+literal "false"
+
+\end_inset
+
+, format dintr-un Encoder, ce reduce dimensionalitatea input-ului si are
+ rolul de a codifica o reprezentare a acestuia.
+ A doua parte a acestei structuri este un Decoder, ce creeaza o reproducere
+ cat mai fidela a input-ului bazata pe rezultatul Encoder-ului.
+ Astfel, caracteristicile extrase isi pastreaza aceeasi dimensionalitate
+ ca si imaginea originala.
+ O variatiune a acestuia este U-Net
+\begin_inset CommandInset citation
+LatexCommand citep
+key "UNet"
+literal "false"
+
+\end_inset
+
+, ce adauga conexiuni 
+\begin_inset Quotes pld
+\end_inset
+
+skip
+\begin_inset Quotes prd
+\end_inset
+
+ intre nivelele Encoder-ului si al Decoder-ului, pentru a pastra caracteristici
+ pierdute in procesul de reducere.
+\end_layout
+
+\begin_layout Standard
+O alta arhitectura este Feature Pyramid Network
+\begin_inset CommandInset citation
+LatexCommand citep
+key "FPN"
+literal "false"
+
+\end_inset
+
+, ce prezinta 2 structuri piramidale paralele ce extrag si transmit caracteristi
+ci.
+ Un aspect important al acestei structuri sunt transmiterea caracteristicilor
+ prin conexiuni 
+\begin_inset Quotes pld
+\end_inset
+
+skip
+\begin_inset Quotes prd
+\end_inset
+
+ intre nivele paralele ale piramidelor, cat si predictiile multi-level ce
+ permit procesarea caracteristicilor la diferite nivele de complexitate.
+\end_layout
+
+\begin_layout Subsection
+Metode de Augmentare
+\end_layout
+
+\begin_layout Standard
+Pentru ca o retea neuronala sa aibe o performanta semnificativa este nevoie
+ de un set de date cat mai mare si divers, astfel permitand modelului produs
+ sa generalizeze pe date noi.
+ Cu toate acestea, nu toate seturile de date prezinta varietate, permitand
+ utilizatorului sa aplice metode de augmentare pentru a spori diversitatea.
+ Printre tehnicile de augmentare se numara:
+\end_layout
+
+\begin_layout Enumerate
+Decuparea - se elimina mai multe randuri de pixeli.
+ Decuparea poate fi centrata, laterala sau aletorie.
+\end_layout
+
+\begin_layout Enumerate
+Redimensionarea - modificarea dimensiunilor imaginii afectand marimea obiectelor
+ prezente.
+ Aceasta augmentare poate produce pierdere de informatii intrucat se produc
+ pierderi la comasarea pixelilor.
+\end_layout
+
+\begin_layout Enumerate
+Variatia fundalului - pentru seturile de date cu fundalul monocrom si usor
+ de izolat, se pot folosi game diferite de culori.
+ Aceasta metoda de augmentare este folosita si pentru datele de intrare
+ compozite, ce se formeaza in timpul executiei programului.
+\end_layout
+
+\begin_layout Enumerate
+Bruiaj cromatic - modificarea luminozitatii, contrastului si saturatiei
+ unei imagini
+\end_layout
+
+\begin_layout Enumerate
+Inducerea de zgomot in imagine - este variatiunea aleatorie a culorii pixelilor
+ unei imagini.
+ Acest zgomot poate varia in functie de functia densitatii de probabiltate.
+\end_layout
+
+\begin_layout Enumerate
+Normalizare - o imagine contine informatii ale pixelilor pe cele 3 canale
+ RGB, cu valori intre 0-255.
+ Normalizarea aduce acele valori intr-un interval potrivit retelei in cauza.
+ In domeniul Retelelor Neuronale, normalizarea si standardizarea denota
+ acelasi proces, termenii fiind folositi interschimbabil.
+\end_layout
+
+\begin_layout Enumerate
+Rotatie - rotirea unei imagini cu un numar de grade variabil.
+\end_layout
+
+\begin_layout Enumerate
+Flip - imaginea este intoarsa 
+\begin_inset Formula $180$
+\end_inset
+
+ de grade in jurul axei orizontale sau verticale.
+\end_layout
+
+\begin_layout Enumerate
+Permutarea canalelor de culoare - se interschimba valorile canalelor de
+ culoare RGB (rosu-verde-albastru)
 \end_layout
 
 \begin_layout Section
-Hiperparametrizarea unei retele
+Aspectele unei retele
+\end_layout
+
+\begin_layout Standard
+Pentru a produce un model capabil de performante satisfacatoare, trebuie
+ definit procesul de antrenare, cel de validare in timpul antrenarii, cat
+ si procesul de testare si evaluare al performantei.
 \end_layout
 
 \begin_layout Subsection
-Hiperparametrii uzuali
+Hiperparametrii
+\end_layout
+
+\begin_layout Standard
+In aplicatiile de Invatare Profunda, exista parametrii simpli, ce contin
+ informatia invatata de retea.
+ Acesti parametrii pot fi antrenabili si sunt reprezentati de ponderi, bias,
+ gamma si beta (Batch Normalization), etc.
+ 
+\end_layout
+
+\begin_layout Standard
+De asemenea, exista si hiperparametrii, ce definesc procesul de antrenare
+ si sunt setati inaintea inceperii acestuia.
+ Printre cei mai consacrati hiperparametrii se numara:
+\end_layout
+
+\begin_layout Itemize
+Rata de invatare - aplicata in tehnica de optimizare aleasa.
+\end_layout
+
+\begin_layout Itemize
+Functiile de Activare - guverneaza cum sunt procesate sau filtrate ponderile.
+\end_layout
+
+\begin_layout Itemize
+Parametrii Optimizatorului - initializeaza si seteaza anumite limite in
+ procesul de optimizare.
+ Un optimizator are scopul de a micsora functia de cost.
+\end_layout
+
+\begin_layout Itemize
+Marimea lotului - Deoarece este ineficient si costisitor sa parcurgem intreg
+ setul de date ca sa efectuam un pas de optimizare, acesta este divizat
+ in loturi, asigurand o oarecare invatare a cazurilor neobisnuite care altfel
+ nu ar fi avut niciun impact comparativ cu restul datelor.
+\end_layout
+
+\begin_layout Itemize
+Numarul de epoci - O parcurgere a intregului set de date este definit ca
+ o epoca.
+ Retelele Neuronale necesita multiple parcurgeri pentru a deveni eficiente.
+\end_layout
+
+\begin_layout Itemize
+Parametrii arhitecturali - Numarul de blocuri structurale folosite in arhitectur
+a sau numarul de straturi ascunse
+\end_layout
+
+\begin_layout Standard
+Procesul de alegere a valorilor optime se numeste Reglarea Hiperparametrilor.
+ In mod normal acestia sunt alesi arbitrar, sau determinati empiric.
+ Cu toate acestea, in ultimii ani au aparut metode de automatizare a acestui
+ procesului de Reglare Hiperparametrica, precum AutoML
+\begin_inset CommandInset citation
+LatexCommand citep
+key "AutoML"
+literal "false"
+
+\end_inset
+
+.
+ Aceste metode de automatizare reprezinta o solutie accesibila pentru antrenarea
+ si lansarea in productie a aplicatilor cu retele neuronale, dar prezinta
+ limitari in domeniul academic, ce are scopul de a depasi solutiile State-of-the
+-Art.
 \end_layout
 
 \begin_layout Subsection
-Batch Norm
+Functii de Activare
+\end_layout
+
+\begin_layout Standard
+Functia de activare reprezinta o ecuatie matimatica ce determina valorie
+ de iesire.
+ Din punct de vedere matematic, pentru aplicarea algoritmului de Gradient
+ Descent, acestea sunt de preferat sa fie differentiabile pe tot domeniul
+ de valori.
+ Printre cele mai reprezentative functii de activare se numara:
+\end_layout
+
+\begin_layout Enumerate
+Sigmoid
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Sigmoid"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ - folosita in general pentru clasificarea binara, intrucat rezultatul acestei
+ functii are valori intre 0 si 1.
+ Reprezinta un caz particular al functiei Softmax
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Softmax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+Sigmoid(x)=\frac{1}{1+e^{-x}}\label{eq:Sigmoid}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+Softmax(x_{i})=\frac{e^{x_{i}}}{\sum_{j=1}^{N}e^{x_{j}}}\label{eq:Softmax}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+ReLU
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ReLU"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(Rectified Linear Unit) - introdus in solutiile de invatare profunda de
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ReLU"
+literal "false"
+
+\end_inset
+
+, a devenit cea mai populara functie de activare, prin rezolvarea problemei
+ disparitiei gradientului si rapiditatii computationale.
+ Aceasta functie este diferentiabila in toate punctele exceptand 
+\begin_inset Formula $x=0$
+\end_inset
+
+, intrucat o derivata are valoarea 1 iar cealalta are valoarea 0.
+ Pentru a evita posibile complicatii, in general este convenit ca derivata
+ in 
+\begin_inset Formula $x=0$
+\end_inset
+
+ este cea de pe a doua ramura.
+ Exista variatii de ReLU in care sunt impuse limite superioare (e.g.
+ Relu6).
+\begin_inset Formula 
+\begin{equation}
+ReLU(x)=\begin{cases}
+x, & x>0\\
+0, & otherwise
+\end{cases}\label{eq:ReLU}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Leaky-ReLU
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Leaky-ReLU"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(Leaky Rectified Linear Unit) - introdus de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Leaky-ReLU"
+literal "false"
+
+\end_inset
+
+, aduce o solutie la problemele in care activarile ReLU 
+\begin_inset Quotes pld
+\end_inset
+
+mor
+\begin_inset Quotes prd
+\end_inset
+
+, adica tind spre 0.
+ Acest lucru se realizeaza prin tratarea valorilor negative cu o pondere
+ mica, valori ce in mod normal nu ar fi tratate de ReLU.
+\begin_inset Formula 
+\begin{equation}
+LeakyReLU(x)=\begin{cases}
+x, & x>0\\
+0.01x, & otherwise
+\end{cases}\label{eq:Leaky-ReLU}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+ELU
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ELU"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(Exponential Linear Unit) - introdus de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ELU"
+literal "false"
+
+\end_inset
+
+ si spre deosebire de activarile precedente, aceasta functie realizeaza
+ mai bine tranzitia de la valori pozitive la valori negative, adaugand un
+ hiperparametru 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, cu valoarea de baza 1.
+ 
+\begin_inset Formula 
+\begin{equation}
+ELU(x)=\begin{cases}
+x, & x>0\\
+\alpha(e^{x}-1), & otherwise
+\end{cases}\label{eq:ELU}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Swish - creata de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Swish"
+literal "false"
+
+\end_inset
+
+, trateaza intr-o maniera mai buna problemele ce apar in ReLU, diferentiandu-se
+ de celelalte activari prin faptul ca functia este diferentiabila in toate
+ punctele si nu este monotona, avand limita inferioara in punctul de inflexiune
+ al functiei.
+ De asemenea, functia nu este limitata superior si prezinta un parametru
+ 
+\begin_inset Formula $\beta$
+\end_inset
+
+, ce poate fi constant sau antrenabil.
+ Cand 
+\begin_inset Formula $\beta$
+\end_inset
+
+ este 0, functia devine liniara, iar cand acesta tinde spre 
+\begin_inset Formula $\infty$
+\end_inset
+
+, functia devine ReLU.
+ Valoarea de baza al lui 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\beta$
+\end_inset
+
+ este 1.
+\begin_inset Formula 
+\begin{equation}
+Swish(x)=x*Sigmoid(\beta x)\label{eq:Swish}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Mish - descrisa de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Mish"
+literal "false"
+
+\end_inset
+
+ si inspirata de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Swish"
+literal "false"
+
+\end_inset
+
+, aceasta functie incearca sa rezolve aceleasi probleme dar reuseste sa
+ evite mai eficient saturarea functiei in valorile negative, problema existenta
+ in functiile prezentate.
+ De asemenea, este diferentiabila in toate punctele.
+ Fiind relativ recent descoperita, analize comparative sunt realizate si
+ in prezent.
+\begin_inset Formula 
+\begin{equation}
+Mish(x)=x*tanh(ln(1+e^{x}))\label{eq:Mish}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Sigmoid.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+ 
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename Illustrations/ReLU.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sigmoid (stanga) si ReLU(dreapta)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Leaky-ReLU.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+ 
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename Illustrations/ELU.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Leaky-ReLU (stanga) si ELU(dreapta)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Swish.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+ 
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename Illustrations/Mish.png
+	lyxscale 40
+	scale 26
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Swish (stanga) si Mish(dreapta)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Functii de Cost
+\end_layout
+
+\begin_layout Standard
+In domeniul Invatarii Profunde, functiile de cost sunt folosite in procesul
+ de optimizare pentru a calcula eroarea modelului, fapt pentru care valoarea
+ acestora este referita drept 
+\begin_inset Quotes pld
+\end_inset
+
+eroarea modelului
+\begin_inset Quotes prd
+\end_inset
+
+.
+ Cea folosita in aceasta lucrare se numeste Cross-Entropie Binara Voxel-Unitara.
+ 
+\end_layout
+
+\begin_layout Standard
+Un voxel reprezinta cea mai minuscula unitate ce poate fi recunoscuta intr-un
+ sistem, echivalentul 3-Dimensional al unui pixel.
+\end_layout
+
+\begin_layout Standard
+Considerand o pozitie in spatiul 3D cu un volum echivalent unui voxel, avem
+ doua evenimente posibile: exista sau nu exista un voxel in pozitia respectiva.
+ Mai departe, definim ocupanta drept probabilitatea unei pozitii de a fi
+ ocupata cu un voxel.
+ Avand un set de valori probabilistice pentru ocupante si un set de evenimente,
+ ambele seturi pentru toate punctele din spatiul 3D existent, Cross-Entropia
+ denota cat este de probabil ca acele evenimente sa se intample bazandu-se
+ pe probabilitatea evenimentelor.
+ Daca este foarte probabil, avem o Cross-Entropie mica.
+ In caz contrar, Cross-Entropia este mare.
+ Formula pentru Costul Cross-Entropic Binar Voxel-Unitar este:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+L=-\frac{1}{N}\sum_{k=1}^{N}((1-gt_{k})ln(1-o_{k})+gt_{k}ln(o_{k}))\label{eq:Cost Cross-Entropic Binar Voxel-Unitar}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+unde 
+\begin_inset Formula $N$
+\end_inset
+
+ este numarul de voxeli din volumul real, 
+\begin_inset Formula $o_{k}$
+\end_inset
+
+ reprezinta ocupanta pentru pozitia 
+\begin_inset Formula $k$
+\end_inset
+
+ iar 
+\begin_inset Formula $gt_{k}$
+\end_inset
+
+este valoarea reala pentru pozitia 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Din cauza naturii binare a lui 
+\begin_inset Formula $gt_{k}$
+\end_inset
+
+, termenul din interiorul sumei poate fi 
+\begin_inset Formula $ln(1-o_{k})$
+\end_inset
+
+ sau 
+\begin_inset Formula $ln(o_{k})$
+\end_inset
+
+.
+ In consecinta, putem defini Cross-Entropia din punct de vedere matematic
+ drept negativul sumei logaritmilor naturali ale probabilitatilor aferente
+ evenimentelor reale.
+\end_layout
+
+\begin_layout Subsection
+Metrici
+\end_layout
+
+\begin_layout Standard
+In scopul reconstructiei 3D a obiectelor cu voxeli, metrica uzuala este
+ 3D-Intersection-over-Union, sau 3D-IoU.
+ Formula acesteia este:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+3DIoU=\frac{V_{reconstruit}\cap V_{real}}{V_{reconstruit}\cup V_{real}}\label{eq:3D-IoU}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+unde 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $V_{reconstruit}$
+\end_inset
+
+ si 
+\begin_inset Formula $V_{real}$
+\end_inset
+
+ este volumul prezis de retea, respectiv volumul real pentru obiect.
+ Un exemplu poate fi observat in figura
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3D-IoU"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/3D-IoU.png
+	lyxscale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3D-IoU"
+
+\end_inset
+
+Exemplu de 3D-IoU a 2 cuburi de 
+\begin_inset Formula $5\vartimes5\vartimes3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Optimizatori Moderni
 \end_layout
 
-\begin_layout Subsection
-SGD
+\begin_layout Standard
+In domeniul Invatarii Profunde, optimizatorul este algoritmul ce actualizeaza
+ paramentrii antrenabili ai unei retele neuronale, reducand valoarea functiei
+ de cost, cu scopul de a ajunge in minimul global al functiei.
+ Alegerea optimizatorului si ajustarea hiperparametrilor acestuia este un
+ aspect foarte important, intrucat este dorita trecerea peste punctele de
+ minim local ale functiei, cat si o convergenta cat mai rapida la valoarea
+ dorita.
 \end_layout
 
 \begin_layout Subsection
-RMS-PROP
+Cele 3 variatii ale Gradient Descent
+\end_layout
+
+\begin_layout Standard
+Concretizata in domeniul Invatarii Automate de 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "SGD"
+literal "false"
+
+\end_inset
+
+, Stochastic Gradiend Descent, sau SGD, este o aproximare stohastica a metodei
+ de optimizare Gradient Descent.
+ Pentru fiecare exemplu din setul de date, SGD calculeaza gradientul erorii
+ si actualizeaza ponderile.
+ Aspectul stohastic provine din faptul ca aceasta metoda estimeaza valoarea
+ gradientului in functie de exemple aleatorii ale setului de date.
+ Batch Gradient Descent se diferentiaza de SGD prin faptul ca eroarea este
+ calculata pentru fiecare exemplu din setul de date, dar ponderile sunt
+ actualizate abia dupa ce toate datele au fost iterate.
+ O alta variatiune a algoritmului de Gradient Descent este Mini-batch Gradient
+ Descent.
+ Deoarece calcularea gradientilor pentru fiecare exemplu poate fi costisitor
+ din punct de vedere computational, dar in acelasi timp memorarea gradientilor
+ pentru intreg setul de date poate fi costisitor din punct de vedere al
+ resurselor de stocare, Mini-batch Gradient Descent imparte setul de date
+ in mai multe loturi, calculeaza eroarea modelului pentru acel lot si actualizea
+za ponderile aferente.
+ Aplicarea pasului de Gradiend Descent este decris in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Gradient-Descent"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
 Momentum
 \end_layout
 
-\begin_layout Subsection
-ADAM
+\begin_layout Standard
+Momentum
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Momentum"
+literal "false"
+
+\end_inset
+
+ reprezinta o imbunatatire a algoritmului de Gradient Descent, ce ia in
+ considerare gradientii precedenti si decide nivelul de contributie al acestora
+ cat si al gradientului actual, folosind un parametru 
+\begin_inset Formula $\beta$
+\end_inset
+
+ - factorul de descompunere exponențiala.
+ Cu ajutorul acestui parametru se poate spune ca o medie locala exponential
+ ponderata a gradientilor este calculata pentru actualizarea ponderilor
+ modelului.
+ Algoritmul este prezentat in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Momentum"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+
+\series bold
+pentru
+\series default
+ iteratia 
+\series bold
+
+\begin_inset Formula $k$
+\end_inset
+
+
+\series default
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+calculeaza gradientii 
+\begin_inset Formula $\nabla E_{k}(\omega)$
+\end_inset
+
+ si 
+\begin_inset Formula $\nabla E_{k}(b)$
+\end_inset
+
+ al lotului 
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+calculeaza mediile locale 
+\begin_inset Formula $\varDelta\omega$
+\end_inset
+
+ si 
+\begin_inset Formula $\varDelta b$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta\omega\leftarrow\beta\varDelta\omega+(1-\beta)\nabla E_{k}(\omega)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta b\leftarrow\beta\varDelta b+(1-\beta)\nabla E_{k}(b)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+actualizeaza ponderile 
+\begin_inset Formula $\omega^{*}$
+\end_inset
+
+ si 
+\begin_inset Formula $b^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\omega^{*}\leftarrow\omega-\alpha\varDelta\omega$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $b^{*}\leftarrow b-\alpha\varDelta b$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+
+\series bold
+sfarsit pentru
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Momentum"
+
+\end_inset
+
+Actualizarea ponderilor folosind Gradient Descent cu Momentum
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-Rectified ADAM
+RMSProp
+\end_layout
+
+\begin_layout Standard
+Acronim pentru Root Mean Square Propagation, RMSProp
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RMSProp"
+literal "false"
+
+\end_inset
+
+ imparte rata de invatare cu media locala a magnitudinilor gradientilor
+ precedenti pentru ponderea in cauza.
+ Se foloseste termenul 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ ca factor de uitare si 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ drept scalar pentru prevenirea imartirii cu 0, operatiile efectuandu-se
+ element-wise.Algoritmul este prezentat in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:RMSProp"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+
+\series bold
+pentru
+\series default
+ iteratia 
+\begin_inset Formula $k$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+calculeaza gradientii 
+\begin_inset Formula $\nabla E_{k}(\omega)$
+\end_inset
+
+ si 
+\begin_inset Formula $\nabla E_{k}(b)$
+\end_inset
+
+ al lotului 
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+calculeaza mediiile locale ale magnitudinii gradientilor 
+\begin_inset Formula $\Theta\omega$
+\end_inset
+
+ si 
+\begin_inset Formula $\Theta b$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta\omega\leftarrow\gamma\Theta\omega+(1-\gamma)(\nabla E_{k}(\omega))^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta b\leftarrow\gamma\Theta b+(1-\gamma)(\nabla E_{k}(b))^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+actualizeaza ponderile 
+\begin_inset Formula $\omega^{*}$
+\end_inset
+
+ si 
+\begin_inset Formula $b^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\omega^{*}\leftarrow\omega-\alpha\frac{\nabla E_{k}(\omega)}{\sqrt{\Theta\omega}+\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $b^{*}\leftarrow b-\alpha\frac{\nabla E_{k}(b)}{\sqrt{\Theta b}+\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+
+\series bold
+sfarsit pentru
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:RMSProp"
+
+\end_inset
+
+Actualizarea ponderilor cu optimizatorul RMSProp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Adam
+\end_layout
+
+\begin_layout Standard
+Adaptive Moment Estimation, denumit si Adam, reprezinta aplicare algoritmilor
+ Momentum si RMSProp pe Gradient Descent.
+ De asemenea, Adam efectueaza corectie de bias, ce are rolul de atenua erorile
+ in pasii incipienti antrenarii.
+ Se pastreaza sintaxa prezentata mai sus.
+ Algoritmul este prezentat in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Adam"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+
+\series bold
+pentru
+\series default
+ iteratia 
+\series bold
+
+\begin_inset Formula $k$
+\end_inset
+
+
+\series default
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+calculeaza gradientii 
+\begin_inset Formula $\nabla E_{k}(\omega)$
+\end_inset
+
+ si 
+\begin_inset Formula $\nabla E_{k}(b)$
+\end_inset
+
+ al lotului 
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+calculeaza 
+\begin_inset Formula $\varDelta\omega$
+\end_inset
+
+,
+\begin_inset Formula $\varDelta b$
+\end_inset
+
+,
+\begin_inset Formula $\Theta\omega$
+\end_inset
+
+ si 
+\begin_inset Formula $\Theta b$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta\omega\leftarrow\beta\varDelta\omega+(1-\beta)\nabla E_{k}(\omega)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta b\leftarrow\beta\varDelta b+(1-\beta)\nabla E_{k}(b)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta\omega\leftarrow\gamma\Theta\omega+(1-\gamma)(\nabla E_{k}(\omega))^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta b\leftarrow\gamma\Theta b+(1-\gamma)(\nabla E_{k}(b))^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+efectueaza corectie de bias:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta\omega^{corect}\leftarrow\frac{\varDelta\omega}{1-\beta^{k}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\varDelta b^{corect}\leftarrow\frac{\varDelta b}{1-\beta^{k}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta\omega^{corect}\leftarrow\frac{\Theta\omega}{1-\gamma^{k}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $\Theta b^{corect}\leftarrow\frac{\Theta b}{1-\gamma^{k}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+actualizeaza ponderile 
+\begin_inset Formula $\omega^{*}$
+\end_inset
+
+ si 
+\begin_inset Formula $b^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $\omega^{*}\leftarrow\omega-\alpha\frac{\varDelta\omega^{corect}}{\sqrt{\Theta\omega^{corect}}+\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $b^{*}\leftarrow b-\alpha\frac{\varDelta b^{corect}}{\sqrt{\Theta b^{corect}}+\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+
+\series bold
+sfarsit pentru
+\end_layout
+
+\begin_layout LyX-Code
+
+\series bold
+returneaza
+\series default
+ parametrii 
+\begin_inset Formula $\omega^{*},b^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Adam"
+
+\end_inset
+
+Actualizarea ponderilor cu optimizatorul Adam 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Rectified-Adam
+\end_layout
+
+\begin_layout Standard
+O versiune imbunatatita fata de optimizatorul Adam, RAdam
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RAdam"
+literal "false"
+
+\end_inset
+
+ aduce un grad de adaptabilitate ratei de invatare 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ In retelele neuronale, exista riscul ca optimizatorul sa convearga catre
+ minime locale, demers ce poate aparea inca de la inceputul antrenarii si
+ rezulta intr-o varianta crescuta.
+ De aceea, autorii au descris o perioada de 
+\begin_inset Quotes pld
+\end_inset
+
+incalzire
+\begin_inset Quotes prd
+\end_inset
+
+ la inceputul antrenarii pentru rate de invatare, in care aceasta are valori
+ scazute.
+ 
+\end_layout
+
+\begin_layout Standard
+Calculand valoarea maxima a mediei locale exponential ponderata si corectata
+ 
+\begin_inset Formula $\rho_{\infty}$
+\end_inset
+
+ cu formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Ro-infinit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, valoarea aproximata a mediei locale exponential ponderate si corectate
+ 
+\begin_inset Formula $\rho_{k}$
+\end_inset
+
+ la iteratia 
+\begin_inset Formula $k$
+\end_inset
+
+ cu formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ro-iteratia-k"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, se defineste termenul de rectificare 
+\begin_inset Formula $r_{t}$
+\end_inset
+
+ pentru iteratia 
+\begin_inset Formula $k$
+\end_inset
+
+ cu formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:termen rectificare"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\rho_{\infty}=\frac{2}{1-\beta}-1\label{eq:Ro-infinit}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\rho_{k}=\rho_{\infty}-\frac{2k\beta^{k}}{1-\beta^{k}}\label{eq:ro-iteratia-k}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+r_{k}=\sqrt{\frac{(\rho_{k}-4)(\rho_{k}-2)\rho_{\infty}}{(\rho_{\infty}-4)(\rho_{\infty}-2)\rho_{k}}}\label{eq:termen rectificare}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Termenul de rectificare se aplica pasilor de actualizare al ponderilor pana
+ cand 
+\begin_inset Formula $\rho_{t}\leq4$
+\end_inset
+
+ se adeverste.
+ Valoarea 
+\begin_inset Formula $4$
+\end_inset
+
+ a fost aleasa empiric.
+ Este de mentionat cazul in care daca 
+\begin_inset Formula $\rho_{\infty}\leq4$
+\end_inset
+
+ si 
+\begin_inset Formula $\beta\leq0.6$
+\end_inset
+
+, R-Adam degenereaza in algoritmul de SGD cu Momentum.
 \end_layout
 
 \begin_layout Subsection
 Lookahead
 \end_layout
 
+\begin_layout Standard
+Creat relativ recent, Lookahead
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Lookahead"
+literal "false"
+
+\end_inset
+
+ se diferentiaza de celelalte optimizatoare prezentate.
+ In primul rand, acesta dispune de doua tipuri de ponderi: ponderi incete
+ 
+\begin_inset Formula $\phi$
+\end_inset
+
+ si ponderi rapide 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ Avand un punct de pornire 
+\begin_inset Formula $\phi_{t}$
+\end_inset
+
+ memorat, algoritmul efectueaza 
+\begin_inset Formula $k$
+\end_inset
+
+ pasi cu o variatie a SGD.
+ Acesti pasi se considera ca se aplica pe ponderi rapide.
+ Dupa cei 
+\begin_inset Formula $k$
+\end_inset
+
+ pasi, functia de cost ajunge intr-un punct 
+\begin_inset Formula $\theta_{k}$
+\end_inset
+
+.
+ Avand 
+\begin_inset Formula $\phi_{t}$
+\end_inset
+
+ , se efectueaza in pas in directia 
+\begin_inset Formula $\theta_{k}$
+\end_inset
+
+, cu o pondere aleasa arbitrar 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ In alte cuvinte, algoritmul 
+\begin_inset Quotes pld
+\end_inset
+
+se uita in fata
+\begin_inset Quotes prd
+\end_inset
+
+ aplicant SGD, dupa care efectueaza un pas partial in directia finala.
+ Algoritmul este prezentat in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Lookahead"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, iar reprezentarea vizuala in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lookahead reprezentare"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout LyX-Code
+initializeaza parametrii 
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $k$
+\end_inset
+
+ si 
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+functia de cost 
+\begin_inset Formula $L$
+\end_inset
+
+, optimizatorul 
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\series bold
+pentru
+\series default
+ pasii 
+\begin_inset Formula $t=1,2,\ldots$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+sincronizeaza parametrii 
+\begin_inset Formula $\theta_{t,0}\leftarrow\phi_{t-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\series bold
+pentru
+\series default
+ pasii 
+\begin_inset Formula $i=1,2,\ldots$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+alege lotul 
+\begin_inset Formula $d$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+actalizeaza ponderile rapide 
+\begin_inset Formula $\theta_{t,i}\leftarrow\theta_{t,i-1}+A(L,\theta_{t,i-1},d)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\series bold
+sfarsit pentru
+\end_layout
+
+\begin_layout LyX-Code
+actualizeaza ponderile incete 
+\begin_inset Formula $\phi_{t}\leftarrow\phi_{t-1}+\alpha(\theta_{t,k}-\phi_{t-1})$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+
+\series bold
+sfarsit pentru
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Lookahead"
+
+\end_inset
+
+Actualizarea ponderilor cu optimizatorul Lookahead
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Lookahead.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lookahead reprezentare"
+
+\end_inset
+
+Efectuarea a 2 pasi cu optimizatorul Lookahead
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-RANGER
+Ranger
+\end_layout
+
+\begin_layout Standard
+Ranger
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Ranger"
+literal "false"
+
+\end_inset
+
+ este o variatiune a optimizatorului Lookahead ce foloseste Rectified-Adam
+ in loc de SGD.
+ Aceasta combinatie este considerata complementara, intrucat RAdam prezinta
+ imbunatari in starile incipiente ale procesului de antrenare, introducand
+ o 
+\begin_inset Quotes pld
+\end_inset
+
+incalzire
+\begin_inset Quotes prd
+\end_inset
+
+ a gradientilor, iar Lookahead aduce in acest ansamblu stabilitatea antrenarii
+ in stadiu avansat.
 \end_layout
 
 \begin_layout Section
 Problemele Retelelor Neuronale si Solutii
 \end_layout
 
-\begin_layout Subsection
-Variance and Bias
+\begin_layout Standard
+Avand un numar substantial de parametrii si variabile ce trebuiesc ajustate,
+ este aproape imposibil de a prevedea tipurile de probleme ce apar in timpul
+ antrenarii unei retele neuronale.
+ 
+\end_layout
+
+\begin_layout Standard
+De la probleme nou descoperite, unde comunitatea academica realizeaza studii
+ sustinute de modele euristice de cercetare, la cele clasic intalnite in
+ experimentele domeniului, unde este urmat un model cantitativ de cercetare,
+ cert este ca inca exista loc pentru imbunatatiri.
 \end_layout
 
 \begin_layout Subsection
-Explozia Gradientilor
+Varianță si Bias
 \end_layout
 
-\begin_layout Subsection
-Functii de Activare si Moartea lui ReLU
+\begin_layout Standard
+In antrenarea unui model, varianta reprezinta cat de mult poate varia o
+ predictie pentru o instanta de intrare nemaivazuta.
+ Daca avem o varianta mare, inseamna ca modelul a invatat prea bine setul
+ de date din timpul antrenarii si nu poate generaliza pentru date noi.
+ Aceasta consecinta se numeste overfitting, si se manifesta printr-o eroare
+ mica in datele de antrenare dar cu o eroare mare in datele de test.
+\end_layout
+
+\begin_layout Standard
+Bias-ul pe de alta parte reprezinta gradul de simplicitate pe care il aplica
+ modelul in predictile sale.
+ In cazul unui bias mare, modelul realizeaza multe presupuneri despre rezultatul
+ dorit, ignorand caracteristicile prezente in setul de date, astfel simplificand
+ prea mult solutia si nereusind sa produca o predictie satisfacatoare.
+ Aceasta consecinta se numeste underfitting, si se manifesta printr-o eroare
+ mare atat pentru datele de antrenare, cat si cele de test.
+\end_layout
+
+\begin_layout Standard
+Se concluzioneaza ca solutia optima prezinta atat o varianta cat si un bias
+ scazut.
+ Deoarece este dificila identificarea cauzei underfitting-ului, solutiile
+ adoptate cauta sa evite complet cazul acesta si propun modele ce sunt predispus
+e overfitting-ului.
+ Astfel, scopul devine imbunatatirea abilitatii de generalizare a modelului.
+\end_layout
+
+\begin_layout Standard
+Problema de overfitting apare in mod normal tarziu in procesul de antrenare.
+ Pentru a fi detectata si evitata aceasta problema, este o practica buna
+ sa se pastreze un istoric al erorii din timpul antrenarii cat si in timpul
+ testarii.
+ O solutie simpla se numeste early-stopping, ce detecteaza daca modelul
+ incepe sa prezinte overfitting si opreste intreg procesul de antrenare.
+ Deoarece minimele locale existente pot da impresia unui minim global, aceasta
+ solutie nu este optima si trebuie ajustata pentru fiecare problema.
 \end_layout
 
 \begin_layout Subsection
 Regularizare
 \end_layout
 
+\begin_layout Standard
+Exista doua solutii pentru combaterea problemei de overfitting: imbogatirea
+ setului de date sau aplicarea metodelor de regularizare.
+ Astfel, regularizarea poate fi definita drept o tehnica de a imbunatati
+ abilitatea unui model de a generaliza.
+\end_layout
+
+\begin_layout Subsubsection
+Dropout
+\end_layout
+
+\begin_layout Standard
+Una dintre cele mai folosite metode de regularizare este Dropout
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Dropout"
+literal "false"
+
+\end_inset
+
+, reprezentata in figura .
+ Aceasta metoda introduce pentru fiecare neuron din straturile ascunse probabili
+tatea ca acesta sa fie anulat in timpul unui ciclu de antrenare.
+ La prima vedere, aceast procedeu pare contraintuitiv, intrucat o arhitectura
+ mai complexa creste capacitatea de invatare a retelei.
+ Cu toate acestea, exista cazuri in care la nivelul unui strat unii neuroni
+ domina impactul pe care il au in calcularea predictilor, rezultand ca ceilalti
+ neuroni sa nu poata invata caracteristicile mai subtile.
+ Prin eliminarea neuronilor dominanti in unele cicluri de antrenare se permite
+ dezvoltarea partilor ramase, astfel rezultand intr-un model ce generalizeaza
+ mai bine.
+ 
+\end_layout
+
+\begin_layout Standard
+Regularizarea Dropout se foloseste la straturile dense.
+ In cazul imaginilor, informatia este continuta in regiuni, nu in puncte
+ individuale.
+ Aplicarea acestei metode va anula aleator puncte din imagine, dar nu va
+ elimina caracteristici in totalitate.
+ Batch Normalization prezinta acelasi un efect asemanator de regularizare
+ cu Dropout, fapt pentru care este deseori folosit ca alternativa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Dropout.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Aplicare dropout pe doua straturi dense
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Regularizare L2
+\end_layout
+
+\begin_layout Standard
+O alta metoda des folosita este regularizarea L2, ce penalizeaza ponderile
+ mari in calculul valorii functiei de cost, adunand suma patratelor ponderilor
+ inmultita cu termenul de regularizare 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+ De exemplu, avand ponderile 
+\begin_inset Formula $W=(w_{1},w_{2},\ldots,w_{m})$
+\end_inset
+
+ si formula de cost Cross-Entriopie Binara 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Cross-Entropy-Loss"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, ne rezulta:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E=-\frac{1}{n}\sum_{k=1}^{n}((1-y_{k})ln(1-\hat{y}_{k})+y_{k}ln(\hat{y}_{k}))+\lambda(w_{1}^{2}+w_{2}^{2}+\ldots+w_{m}^{2})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DropBlock
+\end_layout
+
+\begin_layout Standard
+Creat pentru Retelele Convolutionale, DropBlock
+\begin_inset CommandInset citation
+LatexCommand citep
+key "DropBlock"
+literal "false"
+
+\end_inset
+
+ anuleaza intregi regiuni dintr-o harta de caracteristici.
+ Aplicarea de Aceasta metoda are doi hiperparametrii: 
+\end_layout
+
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $block\text{\_}size$
+\end_inset
+
+ -
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ marimea laturii patratului regiunii anulate
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $drop\text{\_}prob$
+\end_inset
+
+ - probabilitatea ca un punct sa fie ales pentru anulare
+\end_layout
+
+\begin_layout Standard
+Avand o harta de caracteristici, se iau in considerare partile 
+\begin_inset Quotes pld
+\end_inset
+
+activate
+\begin_inset Quotes prd
+\end_inset
+
+ din aceasta, adica regiunile cu informatie relevanta.
+ Pe punctele continute in aceasta regiune importanta se aplica o distributie
+ Bernoulli cu probabilitatea 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+ Deoarece doar punctele cu informatie vor fi alese, se foloseste termenul
+ 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ pentru balansa lipsa alegerii punctelor neimportante.
+ Acest termen are formula:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\gamma=\frac{drop\text{\_}prob}{block\text{\_}size^{2}}\frac{feat\text{\_}size^{2}}{(feat\text{\_}size-block\text{\_}size+1)^{2}}\label{eq:gamma_dropout}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tehnica este exememplificata in figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DropBlock"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/DropBlock.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DropBlock"
+
+\end_inset
+
+Regularizare DropBlock
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Problema 
+\begin_inset Quotes pld
+\end_inset
+
+dying ReLU
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In domeniul retelelor neuronale, saturatia este un termen ce descrie 
+\begin_inset Quotes pld
+\end_inset
+
+tendinta orizontala
+\begin_inset Quotes prd
+\end_inset
+
+ a unei functii.
+ Cu cat o functie se aprope de valoarea la care converge, se poate spune
+ ca functia isi pierde din puterea de antrenare pe care o poseda.
+ Din aceste motive, lipsa limitei superioare a unei functii este o calitate
+ dorita, intrucat problema saturatiei este inexistenta.
+ In cazul limitelor inferioare, se considera ca este contraintuitiv sa se
+ aloce resurse pentru valori mari negative, ce sunt irelevante, intrucat
+ reteaua trebuie sa detecteze doar caracteristicile ce determina rezultatul
+ dorit, nu si cele incidental prezente.
+ Existenta unei limite inferioare reduce din problema de overfitting, deci
+ avand un efect regularizator.
+ Este de mentionat faptul ca unele date pot fi procesate ca fiind irelevante
+ devreme in procesul de antrenare, dar sa prezinte relevanta mai tarziu.
+ Acest fapt justifica existenta tratarii valorilor negative in functiile
+ moderne.
+\end_layout
+
+\begin_layout Standard
+Se poate observa de ce functia de activare ReLU este cea mai folosita functie
+ de activare in interiorul retelelor neuronale: aceasta prezinta cel mai
+ rapid timp de executie si nu are limita superioara.
+ Dezavantajul major este faptul ca functia ReLU este complet saturata in
+ domeniul negativ de valori.
+ Acest detaliu duce la problema numita 
+\begin_inset Quotes pld
+\end_inset
+
+dying ReLU
+\begin_inset Quotes prd
+\end_inset
+
+.
+ In alte cuvinte, valori ce sunt categorisite negative in stadiile incipiente
+ ale procesului de invatare vor avea valoarea 0.
+ Daca derivata pantei lui ReLU ajunge sa fie 0, la momentul calcularii gradientu
+lui cu regula lantului, intreg gradientul se va inmulti cu 0 si va avea
+ valoarea 0, deci nu se va invata absolut nimic.
+ In consecinta, odata ce un neuron cu activare ReLU ajunge la valoarea 0,
+ acesta va ramane asa intotdeauna, intrucat derivata va fi 0 si neuronul
+ nu va putea niciodata sa invete, lucru ce va cauza si limitarea puterii
+ de invatare a neuronilor posteriori.
+ O rata de invatare prea mare poate duce la moartea prematura a neuronilor
+ cu activare ReLU.
+ Empiric, a fost dovedid ca pana la 40% din neuronii cu activare ReLU dintr-o
+ retea pot suferi de aceasta problema, afectand puternic limitele de invatare
+ ale retelei.
+\end_layout
+
+\begin_layout Standard
+O solutie existenta este tratarea valorilor negative, fapt ce face ca derivata
+ sa nu mai fie 0 si in consecinta un neuron cu activare ReLU ce a ajuns
+ la valoarea 0 isi poate reveni in procesul de invatare.
+ Aceasta solutie a fost intai adoptata de functii precum Leaky-ReLU si ELU,
+ si a fost imbunatatia de functii precum Swish si Mish.
+\end_layout
+
 \begin_layout Chapter
-Specificatiile proiectului
+Detalii de Implementare
+\end_layout
+
+\begin_layout Standard
+Problema reconstructiei 3D a obiectelor din poze RGB prezinta aspecte ce
+ nu pot fi rezolvate de metodele clasice existente
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Classic Reconstruction methods"
+literal "false"
+
+\end_inset
+
+, unde pozitia pixelilor este triangulata.
+ Unul dintre cele mai intalnite aspecte este reconstructia regiunilor ocluzate.
+ Metodele de reconstructie folosesc de 3 tipuri de volume: ansamblu mesh,
+ ansamblu de puncte si ansamblu de voxeli
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tipuri de reprezentare volumetrica
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In reprezentarea voxelizata exista 3 variatii des folosite:
+\end_layout
+
+\begin_layout Enumerate
+Grila ocupationala binara - un voxel este setat pe valoarea 1 daca face
+ parte dintr-un obiect de interes, altfel este setat pe valoarea 0
+\end_layout
+
+\begin_layout Enumerate
+Grila ocupationala probabilistica - in aceasta reprezentare fiecare voxel
+ are o probabilitate de apartenenta la obiectul de interes
+\end_layout
+
+\begin_layout Enumerate
+Signed Distance Function sau SDF - in fiecare voxel este codata distanta
+ pana la cel mai apropiat punct de pe suprafata.
+ O valoare negativa denota pozitia in interiorul obiectului iar una pozitiva
+ pozitia pe suprafata.
+\end_layout
+
+\begin_layout Standard
+Solutia implementata se numeste YOVO: You Only Voxelize Once, denumire motivata
+ de faptul ca aceasta trateaza doar reconstructia dintr-o singura imagine
+ a obiectelor, oferind o reconstructie volumetrica voxelizata, atingand
+ rezultate State-of-the-Art pe setul de date Data3D-R2N2.
+ Pentru a trece peste aspectele unde metodele clasice prezinta dificultate,
+ YOVO se foloseste de puterea si eficienta Retelelor Neuronale Convolutionale
+ adanci, reusind sa invete caracteristici ascunse ale obiectului din imaginea
+ de intrare pe baza informatiei existente despre obiecte din aceeasi clasa.
+ 
+\end_layout
+
+\begin_layout Standard
+Domeniul reconstructiei 3D a obiectelor prin invatare profunda este inca
+ in stare incipienta, solutiile existente folosind in mod intensiv resurse
+ in procesul de antrenare.
+ Exista si metode de reconstructie cu rezolutie mare
+\begin_inset CommandInset citation
+LatexCommand citep
+key "HighResolution 3D reconstruction"
+literal "false"
+
+\end_inset
+
+, in care grila de voxeli are dimensiunea 
+\begin_inset Formula $128^{3}$
+\end_inset
+
+.
+ Aceasta performanta este realizata prin expansiunea retelei, dar prezentand
+ costuri de memorie foarte mari, cresterea acestor costuri fiind cubuice.
+ Din acest motiv, multe dintre solutiile de reconstructie a obiectelor este
+ realizata la o scara mai mica, intr-un spatiu de 
+\begin_inset Formula $32^{3}$
+\end_inset
+
+.
+ YOVO produce volume in acest spatiu, realizand tranzitia de la o grila
+ ocupationala probabilistica la una binara aplicand un threshold, intreg
+ procesul avand o performanta ce se aproprie de domeniul reconstrutiei in
+ timp real.
+ 
+\end_layout
+
+\begin_layout Standard
+Inovatia solutiei prezenta in YOVO este extragerea multi-level eficientizata
+ a caracteristicilor imaginii de intrare, extragand mai exact 3 seturi de
+ caracteristici, fiecare captand aspecte mai mult sau mai putin generale
+ ale obiectului prezent.
+ De asemenea, unul dintre motivele pentru care aceasta solutie atinge noi
+ performante State-of-the-Art este filtrarea informatiei in retea, ansamblul
+ de functii de activare Mish, ELU si Leaky-ReLU fiind folosite complementar
+ cu rolul modulelor in care sunt prezente.
+ Aditional, aplicarea metodei de optimizare LookAhead cu Rectified Adam
+ configurata cu hiperparametrii adaptabili, impreuna cu regularizare DropBlock,
+ asigura o oarecare imunitate la overfitting si extinde limitele arhitecturii.
 \end_layout
 
 \begin_layout Section
-Cerinte
+Arhitectura
+\end_layout
+
+\begin_layout Standard
+nr parametrii
+\end_layout
+
+\begin_layout Standard
+Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Arhitectura-YOVO"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ prezinta arhitectura detaliata YOVO.
+ Compusa din 4 componente, pipeline-ul este urmatorul: se extrag multiple
+ seturi de caracteristici, se reconstruieste fiecare set intr-un volum diferit,
+ aceste volume sunt agregate, volumul rezultat este rafinat de un U-Net
+ tridimensional.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura YOVO
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Arhitectura-YOVO"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Autoencoder
+\end_layout
+
+\begin_layout Standard
+Rolul unui autoencoder este de a transforma un input intr-o reprezentare
+ diferita, un ansamblu 3D.
+ Aceasta structura are doua componente: 
+\end_layout
+
+\begin_layout Enumerate
+un Encoder ce interpreteaza datele de intrare si le structureaza multiple
+ seturi de harti de caracteristici
+\end_layout
+
+\begin_layout Enumerate
+un Decoder ce reconstruieste rezultatul dorit pe baza informatiei abstracte
+ prezente in multiplele seturi rezultate din Encoder
+\end_layout
+
+\begin_layout Subsubsection
+Encoder
+\end_layout
+
+\begin_layout Standard
+In solutia propusa, caracteristicile sunt intai extrase de un backbone format
+ din primele 13 blocuri ale arhitecturii MobileNetV2
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Inverted Residuals and Linear Bottlenecks"
+literal "false"
+
+\end_inset
+
+.
+ Prezenta blocurilor reziduale inversate asigura extragerea de caracteristici
+ complexe intr-un numar mai mic de canale, proces eficientizat de convolutiile
+ separabile.
+ De asemenea, aplicarea straturilor de Batch Normalization au efect regularizato
+r.
+ Setul de caracteristici extras de backbone are dimensiunile (X,Y,Z) -TODO.
+\end_layout
+
+\begin_layout Standard
+In continuare, sunt descrise 3 nivele de abstractie la nivelul caracteristicilor
+ cuprinse in spatiul dimensional.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Primul nivel cuprinde informatia din spatiul dimensional mare (512 canale)
+ si o contine in 256 canale
+\end_layout
+
+\begin_layout Enumerate
+Al doilea nivel capteaza informatia dintr-un spatiu dimensional mediu (320
+ de canale) si o codifica in 256 canale
+\end_layout
+
+\begin_layout Enumerate
+Al treilea nivel capteaza caracteristicile generale dintr-un spatiu dimensional
+ mic (128 de canale) si le cuprinde tot in 256 de canale
+\end_layout
+
+\begin_layout Standard
+Toate 3 nivelele produc seturi de caracteristici de dimensiunea (X,Y,Z)
+ - TODO.
+ Standardul de 256 de canale este ales pentru a se reproduce volume in acelasi
+ grila dimensionala.
+ 
+\end_layout
+
+\begin_layout Standard
+Aceasta extragere multi-level este inspirata de versatilitatea arhitecturii
+ FPN, dar adaptata pentru problema reconstruirii volumetrice.
+ Fiecare nivel deriva din primul strat al nivelului precedent, fiind aplicate
+ convolutii ce cresc numarul de canale dar reduc dimensiunile principale
+ (lungime si latime) ale hartilor de caracteristici cu 
+\begin_inset Formula $kernel\text{\_}size-1$
+\end_inset
+
+, din cauza lipsei aplicarii de padding.
+ Intrucat informatia este extrasa in primele doua convolutii al fiecarui
+ nivel, acestora le sunt aplicate regularizare DropBlock2D si activari ELU.
+ Astfel, metoda DropBlock asigura un nivel de antrenare al caracteristicilor
+ mai putin dominante, iar activarea ELU asigura o filtrare mai buna a caracteris
+ticilor neimportante ale obiectului, acestea rezultand intotdeauna intr-o
+ valoare negativa pentru a evita ambiguitatea creata atunci cand reteaua
+ percepe apartenenta unui obiect la mai multe clase.
+ In urma ultimei convolutii nu este aplicata regularizare DropBlock, dar
+ activarea este setata drept Mish, intrucat in aceasta operatie informatia
+ este codificata in 256 de canale.
+ Arhitectura detaliata a Encoder-ului este prezentata in figura 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Encoder-YOVO"
+
+\end_inset
+
+Encoderul introdus in YOVO
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Decoder
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Subsection
+Agregator
+\end_layout
+
+\begin_layout Subsection
+Rafinator
 \end_layout
 
 \begin_layout Section
-Biblioteci folosite
+Set de date
+\end_layout
+
+\begin_layout Standard
+Datasetul ShapeNet contine o multitudine de Proiectari 3D asistate de calculator
+ (CAD).
+ Este folosit un subset al acestui dataset, ce contine 43,783 de modele
+ structurate in 13 clase ordonate alfabetic.
+ Clasele sunt: aeroplane(avion), bench(banca), cabinet(dulap), car(masina),
+ chair(scaun), display(monitor), lamp(lampa), speaker(boxa), rifle(arma),
+ sofa(canapea), table(masa), telephone(telefon), watercraft(barca).
+ Denumirile acestora sunt codificate in conformitate cu WordNet.
+ 
+\end_layout
+
+\begin_layout Section
+Procesul de antrenare
+\end_layout
+
+\begin_layout Subsection
+Preprocesarea datelor
+\end_layout
+
+\begin_layout Subsection
+Hiperparametrizare
+\end_layout
+
+\begin_layout Standard
+Centrarea configuratiei, Ranger
+\end_layout
+
+\begin_layout Subsection
+Functia de cost
+\end_layout
+
+\begin_layout Subsection
+Metrica
+\end_layout
+
+\begin_layout Subsection
+Validare si Testare
+\end_layout
+
+\begin_layout Section
+Mediul de antrenare
+\end_layout
+
+\begin_layout Subsection
+Resurse Hardware
+\end_layout
+
+\begin_layout Standard
+Antrenarea si rularea retelelor neuronale sunt procese ce necesita o cantitate
+ mare de resurse atat computationale cat si de stocare.
+ Reproducerea volumelor obiectelor din imagini 2D este o solutie ce prezinta
+ un numar mare de parametrii antrenabili si necesita o arhitectura complexa,
+ capabila sa invete sa reconstruiasca si parti ale obiectului ce sunt partial
+ vizibile sau deloc vizibile.
+ De asemenea, pentru a asigura un proces de invatare relevant solutionarii
+ problemei este nevoie de o metrica adecvata .
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere hardware, marimea spatiului de stocare, procesorul,
+ placa video si memoria RAM sunt cele mai importante componente.
+ Pentru problemele de Invatare Profunda nu este important daca setul de
+ date este stocat pe un HDD sau pe un SSD.
+ Procesorul este folosit in principal pentru preprocesarea datelor, numarul
+ de nuclee si abilitatea de hyperthreading fiind esentiale in paralelizarea
+ si accelerarea acestui proces.
+ Marimea memoriei RAM va denota cat de multe date se vor putea aloca intr-o
+ iteratie.
+ Deoarece accesarea memoriei disk este seminificativ de inceata, se incearca
+ incarcarea a cat mai multor date in memoria RAM, pentru a scadea numarul
+ de accesari in memoria disk.
+ Datele sunt transmise din memoria RAM in memoria placii video.
+ pentru a evita cazuri de bottleneck, este de preferat ca memoria RAM sa
+ fie mare.
+ Majoritatea operatilor realizate intr-o retea neuronala sunt inmultirile
+ matriciale, operatie pentru care placile video sunt mai eficiente.
+ Experimentele academice sunt dominate de placile NVIDIA, 
+\end_layout
+
+\begin_layout Standard
+stocare, cpu, ram, gpu, vast.ai, informatii sistem propriu
+\end_layout
+
+\begin_layout Subsection
+Resurse Software
+\end_layout
+
+\begin_layout Standard
+biblioteci, python, vscode, ssh
+\end_layout
+
+\begin_layout Subsection
+Inregistrarea progresului
+\end_layout
+
+\begin_layout Subsection
+Vizualizare
+\end_layout
+
+\begin_layout Section
+Interpretarea datelor
 \end_layout
 
 \begin_layout Section
@@ -1066,11 +4472,45 @@ Instalare si Utilizare
 \end_layout
 
 \begin_layout Chapter
-Detalii de Implementare
+Experimente si Rezultate
 \end_layout
 
-\begin_layout Chapter
-Experimente si Rezultate
+\begin_layout Standard
+nr parametrii
+\end_layout
+
+\begin_layout Standard
+specs
+\end_layout
+
+\begin_layout Standard
+Accuracy measures the percentage correctness of the prediction i.e.
+ correct−classestotal−classes
+\end_layout
+
+\begin_layout Standard
+while
+\end_layout
+
+\begin_layout Standard
+Loss actually tracks the inverse-confidence (for want of a better word)
+ of the prediction.
+ A high Loss score indicates that, even when the model is making good prediction
+s, it is less
+\end_layout
+
+\begin_layout Standard
+sure of the predictions it is making...and vice-versa.
+\end_layout
+
+\begin_layout Standard
+So...
+\end_layout
+
+\begin_layout Standard
+High Validation Accuracy + High Loss Score vs High Training Accuracy + Low
+ Loss Score suggest that the model may be over-fitting on the training data.
+ 
 \end_layout
 
 \begin_layout Bibliography
@@ -1086,7 +4526,7 @@ key "key-1"
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "key-2"
+key "SupervisedLearning"
 literal "false"
 
 \end_inset
@@ -1101,13 +4541,460 @@ Cunningham, Padraig & Cord, Matthieu & Delany, Sarah.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "key-3"
+key "Backpropagation"
+literal "false"
 
 \end_inset
 
 Goodfellow, Bengio & Courville (2016, 6.5 Back-Propagation and Other Differentiat
 ion Algorithms, pp.
  200–220)
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tensorflow"
+literal "false"
+
+\end_inset
+
+Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado,
+ G., Davis, A., Dean, J., Devin, M., Ghemawat, S., Goodfellow, I., Harp, A., Irving,
+ G., Isard, M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., Levenberg, J.,
+ Mané, D., Monga, R., Moore, S., Murray, D., Olah, C., Schuster, M., Shlens, J.,
+ Steiner, B., Sutskever, I., Talwar, K., Tucker, P., Vanhoucke, V., Vasudevan,
+ V., Viégas, F., Vinyals, O., Warden, P., Wattenberg, M., Wicke, M., Yu, Y., Zheng,
+ X.: TensorFlow: Large-scale machine learning on heterogeneous systems (2015),
+ https://www.tensorflow.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Pytorch"
+literal "false"
+
+\end_inset
+
+Paszke, A., Gross, S., Chintala, S., Chanan, G., Yang, E., DeVito, Z., Lin, Z.,
+ Desmaison, A., Antiga, L., Lerer, A.: Automatic differentiation in PyTorch.
+ In: NeurIPS Autodiff Workshop (2017), https://pytorch.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ReteleConvDef"
+literal "false"
+
+\end_inset
+
+Yamashita, R., Nishio, M., Do, R.K.G.
+ et al.
+ Convolutional neural networks: an overview and application in radiology.
+ Insights Imaging 9, 611–629 (2018)
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Separable_Conv"
+literal "false"
+
+\end_inset
+
+Chollet, Francois.
+ (2017).
+ Xception: Deep Learning with Depthwise Separable Convolutions.
+ 1800-1807.
+ 10.1109/CVPR.2017.195.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Residual 1"
+literal "false"
+
+\end_inset
+
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, andJian Sun.
+ Deep residual learning for image recog-nition.CoRR, abs/1512.03385, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Residual 2"
+literal "false"
+
+\end_inset
+
+Saining Xie, Ross B.
+ Girshick, Piotr Doll ́ar,Zhuowen Tu, and Kaiming He.Aggregatedresidual transform
+ations for deep neural networks.CoRR, abs/1611.05431, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Inverted Residuals and Linear Bottlenecks"
+literal "false"
+
+\end_inset
+
+Mark Sandler and Andrew G.
+ Howard and Menglong Zhu and Andrey Zhmoginov and Liang-Chieh Chen (2018).
+ Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification,
+ Detection and SegmentationCoRR, abs/1801.04381.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "AutoEncoder"
+literal "false"
+
+\end_inset
+
+D.
+ E.
+ Rumelhart, G.
+ E.
+ Hinton, and R.
+ J.
+ Williams.
+ 1986.
+ Learning internal representations by error propagation.
+ Parallel distributed processing: explorations in the microstructure of
+ cognition, vol.
+ 1: foundations.
+ MIT Press, Cambridge, MA, USA, 318–362.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "UNet"
+literal "false"
+
+\end_inset
+
+Ronneberger, Olaf & Fischer, Philipp & Brox, Thomas.
+ (2015).
+ U-Net: Convolutional Networks for Biomedical Image Segmentation.
+ arXiv:1505.04597v1
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "FPN"
+literal "false"
+
+\end_inset
+
+Lin, Tsung-Yi et al.
+ “Feature Pyramid Networks for Object Detection.” 2017 IEEE Conference on
+ Computer Vision and Pattern Recognition (CVPR) (2017): 936-944.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "AutoML"
+literal "false"
+
+\end_inset
+
+Marcel Wever, F.M., Hüllermeier, E.: ML-Plan for unlimited-length machine learning
+ pipelines.
+ In: Garnett, R., Vanschoren, F.H.J., Brazdil, P., Caruana, R., Giraud-Carrier,
+ C., Guyon, I., Kégl, B.
+ (eds.) ICML workshop on Automated Machine Learning (AutoML workshop 2018)
+ (2018)
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ReLU"
+literal "false"
+
+\end_inset
+
+Glorot, X., Bordes, A.
+ & Bengio, Y..
+ (2011).
+ Deep Sparse Rectifier Neural Networks.
+ Proceedings of the Fourteenth International Conference on Artificial Intelligen
+ce and Statistics, in PMLR 15:315-323 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Leaky-ReLU"
+literal "false"
+
+\end_inset
+
+Maas, Andrew L, Hannun, Awni Y, and Ng, Andrew Y.
+ Rectifier nonlinearities improve neural network acoustic models.
+ In Proc.
+ ICML, volume 30, 2013.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ELU"
+literal "false"
+
+\end_inset
+
+Clevert, Djork-Arné & Unterthiner, Thomas & Hochreiter, Sepp.
+ (2016).
+ Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs).
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Swish"
+literal "false"
+
+\end_inset
+
+Prajit Ramachandran, Barret Zoph, & Quoc V.
+ Le.
+ (2017).
+ Searching for Activation Functions.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Mish"
+literal "false"
+
+\end_inset
+
+Diganta Misra.
+ Mish: A self regularized nonmonotonic neural activation function.
+ arXiv preprint arXiv:1908.08681, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "SGD"
+literal "false"
+
+\end_inset
+
+Herbert E.
+ Robbins (2007).
+ A Stochastic Approximation MethodAnnals of Mathematical Statistics, 22,
+ 400-407.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Momentum"
+literal "false"
+
+\end_inset
+
+David E.
+ Rumelhart, Geoffrey E.
+ Hinton, & Ronald J.
+ Williams (1986).
+ Learning representations by back-propagating errorsNature, 323, 533-536.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Deeplearning.ai"
+literal "false"
+
+\end_inset
+
+Andrew Yan-Tak Ng.
+ 
+\begin_inset Quotes pld
+\end_inset
+
+Deep Learning Specialization
+\begin_inset Quotes prd
+\end_inset
+
+.
+ https://www.deeplearning.ai/ (2017)
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RMSProp"
+literal "false"
+
+\end_inset
+
+G.
+ E.
+ Hinton.
+ "Lecture 6e RMSProp: Divide the gradient by a running average of its recent
+ magnitude".
+ https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Adam"
+literal "false"
+
+\end_inset
+
+Kingma, Diederik & Ba, Jimmy.
+ (2014).
+ Adam: A Method for Stochastic Optimization.
+ International Conference on Learning Representations.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RAdam"
+literal "false"
+
+\end_inset
+
+Liu, Liyuan & Jiang, Haoming & He, Pengcheng & Chen, Weizhu & Liu, Xiaodong
+ & Gao, Jianfeng & Han, Jiawei.
+ (2019).
+ On the Variance of the Adaptive Learning Rate and Beyond.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Lookahead"
+literal "false"
+
+\end_inset
+
+Michael R.
+ Zhang and James Lucas and Geoffrey E.
+ Hinton and Jimmy Ba (2019).
+ Lookahead Optimizer: k steps forward, 1 step backCoRR, abs/1907.08610.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Ranger"
+literal "false"
+
+\end_inset
+
+Less Wright (2019).
+ New Deep Learning Optimizer, Ranger: Synergistic combination of RAdam +
+ LookAhead for the best of both.
+ https://medium.com/@lessw/new-deep-learning-optimizer-ranger-synergistic-combina
+tion-of-radam-lookahead-for-the-best-of-2dc83f79a48d
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Dropout"
+literal "false"
+
+\end_inset
+
+G.
+ E.
+ Hinton, N.
+ Srivastava, A.
+ Krizhevsky, I.
+ Sutskever, and R.
+ R.
+ Salakhutdinov, “Improving neural networks by preventing co-adaptation of
+ feature detectors,” arXiv preprint arXiv:1207.0580, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "DropBlock"
+literal "false"
+
+\end_inset
+
+Golnaz Ghiasi, Tsung-Yi Lin, and Quoc V Le.
+ DropBlock: A regularization method for convolutional networks.
+ In Advances in Neural Information Processing Systems (NIPS), pages 10727–10737,
+ 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Classic Reconstruction methods"
+literal "false"
+
+\end_inset
+
+R.
+ Hartley and A.
+ Zisserman,Multiple view geometry in computervision.
+ Cambridge university press, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "HighResolution 3D reconstruction"
+literal "false"
+
+\end_inset
+
+J.
+ Wu, Y.
+ Wang, T.
+ Xue, X.
+ Sun, B.
+ Freeman, and J.
+ Tenenbaum,“MarrNet: 3D shape reconstruction via 2.5D sketches,” inNIPS,2017,
+ pp.
+ 540–550.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "SotA trends 3D-Reconstruction"
+literal "false"
+
+\end_inset
+
+X.
+ Han, H.
+ Laga and M.
+ Bennamoun, "Image-based 3D Object Reconstruction: State-of-the-Art and
+ Trends in the Deep Learning Era," in IEEE Transactions on Pattern Analysis
+ and Machine Intelligence, doi: 10.1109/TPAMI.2019.2954885.
 \end_layout
 
 \end_body
