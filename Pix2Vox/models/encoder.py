@@ -165,7 +165,6 @@ class Encoder(torch.nn.Module):
         if self.architecture == 'mobilenet':
             for img in rendering_images:
                 features = self.mobilenet(img.squeeze(dim=0))
-                # print(features.size())
                 if self.multi_level == True:
                     new_features_6 = self.multi_conv6_1(features)
                     new_features_6 = self.multi_conv6_2(new_features_6)
@@ -173,7 +172,6 @@ class Encoder(torch.nn.Module):
                     image_features.append(new_features_6)
 
                 features = self.layer1(features)
-                # print(features.size())
                 if self.multi_level == True:
                     new_features_4 = self.multi_conv4_1(features)
                     new_features_4 = self.multi_conv4_2(new_features_4)

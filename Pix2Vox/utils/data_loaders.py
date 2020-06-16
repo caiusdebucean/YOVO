@@ -332,8 +332,27 @@ class Pix3dDataset(torch.utils.data.dataset.Dataset):
         bounding_box = self.file_list[idx]['bounding_box']
         volume_path = self.file_list[idx]['volume']
 
+
         # Get data of rendering images
-        rendering_image = cv2.imread(rendering_image_path, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+
+        try:
+            rendering_image_path1 = rendering_image_path % (taxonomy_name, sample_name, 'jpg')
+            print("MAMA")
+            print(rendering_image_path1)
+            rendering_image = cv2.imread(rendering_image_path1, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+        except:
+            try:
+                rendering_image_path2 = rendering_image_path % (taxonomy_name, sample_name, 'jpeg')
+                print("PAPA")
+                print(rendering_image_path2)
+                rendering_image = cv2.imread(rendering_image_path2, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+            except:
+                rendering_image_path3 = rendering_image_path % (taxonomy_name, sample_name, 'png')
+                print("PAPA")
+                print(rendering_image_path2)
+                rendering_image = cv2.imread(rendering_image_path3, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+
+
 
         if len(rendering_image.shape) < 3:
             print('[WARN] %s It seems the image file %s is grayscale.' % (dt.now(), rendering_image_path))
@@ -386,7 +405,6 @@ class Pix3dDataLoader:
                 samples = taxonomy['test']
             elif dataset_type == DatasetType.VAL:
                 samples = taxonomy['test']
-
             files.extend(self.get_files_of_taxonomy(taxonomy_name, samples))
 
         print('[INFO] %s Complete collecting files of the dataset. Total files: %d.' % (dt.now(), len(files)))
@@ -402,7 +420,7 @@ class Pix3dDataLoader:
 
             # Get file list of rendering images
             _, img_file_suffix = os.path.splitext(annotations['img'])
-            rendering_image_file_path = self.rendering_image_path_template % (taxonomy_name, sample_name,
+            rendering_image_file_path = self.rendering_image_path_template.format(taxonomy_name, sample_name,
                                                                               img_file_suffix[1:])
 
             # Get the bounding box of the image
@@ -414,12 +432,10 @@ class Pix3dDataLoader:
                 annotations['bbox'][3] / img_height
             ]  # yapf: disable
             model_name_parts = annotations['voxel'].split('/')
-            model_name = model_name_parts[2]
             volume_file_name = model_name_parts[3][:-4].replace('voxel', 'model')
-
-            # Get file path of volumes
-            volume_file_path = self.volume_path_template % (taxonomy_name, model_name, volume_file_name)
+            volume_file_path = self.volume_path_template % (taxonomy_name, sample_name, volume_file_name)
             if not os.path.exists(volume_file_path):
+                print(volume_file_path)
                 print('[WARN] %s Ignore sample %s/%s since volume file not exists.' %
                       (dt.now(), taxonomy_name, sample_name))
                 continue

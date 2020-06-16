@@ -14,6 +14,7 @@ import utils.data_loaders
 import utils.data_transforms
 import utils.network_utils
 from tensorboardX import SummaryWriter
+import matplotlib.pyplot as plt
 
 from datetime import datetime as dt
 
@@ -115,10 +116,16 @@ def test_net(cfg,
     refiner.eval()
     merger.eval()
 
+    rend_exist = False #variable for not creating more rendering folders
+    last_taxonomy = None
+    current_taxonomy = None
+    taxonomy_render_count = 0
+
     for sample_idx, (taxonomy_id, sample_name, rendering_images, ground_truth_volume) in enumerate(test_data_loader):
         taxonomy_id = taxonomy_id[0] if isinstance(taxonomy_id[0], str) else taxonomy_id[0].item()
         sample_name = sample_name[0]
 
+        current_taxonomy = taxonomy_id
         with torch.no_grad():
             # Get data from data loader
             rendering_images = utils.network_utils.var_or_cuda(rendering_images)
@@ -128,10 +135,76 @@ def test_net(cfg,
             image_features = encoder(rendering_images)
             raw_features, generated_volume = decoder(image_features)
 
+            #Decoder print 3 differences
+            if cfg.TEST.GENERATE_MULTILEVEL_VOLUMES:
+                if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS is not None:
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "plane":
+                        volume_class = '02691156'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "bench":
+                        volume_class = '02828884'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "cabinet":
+                        volume_class = '02933112'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "car":
+                        volume_class = '02958343'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "chair":
+                        volume_class = '03001627'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "display":
+                        volume_class = '03211117'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "lamp":
+                        volume_class = '03636649'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "speaker":
+                        volume_class = '03691459'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "rifle":
+                        volume_class = '04090263'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "sofa":
+                        volume_class = '04256520'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "table":
+                        volume_class = '04379243'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "phone":
+                        volume_class = '04401088'
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "boat":
+                        volume_class = '04530566'
+                else:
+                    print("Please specify which cobject class to generate multi-level volumes!")
+                    exit()
+
+
+                    decoder_volume = torch.clone(generated_volume).detach().squeeze()
+                    decoder_features = torch.clone(raw_features).detach().squeeze()
+
+                    merge_total_volume = merger(raw_features, generated_volume)
+                    for th in cfg.TEST.VOXEL_THRESH:
+                        print(f"Merge TOTAL volume number with threshold {th} :")
+                        _volume = torch.ge(merge_total_volume, th).float()
+                        intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                        union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                        metric = (intersection / union).item()
+                        print(metric)
+
+                    if metric > cfg.TEST.RENDER_THRESHOLD and taxonomy_id == volume_class:
+                        print("Decoder volumes:/n")
+                        for i in range(3):
+                            for th in cfg.TEST.VOXEL_THRESH:
+                                print(f"Decoder volume number {i} with threshold {th} :")
+                                _volume = torch.ge(decoder_volume[i], th).float()
+                                intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                                union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                                metric = (intersection / union).item()
+                                print(metric)
+                                if th == 0.4:
+                                    gv = decoder_volume[i].cpu().numpy()
+                                    img_dir = output_dir % 'Decoder_volumes'
+                                    rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx*1000+i, save_gif=cfg.TEST.SAVE_GIF, color_map="bone")
+                            print('/n')
+                        gv = merge_total_volume.cpu().numpy()
+                        rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx*1000+4, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
+            #Decoder print 3 differences
+
             if cfg.NETWORK.USE_MERGER and epoch_idx >= cfg.TRAIN.EPOCH_START_USE_MERGER:
                 generated_volume = merger(raw_features, generated_volume)
             else:
                 generated_volume = torch.mean(generated_volume, dim=1)
+                
             encoder_loss = bce_loss(generated_volume, ground_truth_volume) * 10
 
             if cfg.NETWORK.USE_REFINER and epoch_idx >= cfg.TRAIN.EPOCH_START_USE_REFINER:
@@ -157,27 +230,59 @@ def test_net(cfg,
                 test_iou[taxonomy_id] = {'n_samples': 0, 'iou': []}
             test_iou[taxonomy_id]['n_samples'] += 1
             test_iou[taxonomy_id]['iou'].append(sample_iou)
+
+            is_good_sample = False
+            # print(sample_iou)
+            for spl_iou in sample_iou:
+                # print("one instance has ",spl_iou)
+                if spl_iou > cfg.TEST.RENDER_THRESHOLD:
+                    is_good_sample = True
             print(sample_idx)
             # Append generated volumes to TensorBoard
-            if output_dir and sample_idx < cfg.TEST.N_VIEW: #Only prints 3 images - remove second condition for all dataset
+            # if output_dir and sample_idx < cfg.TEST.N_VIEW: #Only prints 3 images - remove second condition for all dataset
+            if current_taxonomy != last_taxonomy:
+                last_taxonomy = current_taxonomy
+                taxonomy_render_count = 0
+            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS:
+                if current_taxonomy == last_taxonomy:
+                    taxonomy_render_count+=1
+                print("Found a good sample")
                 img_dir = output_dir % 'images_from_test'
+                renderer_dir = output_dir % 'renderer'
                 # Volume Visualization
                 gv = generated_volume.cpu().numpy()
                 if cfg.TEST.VIEW_KAOLIN == True:
                     kaolin_gv = np.copy(gv)
                     kaolin_gv = np.squeeze(kaolin_gv,axis=0)
                     kal.visualize.show(kaolin_gv, mode='voxels')
-                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx)
+                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
 
                 #Supported type is (C x W x H) and current one is (W x H x C)         
                 test_writer.add_image('Test Sample#%02d/Volume Reconstructed' % sample_idx, rendering_views, epoch_idx)
                 gtv = ground_truth_volume.cpu().numpy()
+                if cfg.TEST.SAVE_RENDERED_IMAGE == True:
+                    print(type(rendering_images))
+                    rendering_images = torch.squeeze(rendering_images)
+                    rendering_images = rendering_images.cpu()
+                    print(rendering_images.size())
+                    rendering_images = (rendering_images.permute(1, 2, 0))
+                    
+                    plt.imshow((rendering_images.numpy() * 255).astype(np.uint8))
+                    if rend_exist == False:
+                        os.mkdir(img_dir + '/rendering')
+                        rend_exist = True
+                    render_save = img_dir + '/rendering'
+                    # render_save = renderer_dir
+                    plt.savefig(render_save +'/test_'+ str(sample_idx) + "_" + str(taxonomy_id) + "_" + str(sample_name) + '.png')
+
+                    print("Rendered an image")
                 if cfg.TEST.VIEW_KAOLIN == True:
                     kaolin_gtv = np.copy(gtv)
                     kaolin_gtv = np.squeeze(kaolin_gtv,axis=0)
                     kal.visualize.show(kaolin_gtv, mode='voxels')
-                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx)
+                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx, test=True, save_gif=cfg.TEST.SAVE_GIF)
+                
                 #Supported type is (C x W x H) and current one is (W x H x C)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
                 test_writer.add_image('Test Sample#%02d/Volume GroundTruth' % sample_idx, rendering_views, epoch_idx)
@@ -217,9 +322,10 @@ def test_net(cfg,
     # Print mean IoU for each threshold
     print('Overall ', end='\t\t\t\t')
     # print(mean_iou)
-    for mi in mean_iou:
-        print('%.4f' % mi, end='\t')
-    print('\n')
+    if cfg.DATASET.TEST_DATASET == 'ShapeNet':
+        for mi in mean_iou:
+            print('%.4f' % mi, end='\t')
+        print('\n')
 
     # Add testing results to TensorBoard
     max_iou = np.max(mean_iou)
