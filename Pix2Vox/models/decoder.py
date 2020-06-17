@@ -41,11 +41,24 @@ class Decoder(torch.nn.Module):
             torch.nn.BatchNorm3d(512),
             activation_A
         )
-        self.layer2 = torch.nn.Sequential(
-            torch.nn.ConvTranspose3d(512, 128, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
-            torch.nn.BatchNorm3d(128),
+
+        if cfg.NETWORK.EXTEND_DECODER:
+            self.layer2 = torch.nn.Sequential(
+            torch.nn.ConvTranspose3d(512, 256, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+            torch.nn.BatchNorm3d(256),
             activation_A
-        )
+            )
+            self.layer2_3 = torch.nn.Sequential(
+                torch.nn.ConvTranspose3d(256, 128, kernel_size=3, stride=1, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+                torch.nn.BatchNorm3d(128),
+                activation_A
+            )
+        else:
+            self.layer2 = torch.nn.Sequential(
+                torch.nn.ConvTranspose3d(512, 128, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
+                torch.nn.BatchNorm3d(128),
+                activation_A
+            )
         self.layer3 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(128, 32, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             torch.nn.BatchNorm3d(32),
@@ -63,6 +76,7 @@ class Decoder(torch.nn.Module):
         )
 
     def forward(self, image_features):
+        cfg = self.cfg
         image_features = image_features.permute(1, 0, 2, 3, 4).contiguous()
         image_features = torch.split(image_features, 1, dim=0)
         gen_volumes = []
@@ -75,6 +89,8 @@ class Decoder(torch.nn.Module):
             # print(gen_volume.size())   # torch.Size([batch_size, 512, 4, 4, 4])
             gen_volume = self.layer2(gen_volume)
             # print(gen_volume.size())   # torch.Size([batch_size, 128, 8, 8, 8])
+            if cfg.NETWORK.EXTEND_DECODER:
+                gen_volume = self.layer2_3(gen_volume)
             gen_volume = self.layer3(gen_volume)
             # print(gen_volume.size())   # torch.Size([batch_size, 32, 16, 16, 16])
             gen_volume = self.layer4(gen_volume)

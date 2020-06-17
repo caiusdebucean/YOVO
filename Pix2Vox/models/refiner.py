@@ -58,15 +58,40 @@ class Refiner(torch.nn.Module):
             activation_A,
             torch.nn.MaxPool3d(kernel_size=2)
         )
+
         self.layer4 = torch.nn.Sequential(
             torch.nn.Linear(8192, 2048),
             torch.nn.Dropout(p=0.1, inplace=False),
             activation_A
-        )
-        self.layer4_5 = torch.nn.Sequential(
-            torch.nn.Linear(2048, 2048),
-            activation_A
-        )
+            )
+
+        if cfg.NETWORK.EXTEND_REFINER:
+            print("Using Extended Refiner")
+            if cfg.NETWORK.REFINER_VERSION == 1:
+                self.layer4_5 = torch.nn.Sequential(
+                    torch.nn.Linear(2048, 2048),
+                    activation_A
+                )
+            elif cfg.NETWORK.REFINER_VERSION == 2:
+                self.layer4 = torch.nn.Sequential(
+                    torch.nn.Linear(8192, 4096),
+                    torch.nn.Dropout(p=0.1, inplace=False),
+                    activation_A
+                    )
+                self.layer4_51 = torch.nn.Sequential(
+                    torch.nn.Linear(4096, 2048),
+                    torch.nn.Dropout(p=0.2, inplace=False),
+                    activation_A
+                )
+                self.layer4_52 = torch.nn.Sequential(
+                    torch.nn.Linear(2048, 4096),
+                    torch.nn.Dropout(p=0.2, inplace=False),
+                    activation_A
+                )
+            else:
+                print("Refiner Version not implemented. Please choose between Versions: [1 , 2]")
+                exit()
+
 
         self.layer5 = torch.nn.Sequential(
             torch.nn.Linear(2048, 8192),
@@ -91,6 +116,7 @@ class Refiner(torch.nn.Module):
         )
 
     def forward(self, coarse_volumes):
+        cfg = self.cfg
         volumes_32_l = coarse_volumes.view((-1, 1, self.cfg.CONST.N_VOX, self.cfg.CONST.N_VOX, self.cfg.CONST.N_VOX))
         # print(volumes_32_l.size())       # torch.Size([batch_size, 1, 32, 32, 32])
         volumes_16_l = self.layer1(volumes_32_l)
@@ -102,8 +128,12 @@ class Refiner(torch.nn.Module):
         flatten_features = self.layer4(volumes_4_l.view(-1, 8192))
         # print(flatten_features.size())   # torch.Size([batch_size, 2048])
 
-
-        flatten_features = self.layer4_5(flatten_features)
+        if cfg.NETWORK.EXTEND_REFINER:
+            if cfg.NETWORK.REFINER_VERSION == 1:
+                flatten_features = self.layer4_5(flatten_features)
+            elif cfg.NETWORK.REFINER_VERSION == 2:
+                flatten_features = self.layer4_51(flatten_features)
+                flatten_features = self.layer4_52(flatten_features)
 
         flatten_features = self.layer5(flatten_features)
         # print(flatten_features.size())   # torch.Size([batch_size, 8192])

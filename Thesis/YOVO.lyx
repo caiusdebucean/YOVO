@@ -5174,6 +5174,57 @@ Experimente si Rezultate
 \end_layout
 
 \begin_layout Standard
+Arhitectura YOVO contine 466280683 de parametrii: 3921344 in Encoder, 71583064
+ in Decoder, 8571 in Agregator si 39076704 in Rafinator.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Illustrations/Multi-Head-Volumes.png
+	lyxscale 70
+	scale 42
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Reproducere-multi-leve-voluemtric"
+
+\end_inset
+
+Reproducerea volumetrica pentru cele 3 nivele de abstractie
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 nr parametrii
 \end_layout
 
