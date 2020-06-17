@@ -59,19 +59,22 @@ class Refiner(torch.nn.Module):
             torch.nn.MaxPool3d(kernel_size=2)
         )
 
-        self.layer4 = torch.nn.Sequential(
-            torch.nn.Linear(8192, 2048),
-            torch.nn.Dropout(p=0.1, inplace=False),
-            activation_A
-            )
-
         if cfg.NETWORK.EXTEND_REFINER:
-            print("Using Extended Refiner")
             if cfg.NETWORK.REFINER_VERSION == 1:
+                self.layer4 = torch.nn.Sequential(
+                    torch.nn.Linear(8192, 2048),
+                    torch.nn.Dropout(p=0.1, inplace=False),
+                    activation_A
+                    )
                 self.layer4_5 = torch.nn.Sequential(
                     torch.nn.Linear(2048, 2048),
                     activation_A
                 )
+                self.layer5 = torch.nn.Sequential(
+                    torch.nn.Linear(2048, 8192),
+                    torch.nn.Dropout(p=0.1, inplace=False),
+                    activation_A
+                    )
             elif cfg.NETWORK.REFINER_VERSION == 2:
                 self.layer4 = torch.nn.Sequential(
                     torch.nn.Linear(8192, 4096),
@@ -88,16 +91,26 @@ class Refiner(torch.nn.Module):
                     torch.nn.Dropout(p=0.2, inplace=False),
                     activation_A
                 )
+                self.layer5 = torch.nn.Sequential(
+                    torch.nn.Linear(4096, 8192),
+                    torch.nn.Dropout(p=0.1, inplace=False),
+                    activation_A
+                    )
             else:
                 print("Refiner Version not implemented. Please choose between Versions: [1 , 2]")
                 exit()
+        else:
+            self.layer4 = torch.nn.Sequential(
+                torch.nn.Linear(8192, 2048),
+                torch.nn.Dropout(p=0.1, inplace=False),
+                activation_A
+                )        
+            self.layer5 = torch.nn.Sequential(
+                torch.nn.Linear(2048, 8192),
+                torch.nn.Dropout(p=0.1, inplace=False),
+                activation_A
+                )
 
-
-        self.layer5 = torch.nn.Sequential(
-            torch.nn.Linear(2048, 8192),
-            torch.nn.Dropout(p=0.1, inplace=False),
-            activation_A
-        )
         self.layer6 = torch.nn.Sequential(
             torch.nn.ConvTranspose3d(128, 64, kernel_size=4, stride=2, bias=cfg.NETWORK.TCONV_USE_BIAS, padding=1),
             #DropBlock3D(block_size=3, drop_prob=drop_prob),
@@ -147,3 +160,4 @@ class Refiner(torch.nn.Module):
         # print(volumes_32_r.size())       # torch.Size([batch_size, 1, 32, 32, 32])
 
         return volumes_32_r.view((-1, self.cfg.CONST.N_VOX, self.cfg.CONST.N_VOX, self.cfg.CONST.N_VOX))
+

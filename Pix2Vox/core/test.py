@@ -3,6 +3,7 @@
 # Developed by Haozhe Xie <cshzxie@gmail.com>
 
 import json
+import time
 import numpy as np
 import os
 import torch
@@ -122,6 +123,7 @@ def test_net(cfg,
     taxonomy_render_count = 0
 
     for sample_idx, (taxonomy_id, sample_name, rendering_images, ground_truth_volume) in enumerate(test_data_loader):
+        start_time = time.time()
         taxonomy_id = taxonomy_id[0] if isinstance(taxonomy_id[0], str) else taxonomy_id[0].item()
         sample_name = sample_name[0]
 
@@ -202,6 +204,12 @@ def test_net(cfg,
 
             if cfg.NETWORK.USE_MERGER and epoch_idx >= cfg.TRAIN.EPOCH_START_USE_MERGER:
                 generated_volume = merger(raw_features, generated_volume)
+                if cfg.TEST.GENERATE_SIMPLE_VOLUME:
+                    autoencoder_volume = torch.clone(generated_volume).detach()
+                    _volume = torch.ge(autoencoder_volume, 0.4).float()
+                    intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                    union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                    metric_autoencoder = (intersection / union).item()
             else:
                 generated_volume = torch.mean(generated_volume, dim=1)
                 
@@ -212,18 +220,23 @@ def test_net(cfg,
                 refiner_loss = bce_loss(generated_volume, ground_truth_volume) * 10
             else:
                 refiner_loss = encoder_loss
-
+            end_time = time.time()
+            total_time = end_time - start_time
             # Append loss and accuracy to average metrics
             encoder_losses.update(encoder_loss.item())
             refiner_losses.update(refiner_loss.item())
 
             # IoU per sample
             sample_iou = []
+            best_refined_volume = 0
             for th in cfg.TEST.VOXEL_THRESH:
                 _volume = torch.ge(generated_volume, th).float()
                 intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
                 union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
-                sample_iou.append((intersection / union).item())
+                current_metric = (intersection / union).item()
+                if current_metric > best_refined_volume:
+                    best_refined_volume = current_metric
+                sample_iou.append(current_metric)
 
             # IoU per taxonomy
             if taxonomy_id not in test_iou:
@@ -243,7 +256,7 @@ def test_net(cfg,
             if current_taxonomy != last_taxonomy:
                 last_taxonomy = current_taxonomy
                 taxonomy_render_count = 0
-            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS:
+            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS and (best_refined_volume - metric_autoencoder) > cfg.TEST.DIFFERENCE_THESHOLD:
                 if current_taxonomy == last_taxonomy:
                     taxonomy_render_count+=1
                 print("Found a good sample")
@@ -255,7 +268,11 @@ def test_net(cfg,
                     kaolin_gv = np.copy(gv)
                     kaolin_gv = np.squeeze(kaolin_gv,axis=0)
                     kal.visualize.show(kaolin_gv, mode='voxels')
-                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF)
+                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
+                if cfg.TEST.GENERATE_SIMPLE_VOLUME :
+                    if best_refined_volume - metric_autoencoder > cfg.TEST.DIFFERENCE_THESHOLD:
+                        autoencoder_volume = autoencoder_volume.cpu().numpy()
+                        rendering_autoencoder = utils.binvox_visualization.get_volume_views(autoencoder_volume, os.path.join(img_dir, 'autoencoder_photos'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
                 rendering_views = np.transpose(rendering_views,(2,0,1))
 
                 #Supported type is (C x W x H) and current one is (W x H x C)         
@@ -299,6 +316,11 @@ def test_net(cfg,
         mean_iou.append(test_iou[taxonomy_id]['iou'] * test_iou[taxonomy_id]['n_samples'])
     mean_iou = np.sum(mean_iou, axis=0) / n_samples
 
+    # Print Time statistics
+    print("Time statistics:")
+    avg_time = sum(total_time) / len(total_time)
+    print(f"Average time is {avg_time} seconds")
+
     # Print header
     print('============================ TEST RESULTS ============================')
     print('Taxonomy', end='\t')
@@ -335,3 +357,4 @@ def test_net(cfg,
         test_writer.add_scalar('Refiner/IoU', max_iou, epoch_idx)
 
     return max_iou
+

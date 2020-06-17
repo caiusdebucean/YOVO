@@ -59,12 +59,20 @@ class Encoder(torch.nn.Module):
                 torch.nn.BatchNorm2d(192),
                 activation_B
             )
-            self.multi_conv6_2 = torch.nn.Sequential(
-                torch.nn.Conv2d(192, 384, kernel_size=3),
-                DropBlock2D(block_size=2, drop_prob=drop_prob),
-                torch.nn.BatchNorm2d(384),
-                activation_B
-            )
+
+            if cfg.NETWORK.REFINER_VERSION == 2 and cfg.NETWORK.EXTEND_REFINER:
+                self.multi_conv6_2 = torch.nn.Sequential(
+                    torch.nn.Conv2d(192, 384, kernel_size=3),
+                    torch.nn.BatchNorm2d(384),
+                    activation_B
+                )
+            else:
+                self.multi_conv6_2 = torch.nn.Sequential(
+                    torch.nn.Conv2d(192, 384, kernel_size=3),
+                    DropBlock2D(block_size=2, drop_prob=drop_prob),
+                    torch.nn.BatchNorm2d(384),
+                    activation_B
+                )
             self.multi_conv6_3 = torch.nn.Sequential(
                 torch.nn.Conv2d(384, 256, kernel_size=3),
                 torch.nn.BatchNorm2d(256),
@@ -82,12 +90,6 @@ class Encoder(torch.nn.Module):
                 torch.nn.BatchNorm2d(256),
                 activation_A
             )
-            # self.multi_conv3 = torch.nn.Sequential(
-            #     torch.nn.Conv2d(128, 256, kernel_size=3),
-            #     torch.nn.BatchNorm2d(128),
-            #     activation_A
-            # )
-
 
         if self.architecture == 'original':
             vgg16_bn = torchvision.models.vgg16_bn(pretrained=True)
@@ -125,12 +127,20 @@ class Encoder(torch.nn.Module):
                 torch.nn.BatchNorm2d(128),
                 activation_B
             )
-            self.layer2 = torch.nn.Sequential(
-                torch.nn.Conv2d(128, 128, kernel_size=3),
-                DropBlock2D(block_size=2, drop_prob=drop_prob),
-                torch.nn.BatchNorm2d(128),
-                activation_B
-            )
+
+            if cfg.NETWORK.REFINER_VERSION == 2 and cfg.NETWORK.EXTEND_REFINER:
+                self.layer2 = torch.nn.Sequential(
+                    torch.nn.Conv2d(128, 128, kernel_size=3),
+                    torch.nn.BatchNorm2d(128),
+                    activation_B
+                )
+            else:
+                self.layer2 = torch.nn.Sequential(
+                    torch.nn.Conv2d(128, 128, kernel_size=3),
+                    DropBlock2D(block_size=2, drop_prob=drop_prob),
+                    torch.nn.BatchNorm2d(128),
+                    activation_B
+                )
             self.layer3 = torch.nn.Sequential(
                 torch.nn.Conv2d(128, 256, kernel_size=3),
                 torch.nn.BatchNorm2d(256),
@@ -186,3 +196,4 @@ class Encoder(torch.nn.Module):
         # print(image_features.size())  # torch.Size([batch_size, n_views, 256, 8, 8])
         # exit()
         return image_features
+

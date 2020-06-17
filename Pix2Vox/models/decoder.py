@@ -109,3 +109,4 @@ class Decoder(torch.nn.Module):
         # print(gen_volumes.size())      # torch.Size([batch_size, n_views, 32, 32, 32])
         # print(raw_features.size())     # torch.Size([batch_size, n_views, 9, 32, 32, 32])
         return raw_features, gen_volumes
+

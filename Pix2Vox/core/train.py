@@ -175,6 +175,8 @@ def train_net(cfg):
     train_writer = SummaryWriter(os.path.join(log_dir, 'train'))
     val_writer = SummaryWriter(os.path.join(log_dir, 'test'))
 
+    total_time = []
+
     # Training loop
     for epoch_idx in range(init_epoch, cfg.TRAIN.NUM_EPOCHES):
         # Tick / tock
@@ -251,6 +253,10 @@ def train_net(cfg):
                 '[INFO] %s [Epoch %d/%d][Batch %d/%d] BatchTime = %.3f (s) DataTime = %.3f (s) EDLoss = %.4f RLoss = %.4f'
                 % (dt.now(), epoch_idx + 1, cfg.TRAIN.NUM_EPOCHES, batch_idx + 1, n_batches, batch_time.val,
                    data_time.val, encoder_loss.item(), refiner_loss.item()))
+            
+            total_time.append(batch_time.val)
+            total_batch_time_avg = sum(total_time) / len(total_time)
+            print(f"Average Batch Time is {total_batch_time_avg} seconds")
 
         # Append epoch loss to TensorBoard
         train_writer.add_scalar('EncoderDecoder/EpochLoss', encoder_losses.avg, epoch_idx + 1)
@@ -298,3 +304,4 @@ def train_net(cfg):
     # Close SummaryWriter for TensorBoard
     train_writer.close()
     val_writer.close()
+
