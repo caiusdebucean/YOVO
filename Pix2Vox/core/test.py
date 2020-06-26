@@ -121,7 +121,7 @@ def test_net(cfg,
     last_taxonomy = None
     current_taxonomy = None
     taxonomy_render_count = 0
-
+    
     for sample_idx, (taxonomy_id, sample_name, rendering_images, ground_truth_volume) in enumerate(test_data_loader):
         start_time = time.time()
         taxonomy_id = taxonomy_id[0] if isinstance(taxonomy_id[0], str) else taxonomy_id[0].item()
@@ -137,71 +137,12 @@ def test_net(cfg,
             image_features = encoder(rendering_images)
             raw_features, generated_volume = decoder(image_features)
 
-            #Decoder print 3 differences
             if cfg.TEST.GENERATE_MULTILEVEL_VOLUMES:
-                if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS is not None:
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "plane":
-                        volume_class = '02691156'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "bench":
-                        volume_class = '02828884'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "cabinet":
-                        volume_class = '02933112'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "car":
-                        volume_class = '02958343'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "chair":
-                        volume_class = '03001627'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "display":
-                        volume_class = '03211117'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "lamp":
-                        volume_class = '03636649'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "speaker":
-                        volume_class = '03691459'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "rifle":
-                        volume_class = '04090263'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "sofa":
-                        volume_class = '04256520'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "table":
-                        volume_class = '04379243'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "phone":
-                        volume_class = '04401088'
-                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "boat":
-                        volume_class = '04530566'
-                else:
-                    print("Please specify which cobject class to generate multi-level volumes!")
-                    exit()
+                decoder_volume = torch.clone(generated_volume)
+                decoder_features = torch.clone(raw_features)
 
 
-                    decoder_volume = torch.clone(generated_volume).detach().squeeze()
-                    decoder_features = torch.clone(raw_features).detach().squeeze()
-
-                    merge_total_volume = merger(raw_features, generated_volume)
-                    for th in cfg.TEST.VOXEL_THRESH:
-                        print(f"Merge TOTAL volume number with threshold {th} :")
-                        _volume = torch.ge(merge_total_volume, th).float()
-                        intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
-                        union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
-                        metric = (intersection / union).item()
-                        print(metric)
-
-                    if metric > cfg.TEST.RENDER_THRESHOLD and taxonomy_id == volume_class:
-                        print("Decoder volumes:/n")
-                        for i in range(3):
-                            for th in cfg.TEST.VOXEL_THRESH:
-                                print(f"Decoder volume number {i} with threshold {th} :")
-                                _volume = torch.ge(decoder_volume[i], th).float()
-                                intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
-                                union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
-                                metric = (intersection / union).item()
-                                print(metric)
-                                if th == 0.4:
-                                    gv = decoder_volume[i].cpu().numpy()
-                                    img_dir = output_dir % 'Decoder_volumes'
-                                    rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx*1000+i, save_gif=cfg.TEST.SAVE_GIF, color_map="bone")
-                            print('/n')
-                        gv = merge_total_volume.cpu().numpy()
-                        rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx*1000+4, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
-            #Decoder print 3 differences
-
+            metric_autoencoder = 0
             if cfg.NETWORK.USE_MERGER and epoch_idx >= cfg.TRAIN.EPOCH_START_USE_MERGER:
                 generated_volume = merger(raw_features, generated_volume)
                 if cfg.TEST.GENERATE_SIMPLE_VOLUME:
@@ -256,10 +197,74 @@ def test_net(cfg,
             if current_taxonomy != last_taxonomy:
                 last_taxonomy = current_taxonomy
                 taxonomy_render_count = 0
-            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS and (best_refined_volume - metric_autoencoder) > cfg.TEST.DIFFERENCE_THESHOLD:
+            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS and (best_refined_volume - metric_autoencoder) > cfg.TEST.DIFFERENCE_THESHOLD:# and current_taxonomy=='03001627':
                 if current_taxonomy == last_taxonomy:
                     taxonomy_render_count+=1
                 print("Found a good sample")
+                #Decoder print 3 differences
+                if cfg.TEST.GENERATE_MULTILEVEL_VOLUMES:
+                    if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS is not None:
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "plane":
+                            volume_class = '02691156'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "bench":
+                            volume_class = '02828884'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "cabinet":
+                            volume_class = '02933112'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "car":
+                            volume_class = '02958343'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "chair":
+                            volume_class = '03001627'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "display":
+                            volume_class = '03211117'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "lamp":
+                            volume_class = '03636649'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "speaker":
+                            volume_class = '03691459'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "rifle":
+                            volume_class = '04090263'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "sofa":
+                            volume_class = '04256520'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "table":
+                            volume_class = '04379243'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "phone":
+                            volume_class = '04401088'
+                        if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "boat":
+                            volume_class = '04530566'
+                    else:
+                        print("Please specify which cobject class to generate multi-level volumes!")
+                        volume_class = False
+                        # exit()
+
+                        
+                    merge_total_volume = merger(decoder_features, decoder_volume)
+                    decoder_volume = decoder_volume.detach().squeeze()
+                    decoder_features = decoder_features.detach().squeeze()
+                    for th in cfg.TEST.VOXEL_THRESH:
+                        print(f"Merge TOTAL volume number with threshold {th} :")
+                        _volume = torch.ge(merge_total_volume, th).float()
+                        intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                        union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                        metric = (intersection / union).item()
+                        print(metric)
+
+                    if metric > cfg.TEST.RENDER_THRESHOLD and (taxonomy_id == volume_class or volume_class == False):
+                        print("Decoder volumes:/n")
+                        for i in range(3):
+                            for th in cfg.TEST.VOXEL_THRESH:
+                                print(f"Decoder volume number {i} with threshold {th} :")
+                                _volume = torch.ge(decoder_volume[i], th).float()
+                                intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                                union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                                metric = (intersection / union).item()
+                                print(metric)
+                                if th == 0.4:
+                                    gv = decoder_volume[i].cpu().numpy()
+                                    img_dir = output_dir % 'Decoder_volumes'
+                                    rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+i, save_gif=False, color_map="bone")
+                            print('/n')
+                        gv = merge_total_volume.cpu().numpy()
+                        rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+4, save_gif=False,color_map="Spectral")
+                #Decoder print 3 differences
                 img_dir = output_dir % 'images_from_test'
                 renderer_dir = output_dir % 'renderer'
                 # Volume Visualization
@@ -277,7 +282,8 @@ def test_net(cfg,
 
                 #Supported type is (C x W x H) and current one is (W x H x C)         
                 test_writer.add_image('Test Sample#%02d/Volume Reconstructed' % sample_idx, rendering_views, epoch_idx)
-                gtv = ground_truth_volume.cpu().numpy()
+                _volume = torch.ge(ground_truth_volume, 0.001).float()
+                gtv = _volume.cpu().numpy()
                 if cfg.TEST.SAVE_RENDERED_IMAGE == True:
                     print(type(rendering_images))
                     rendering_images = torch.squeeze(rendering_images)
@@ -291,18 +297,22 @@ def test_net(cfg,
                         rend_exist = True
                     render_save = img_dir + '/rendering'
                     # render_save = renderer_dir
-                    plt.savefig(render_save +'/test_'+ str(sample_idx) + "_" + str(taxonomy_id) + "_" + str(sample_name) + '.png')
+                    plt.savefig(render_save +'/test_'+ str(sample_idx) + "_" + str(taxonomy_id) + "_" + str(sample_name) + '.png', bbox_inches='tight', pad_inches=0)
 
                     print("Rendered an image")
                 if cfg.TEST.VIEW_KAOLIN == True:
                     kaolin_gtv = np.copy(gtv)
                     kaolin_gtv = np.squeeze(kaolin_gtv,axis=0)
                     kal.visualize.show(kaolin_gtv, mode='voxels')
-                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx, test=True, save_gif=cfg.TEST.SAVE_GIF)
+                
+                rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx, test=True, save_gif=False)
                 
                 #Supported type is (C x W x H) and current one is (W x H x C)
                 rendering_views = np.transpose(rendering_views,(2,0,1))
                 test_writer.add_image('Test Sample#%02d/Volume GroundTruth' % sample_idx, rendering_views, epoch_idx)
+
+
+
 
             # Print sample loss and IoU
             print('[INFO] %s Test[%d/%d] Taxonomy = %s Sample = %s EDLoss = %.4f RLoss = %.4f IoU = %s' %
@@ -317,9 +327,9 @@ def test_net(cfg,
     mean_iou = np.sum(mean_iou, axis=0) / n_samples
 
     # Print Time statistics
-    print("Time statistics:")
-    avg_time = sum(total_time) / len(total_time)
-    print(f"Average time is {avg_time} seconds")
+    # print("Time statistics:")
+    # avg_time = sum(total_time) / len(total_time)
+    # print(f"Average time is {avg_time} seconds")
 
     # Print header
     print('============================ TEST RESULTS ============================')

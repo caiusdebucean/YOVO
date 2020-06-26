@@ -39,7 +39,7 @@ def get_volume_views(volume, save_dir, n_itr, idx, test=False, save_gif=False,co
     #ax.set_aspect('equal')
 
     def init():
-        ax.scatter(volume[0],volume[1].volume[2], marker='o', s=20, c="goldenrod", alpha=0.6)
+        ax.scatter(volume[0],volume[1],volume[2], marker='o', s=20, c="goldenrod", alpha=0.6)
         return fig,
 
     def animate(i):
@@ -49,7 +49,7 @@ def get_volume_views(volume, save_dir, n_itr, idx, test=False, save_gif=False,co
     if test == False:
         ax.voxels(volume, facecolors=cmap(norm(heatmap_volume)), edgecolor=None)
     else:
-        ax.voxels(volume, facecolors='tomato', edgecolor='k')
+        ax.voxels(volume, facecolors='ivory', edgecolor='k', linewidths=0.4)
 
     ax.grid(False)
     ax.set_xticks([])
@@ -63,7 +63,7 @@ def get_volume_views(volume, save_dir, n_itr, idx, test=False, save_gif=False,co
     if not os.path.exists(gif_dir):
         os.mkdir(gif_dir)
     save_path = os.path.join(save_dir, name)
-    plt.savefig(save_path, bbox_inches='tight')
+    plt.savefig(save_path, bbox_inches='tight', dpi=300)
 
     if save_gif == True:
         try:
