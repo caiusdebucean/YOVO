@@ -15,23 +15,30 @@ _Minor changes, such as code modifications or small improvements will not be tra
 
 **Specific things *to do* in the future:**
 
-- [ ] **REPAIR** and improve the function activation alternatives
-- [ ] Better understand and tweak **Ranger** optimizer (_-> RMSProp -> Momentum -> Adam -> RAdam -> Lookahead_)
 - [ ] Try **RangerLARS** optimizer
-- [ ] Implement HR-Net or U-net alternative for backbone (possibly Darknet-19)
-- [ ] Add regularization method **DropBlock**
-- [ ] Try out **Pix2Vox-F**
-- [ ] Find a **good combination** between variations of _relu_ and _Mish/Swish_
-- [ ] Learn to use **TensorboardX**
+- [ ] Implement  backbone alternative to MobileNetV2 (HR-Net or U-net, possibly Darknet-19)
 - [ ] Explore the other [YOLOV4](https://arxiv.org/pdf/2004.10934v1.pdf) improvements techniques 
 - [ ] Try [Class-Balanced Loss Based on Effective Number of Samples](https://arxiv.org/pdf/1901.05555.pdf)
+- [ ] Add attention modules
+- [ ] Revamp Refiner
 - [ ] _(OPTIONAL):_ Try _K3D_ package, for visualization (feasability test)
 
 **Things which I have *done*:**
 
-- [x] Correct Pix2Vox-A and made it *Work*
-- [x] Add and tested **Ranger** optimizer (along with _RAdam_ and _Lookahead_)
-- [x] Add and teste the **Mish** activation function (with crude all-throughout replacement)
+- [x] Correct original idea and make the code *Work*
+- [x] Add and test **Ranger** optimizer (along with _RAdam_ and _Lookahead_)
+- [x] Add and test the **Mish** activation function (with crude all-throughout replacement)
 - [x] Code adaptive save mechanism to isolate training instances more easily
 - [x] Add 3D interactive representation using [kaolin](https://github.com/NVIDIAGameWorks/kaolin) 
 - [x] Implement beta-MobileNetV2 architecture
+- [x] Learn to use **TensorboardX**
+- [x] Find a **good combination** between variations of _relu_ and _Mish/ELU_
+- [x] **REPAIR** and improve the function activation alternatives
+- [x] Introduce **Multi-level** feature extraction and reconstruction
+- [x] Better understand and tweak **Ranger** optimizer (_-> RMSProp -> Momentum -> Adam -> RAdam -> Lookahead_)
+- [x] Add regularization method **DropBlock**
+- [x] **Beat SotA** (Pix2Vox)
+- [x] Add heatmap visualization to volumes
+- [x] Add configurations for multi-level volume visualization
+- [x] Add configurations for 360 gif of volumes and save input image
+- [x] Implement modifications and introduce YOVO-s and YOVO-e
