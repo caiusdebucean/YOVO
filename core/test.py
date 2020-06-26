@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# Developed by Haozhe Xie <cshzxie@gmail.com>
 
 import json
 import time
@@ -197,7 +195,7 @@ def test_net(cfg,
             if current_taxonomy != last_taxonomy:
                 last_taxonomy = current_taxonomy
                 taxonomy_render_count = 0
-            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS and (best_refined_volume - metric_autoencoder) > cfg.TEST.DIFFERENCE_THESHOLD:# and current_taxonomy=='03001627':
+            if output_dir and is_good_sample and taxonomy_render_count < cfg.TEST.NO_OF_RENDERS and best_refined_volume > cfg.TEST.RENDER_THRESHOLD and (best_refined_volume - metric_autoencoder) > cfg.TEST.DIFFERENCE_THESHOLD:# and current_taxonomy=='03001627':
                 if current_taxonomy == last_taxonomy:
                     taxonomy_render_count+=1
                 print("Found a good sample")
@@ -231,7 +229,7 @@ def test_net(cfg,
                         if cfg.TEST.CLASS_TO_GENERATE_MULTI_LEVELS == "boat":
                             volume_class = '04530566'
                     else:
-                        print("Please specify which cobject class to generate multi-level volumes!")
+                        print("Please specify which object class to generate multi-level volumes! No class chosen.")
                         volume_class = False
                         # exit()
 
@@ -239,31 +237,22 @@ def test_net(cfg,
                     merge_total_volume = merger(decoder_features, decoder_volume)
                     decoder_volume = decoder_volume.detach().squeeze()
                     decoder_features = decoder_features.detach().squeeze()
-                    for th in cfg.TEST.VOXEL_THRESH:
-                        print(f"Merge TOTAL volume number with threshold {th} :")
-                        _volume = torch.ge(merge_total_volume, th).float()
-                        intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
-                        union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
-                        metric = (intersection / union).item()
-                        print(metric)
-
-                    if metric > cfg.TEST.RENDER_THRESHOLD and (taxonomy_id == volume_class or volume_class == False):
-                        print("Decoder volumes:/n")
-                        for i in range(3):
-                            for th in cfg.TEST.VOXEL_THRESH:
-                                print(f"Decoder volume number {i} with threshold {th} :")
-                                _volume = torch.ge(decoder_volume[i], th).float()
-                                intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
-                                union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
-                                metric = (intersection / union).item()
-                                print(metric)
-                                if th == 0.4:
-                                    gv = decoder_volume[i].cpu().numpy()
-                                    img_dir = output_dir % 'Decoder_volumes'
-                                    rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+i, save_gif=False, color_map="bone")
-                            print('/n')
-                        gv = merge_total_volume.cpu().numpy()
-                        rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+4, save_gif=False,color_map="Spectral")
+                    print("Decoder volumes:/n")
+                    for i in range(3):
+                        for th in cfg.TEST.VOXEL_THRESH:
+                            print(f"Decoder volume number {i} with threshold {th} :")
+                            _volume = torch.ge(decoder_volume[i], th).float()
+                            intersection = torch.sum(_volume.mul(ground_truth_volume)).float()
+                            union = torch.sum(torch.ge(_volume.add(ground_truth_volume), 1)).float()
+                            metric = (intersection / union).item()
+                            print(metric)
+                            if th == 0.4:
+                                gv = decoder_volume[i].cpu().numpy()
+                                img_dir = output_dir % 'Decoder_volumes'
+                                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+i, save_gif=False, color_map="bone", interactive_show = True)
+                        print('/n')
+                    gv = merge_total_volume.cpu().numpy()
+                    rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'Multi_level_views'), epoch_idx, sample_idx+4, save_gif=False, color_map="Spectral")
                 #Decoder print 3 differences
                 img_dir = output_dir % 'images_from_test'
                 renderer_dir = output_dir % 'renderer'
@@ -273,11 +262,11 @@ def test_net(cfg,
                     kaolin_gv = np.copy(gv)
                     kaolin_gv = np.squeeze(kaolin_gv,axis=0)
                     kal.visualize.show(kaolin_gv, mode='voxels')
-                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
+                rendering_views = utils.binvox_visualization.get_volume_views(gv, os.path.join(img_dir, 'test'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF, color_map="viridis", interactive_show = True)
                 if cfg.TEST.GENERATE_SIMPLE_VOLUME :
                     if best_refined_volume - metric_autoencoder > cfg.TEST.DIFFERENCE_THESHOLD:
                         autoencoder_volume = autoencoder_volume.cpu().numpy()
-                        rendering_autoencoder = utils.binvox_visualization.get_volume_views(autoencoder_volume, os.path.join(img_dir, 'autoencoder_photos'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF,color_map="viridis")
+                        rendering_autoencoder = utils.binvox_visualization.get_volume_views(autoencoder_volume, os.path.join(img_dir, 'autoencoder_photos'), epoch_idx, sample_idx, save_gif=cfg.TEST.SAVE_GIF, color_map="viridis")
                 rendering_views = np.transpose(rendering_views,(2,0,1))
 
                 #Supported type is (C x W x H) and current one is (W x H x C)         

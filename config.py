@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# Developed by Haozhe Xie <cshzxie@gmail.com>
 
 from easydict import EasyDict as edict
 
@@ -15,19 +13,19 @@ __C.DATASETS.SHAPENET                       = edict()
 __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH    = './datasets/ShapeNet.json'
 
 # __C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/amuresan/Documents/CaiusD/ShapeNetRendering/%s/%s/rendering/%02d.png'
-__C.DATASETS.SHAPENET.RENDERING_PATH        = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetRendering/ShapeNetRendering/%s/%s/rendering/%02d.png'
+__C.DATASETS.SHAPENET.RENDERING_PATH        = '/media/caius/Elements/Licenta/YOVO_Data/ShapeNetRendering/ShapeNetRendering/%s/%s/rendering/%02d.png'
 # __C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/amuresan/Documents/CaiusD/ShapeNetVox32/%s/%s/model.binvox'
-__C.DATASETS.SHAPENET.VOXEL_PATH            = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetVox32/ShapeNetVox32/%s/%s/model.binvox'
+__C.DATASETS.SHAPENET.VOXEL_PATH            = '/media/caius/Elements/Licenta/YOVO_Data/ShapeNetVox32/ShapeNetVox32/%s/%s/model.binvox'
 __C.DATASETS.PIX3D                          = edict()
 
 # __C.DATASETS.PIX3D.TAXONOMY_FILE_PATH       = './datasets/Pix3D.json'
-# __C.DATASETS.PIX3D.ANNOTATION_PATH          = '/media/caius/Elements/Licenta/Pix2VoxData/Pix3D/pix3d.json'
-# __C.DATASETS.PIX3D.RENDERING_PATH           = '/media/caius/Elements/Licenta/Pix2VoxData/Pix3D/img/%s/%s.%s'
-# __C.DATASETS.PIX3D.VOXEL_PATH               = '/media/caius/Elements/Licenta/Pix2VoxData/Pix3D/model/%s/%s/%s.binvox'
+# __C.DATASETS.PIX3D.ANNOTATION_PATH          = '/media/caius/Elements/Licenta/YOVO_Data/Pix3D/pix3d.json'
+# __C.DATASETS.PIX3D.RENDERING_PATH           = '/media/caius/Elements/Licenta/YOVO_Data/Pix3D/img/%s/%s.%s'
+# __C.DATASETS.PIX3D.VOXEL_PATH               = '/media/caius/Elements/Licenta/YOVO_Data/Pix3D/model/%s/%s/%s.binvox'
 __C.DATASETS.PIX3D.TAXONOMY_FILE_PATH       = './datasets/customPix3D.json'
-__C.DATASETS.PIX3D.ANNOTATION_PATH          = '/media/caius/Elements/Licenta/Pix2VoxData/CustomPix3D/pix3d.json'
-__C.DATASETS.PIX3D.RENDERING_PATH           = '/media/caius/Elements/Licenta/Pix2VoxData/CustomPix3D/img/%s/%s.%s'
-__C.DATASETS.PIX3D.VOXEL_PATH               = '/media/caius/Elements/Licenta/Pix2VoxData/CustomPix3D/model/%s/%s/%s.binvox'
+__C.DATASETS.PIX3D.ANNOTATION_PATH          = '/media/caius/Elements/Licenta/YOVO_Data/CustomPix3D/pix3d.json'
+__C.DATASETS.PIX3D.RENDERING_PATH           = '/media/caius/Elements/Licenta/YOVO_Data/CustomPix3D/img/%s/%s.%s'
+__C.DATASETS.PIX3D.VOXEL_PATH               = '/media/caius/Elements/Licenta/YOVO_Data/CustomPix3D/model/%s/%s/%s.binvox'
 
 #
 # Dataset
@@ -58,7 +56,7 @@ __C.CONST.CROP_IMG_H                        = 128
 # Directories
 #
 __C.DIR                                     = edict()
-__C.DIR.OUT_PATH                            = './output'
+__C.DIR.OUT_PATH                            = './results'
 __C.DIR.RANDOM_BG_PATH                      = ''
 __C.CONST.NAME                              = 'Test'  
 
@@ -75,6 +73,7 @@ __C.NETWORK.MULTI_LEVEL_TRAIN               = True
 __C.NETWORK.LEAKY_VALUE                     = .2
 __C.NETWORK.TCONV_USE_BIAS                  = False
 __C.NETWORK.USE_REFINER                     = True
+__C.NETWORK.USE_REFINER                     = False
 __C.NETWORK.USE_MERGER                      = True
 __C.NETWORK.EXTEND_DECODER                  = False # Extends upsampling to avoid information loss
 __C.NETWORK.EXTEND_REFINER                  = True # Requires refiner version
@@ -84,6 +83,21 @@ __C.NETWORK.ALTERNATIVE_ACTIVATION_B        = 'elu' # ['relu', 'elu', 'leaky rel
 __C.NETWORK.USE_DROPBLOCK                   = True
 __C.NETWORK.DROPBLOCK_VALUE_2D              = 0.05 # what is the probability that a block is dropped
 __C.NETWORK.DROPBLOCK_VALUE_3D              = 0.05 # what is the probability that a block is dropped
+__C.NETWORK.YOVO_VERSION                    = 'classic' # [classic, simple, extended, custom]
+
+if __C.NETWORK.YOVO_VERSION == 'classic':
+    __C.NETWORK.EXTEND_DECODER = False
+    __C.NETWORK.USE_REFINER = True
+    __C.NETWORK.EXTEND_REFINER = True
+    __C.NETWORK.REFINER_VERSION = 1
+elif __C.NETWORK.YOVO_VERSION == 'simple':
+    __C.NETWORK.EXTEND_DECODER = True
+    __C.NETWORK.USE_REFINER = False
+elif __C.NETWORK.YOVO_VERSION == 'extended':
+    __C.NETWORK.EXTEND_DECODER = True
+    __C.NETWORK.USE_REFINER = True
+    __C.NETWORK.EXTEND_REFINER = True
+    __C.NETWORK.REFINER_VERSION = 2
 
 #
 # Training
@@ -130,4 +144,4 @@ __C.TEST.RENDER_THRESHOLD                   = 0.85
 __C.TEST.GENERATE_MULTILEVEL_VOLUMES        = True
 __C.TEST.CLASS_TO_GENERATE_MULTI_LEVELS     = None #[None,"plane","bench","cabinet","car","chair","display","lamp","speaker","rifle","sofa","table","phone","boat"]
 __C.TEST.GENERATE_SIMPLE_VOLUME             = False # Generate images from Merger, without refining
-__C.TEST.DIFFERENCE_THESHOLD                = 0.4 # How much of a difference you want to have between final volume and refined volume. Between[0,1]. -1 to turn off
+__C.TEST.DIFFERENCE_THESHOLD                = -1 # How much of a difference you want to have between final volume and refined volume. Between[0,1]. -1 to turn off

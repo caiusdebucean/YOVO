@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# References for inspiration:
+# Reference for inspiration:
 # - https://github.com/hzxie/Pix2Vox
 
 
@@ -51,7 +51,7 @@ def main():
     if args.name is not None:
         cfg.DIR.NAME = args.name
     else:
-        print('[FATAL] Please specify the training instance name')
+        print('[FATAL] Please specify the instance name')
         sys.exit(3)
     if args.gpu_id is not None:
         cfg.CONST.DEVICE = args.gpu_id
@@ -71,13 +71,13 @@ def main():
     # Print config
     print('Use config:')
     pprint(cfg)
-
     # Set GPU to use
     if type(cfg.CONST.DEVICE) == str:
         os.environ["CUDA_VISIBLE_DEVICES"] = cfg.CONST.DEVICE
         # print(os.environ["CUDA_VISIBLE_DEVICES"])
         # exit()
-
+    
+    print(f"YOVO version used: {cfg.NETWORK.YOVO_VERSION}")
     # Start train/test process
     if not args.test:
         train_net(cfg)
@@ -92,7 +92,7 @@ def main():
 if __name__ == '__main__':
     # Check python version
     if sys.version_info < (3, 0):
-        raise Exception("Please follow the installation instruction on 'https://github.com/hzxie/Pix2Vox'")
+        raise Exception("Please follow the installation instruction on 'https://github.com/caiusdebucean/YOVO'")
 
     # Setup logger
     mp.log_to_stderr()
