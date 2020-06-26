@@ -9,3 +9,4 @@ echoAI
 pyglet
 torchvision
 tensorboardX
+dropblock

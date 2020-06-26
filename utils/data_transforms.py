@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# Developed by Haozhe Xie <cshzxie@gmail.com>
 # References:
 # - https://github.com/xiumingzhang/GenRe-ShapeHD
 

@@ -13,18 +13,11 @@ cfg                                         = __C
 __C.DATASETS                                = edict()
 __C.DATASETS.SHAPENET                       = edict()
 __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH    = './datasets/ShapeNet.json'
-# __C.DATASETS.SHAPENET.TAXONOMY_FILE_PATH  = './datasets/PascalShapeNet.json'
 
 # __C.DATASETS.SHAPENET.RENDERING_PATH        = '/home/amuresan/Documents/CaiusD/ShapeNetRendering/%s/%s/rendering/%02d.png'
 __C.DATASETS.SHAPENET.RENDERING_PATH        = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetRendering/ShapeNetRendering/%s/%s/rendering/%02d.png'
 # __C.DATASETS.SHAPENET.VOXEL_PATH            = '/home/amuresan/Documents/CaiusD/ShapeNetVox32/%s/%s/model.binvox'
 __C.DATASETS.SHAPENET.VOXEL_PATH            = '/media/caius/Elements/Licenta/Pix2VoxData/ShapeNetVox32/ShapeNetVox32/%s/%s/model.binvox'
-
-__C.DATASETS.PASCAL3D                       = edict()
-__C.DATASETS.PASCAL3D.TAXONOMY_FILE_PATH    = './datasets/Pascal3D.json'
-__C.DATASETS.PASCAL3D.ANNOTATION_PATH       = '/home/hzxie/Datasets/PASCAL3D/Annotations/%s_imagenet/%s.mat'
-__C.DATASETS.PASCAL3D.RENDERING_PATH        = '/home/hzxie/Datasets/PASCAL3D/Images/%s_imagenet/%s.JPEG'
-__C.DATASETS.PASCAL3D.VOXEL_PATH            = '/home/hzxie/Datasets/PASCAL3D/CAD/%s/%02d.binvox'
 __C.DATASETS.PIX3D                          = edict()
 
 # __C.DATASETS.PIX3D.TAXONOMY_FILE_PATH       = './datasets/Pix3D.json'
@@ -46,7 +39,6 @@ __C.DATASET.TRAIN_DATASET                   = 'ShapeNet'
 __C.DATASET.TEST_DATASET                    = 'ShapeNet'
 # __C.DATASET.TRAIN_DATASET                   = 'Pix3D'
 # __C.DATASET.TEST_DATASET                    = 'Pix3D'
-# __C.DATASET.TEST_DATASET                  = 'Pascal3D'
 # __C.DATASET.TEST_DATASET                  = 'Pix3D'
 
 #
@@ -59,9 +51,9 @@ __C.CONST.IMG_W                             = 224       # Image width for input
 __C.CONST.IMG_H                             = 224       # Image height for input
 __C.CONST.N_VOX                             = 32
 __C.CONST.BATCH_SIZE                        = 16
-__C.CONST.N_VIEWS_RENDERING                 = 1        # Dummy property for Pascal 3D
-__C.CONST.CROP_IMG_W                        = 128       # Dummy property for Pascal 3D
-__C.CONST.CROP_IMG_H                        = 128       # Dummy property for Pascal 3D
+__C.CONST.N_VIEWS_RENDERING                 = 1        # How many images to use at inference
+__C.CONST.CROP_IMG_W                        = 128       
+__C.CONST.CROP_IMG_H                        = 128       
 #
 # Directories
 #
@@ -129,13 +121,13 @@ __C.TRAIN.UPDATE_N_VIEWS_RENDERING          = False
 __C.TEST                                    = edict()
 __C.TEST.RANDOM_BG_COLOR_RANGE              = [[240, 240], [240, 240], [240, 240]]
 __C.TEST.VOXEL_THRESH                       = [.2, .3, .4, .5]
-__C.TEST.VIEW_KAOLIN                        = True  # Rendering during training with kaolin. This should be done locally, not through ssh
+__C.TEST.VIEW_KAOLIN                        = False  # Rendering during training with kaolin. This should be done locally, not through ssh
 __C.TEST.N_VIEW                             = 1 # How many images should we save and render at test/validation time
 __C.TEST.SAVE_RENDERED_IMAGE                = True # Save the input preprocessed image containing the object
-__C.TEST.SAVE_GIF                           = False # Save GIF of 360 rotating volume
-__C.TEST.NO_OF_RENDERS                      = 5 # How many examples to be saved for visualization
+__C.TEST.SAVE_GIF                           = True # Save GIF of 360 rotating volume
+__C.TEST.NO_OF_RENDERS                      = 1 # How many examples to be saved for visualization
 __C.TEST.RENDER_THRESHOLD                   = 0.85
 __C.TEST.GENERATE_MULTILEVEL_VOLUMES        = True
 __C.TEST.CLASS_TO_GENERATE_MULTI_LEVELS     = None #[None,"plane","bench","cabinet","car","chair","display","lamp","speaker","rifle","sofa","table","phone","boat"]
 __C.TEST.GENERATE_SIMPLE_VOLUME             = False # Generate images from Merger, without refining
-__C.TEST.DIFFERENCE_THESHOLD                = 0.2 # How much of a difference you want to have between final volume and refined volume. Between[0,1]. -1 to turn off
+__C.TEST.DIFFERENCE_THESHOLD                = 0.4 # How much of a difference you want to have between final volume and refined volume. Between[0,1]. -1 to turn off

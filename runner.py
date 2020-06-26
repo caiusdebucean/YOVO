@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#
-# Developed by Haozhe Xie <cshzxie@gmail.com>
+# References for inspiration:
+# - https://github.com/hzxie/Pix2Vox
+
+
 
 import logging
 import matplotlib
