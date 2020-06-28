@@ -3,11 +3,7 @@
 		"taxonomy_id": "02691156",
 		"taxonomy_name": "aeroplane",
 		"baseline": {
-			"1-view": 0.513,
-			"2-view": 0.536,
-			"3-view": 0.549,
-			"4-view": 0.556,
-			"5-view": 0.561
+			"1-view": 0.684
 		},
 		"test": [
 			"6c432109eee42aed3b053f623496d8f5",
@@ -4065,11 +4061,7 @@
 		"taxonomy_id": "02828884",
 		"taxonomy_name": "bench",
 		"baseline": {
-			"1-view": 0.421,
-			"2-view": 0.484,
-			"3-view": 0.502,
-			"4-view": 0.516,
-			"5-view": 0.527
+			"1-view": 0.616
 		},
 		"test": [
 			"891b8a01ad71af2db7e843606969432b",
@@ -5898,11 +5890,7 @@
 		"taxonomy_id": "02933112",
 		"taxonomy_name": "cabinet",
 		"baseline": {
-			"1-view": 0.716,
-			"2-view": 0.746,
-			"3-view": 0.763,
-			"4-view": 0.767,
-			"5-view": 0.772
+			"1-view": 0.792
 		},
 		"test": [
 			"d5c60b873643f0e99f0825ef57cf78df",
@@ -7487,11 +7475,7 @@
 		"taxonomy_id": "02958343",
 		"taxonomy_name": "car",
 		"baseline": {
-			"1-view": 0.798,
-			"2-view": 0.821,
-			"3-view": 0.829,
-			"4-view": 0.833,
-			"5-view": 0.836
+			"1-view": 0.854
 		},
 		"test": [
 			"d43dc96daed9ba0f91bfeeca48a08b93",
@@ -15001,11 +14985,7 @@
 		"taxonomy_id": "03001627",
 		"taxonomy_name": "chair",
 		"baseline": {
-			"1-view": 0.466,
-			"2-view": 0.515,
-			"3-view": 0.533,
-			"4-view": 0.541,
-			"5-view": 0.550
+			"1-view": 0.567
 		},
 		"test": [
 			"3b3a9f4e3aa9f2f4d39a194653571dfc",
@@ -21796,11 +21776,7 @@
 		"taxonomy_id": "03211117",
 		"taxonomy_name": "display",
 		"baseline": {
-			"1-view": 0.468,
-			"2-view": 0.527,
-			"3-view": 0.545,
-			"4-view": 0.558,
-			"5-view": 0.565
+			"1-view": 0.537
 		},
 		"test": [
 			"5286df5fdb7ab5cf403c2939fca0114",
@@ -22908,11 +22884,7 @@
 		"taxonomy_id": "03636649",
 		"taxonomy_name": "lamp",
 		"baseline": {
-			"1-view": 0.381,
-			"2-view": 0.406,
-			"3-view": 0.415,
-			"4-view": 0.416,
-			"5-view": 0.421
+			"1-view": 0.443
 		},
 		"test": [
 			"8006e3cb3ba934a05b977412e02c412c",
@@ -25243,11 +25215,7 @@
 		"taxonomy_id": "03691459",
 		"taxonomy_name": "speaker",
 		"baseline": {
-			"1-view": 0.662,
-			"2-view": 0.696,
-			"3-view": 0.708,
-			"4-view": 0.714,
-			"5-view": 0.717
+			"1-view": 0.714
 		},
 		"test": [
 			"2686bb573a9bae79d34aabb2f31dae9e",
@@ -26878,11 +26846,7 @@
 		"taxonomy_id": "04090263",
 		"taxonomy_name": "rifle",
 		"baseline": {
-			"1-view": 0.544,
-			"2-view": 0.582,
-			"3-view": 0.593,
-			"4-view": 0.595,
-			"5-view": 0.600
+			"1-view": 0.615
 		},
 		"test": [
 			"beb75684ec2f965412b38b1d99376c0b",
@@ -29267,11 +29231,7 @@
 		"taxonomy_id": "04256520",
 		"taxonomy_name": "sofa",
 		"baseline": {
-			"1-view": 0.628,
-			"2-view": 0.677,
-			"3-view": 0.690,
-			"4-view": 0.698,
-			"5-view": 0.706
+			"1-view": 0.709
 		},
 		"test": [
 			"cb7cee345d3e7f75593ebeeedbff73b",
@@ -32457,11 +32417,7 @@
 		"taxonomy_id": "04379243",
 		"taxonomy_name": "table",
 		"baseline": {
-			"1-view": 0.513,
-			"2-view": 0.550,
-			"3-view": 0.564,
-			"4-view": 0.573,
-			"5-view": 0.580
+			"1-view": 0.601
 		},
 		"test": [
 			"bc23348d2f16d4237155483601ac0c56",
@@ -40983,11 +40939,7 @@
 		"taxonomy_id": "04401088",
 		"taxonomy_name": "telephone",
 		"baseline": {
-			"1-view": 0.661,
-			"2-view": 0.717,
-			"3-view": 0.732,
-			"4-view": 0.738,
-			"5-view": 0.754
+			"1-view": 0.776
 		},
 		"test": [
 			"8fcae817c180d5224208dfa1c5fa1065",
@@ -42052,11 +42004,7 @@
 		"taxonomy_id": "04530566",
 		"taxonomy_name": "watercraft",
 		"baseline": {
-			"1-view": 0.513,
-			"2-view": 0.576,
-			"3-view": 0.596,
-			"4-view": 0.604,
-			"5-view": 0.610
+			"1-view": 0.594
 		},
 		"test": [
 			"ff70051c32217b2df671917093bd361",

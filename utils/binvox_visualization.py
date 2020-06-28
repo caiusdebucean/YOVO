@@ -71,7 +71,7 @@ def get_volume_views(volume, save_dir, n_itr, idx, test=False, save_gif=False, c
             anim = animation.FuncAnimation(fig, animate,
                                     frames=360, interval=20, blit=True)
             # Save
-            gif_name = 'voxels_id_' + str(idx) + '_iter%06d.gif' % n_itr
+            gif_name = 'voxels_id_' + str(idx) + '_iter%06d.mkv' % n_itr
             gif_save_path = os.path.join(gif_dir, gif_name)
             anim.save(gif_save_path, fps=30, extra_args=['-vcodec', 'libx264'])
         except:

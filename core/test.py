@@ -289,10 +289,10 @@ def test_net(cfg,
                     plt.savefig(render_save +'/test_'+ str(sample_idx) + "_" + str(taxonomy_id) + "_" + str(sample_name) + '.png', bbox_inches='tight', pad_inches=0)
 
                     print("Rendered an image")
-                if cfg.TEST.VIEW_KAOLIN == True:
-                    kaolin_gtv = np.copy(gtv)
-                    kaolin_gtv = np.squeeze(kaolin_gtv,axis=0)
-                    kal.visualize.show(kaolin_gtv, mode='voxels')
+                # if cfg.TEST.VIEW_KAOLIN == True:
+                #     kaolin_gtv = np.copy(gtv)
+                #     kaolin_gtv = np.squeeze(kaolin_gtv,axis=0)
+                #     kal.visualize.show(kaolin_gtv, mode='voxels')
                 
                 rendering_views = utils.binvox_visualization.get_volume_views(gtv, os.path.join(img_dir, 'test_gt'), epoch_idx, sample_idx, test=True, save_gif=False)
                 
