@@ -1,7 +1,8 @@
 # YOVO: You Only Voxelize Once
-This is my Bachelor's Thesis at UPT, called **YOVO: You Only Voxelize Once** - a State-of-the-Art* 3D Object Reconstruction from a single 2D image. My thesis supervisor was Dr. Eng. Conf. Calin-Adrian Popa.
+This is my Bachelor's Thesis at UPT, called **YOVO: You Only Voxelize Once** - a _State-of-the-Art_* 3D Object Reconstruction from a single 2D image. My thesis supervisor was Dr. Eng. Conf. Calin-Adrian Popa.
 
 The nomenclature **_YOVO: You Only Voxelize Once_** derives from the fact that it only uses one input image in order to reconstruct a 3D voxelized representation of the presented object. It is inspired by [Pix2Vox](https://github.com/hzxie/Pix2Vox) and reinvents the Autoencoder module, introducing multi-level feature extraction, leading to multiple volume reconstructions at differente levels of abstractions. Moreover, using a MobileNetV2 backbone, [Mish](https://arxiv.org/abs/1908.08681) activations, [Dropblock](https://arxiv.org/abs/1810.12890) regularization, [Ranger](https://medium.com/@lessw/new-deep-learning-optimizer-ranger-synergistic-combination-of-radam-lookahead-for-the-best-of-2dc83f79a48d) optimizer, **YOVO** overcomes the SotA on the ShapeNet subset _Data3D-R2N2_, currently* held by Pix2Vox-A. 
+
 (* _as of March 2020_)
 
 
