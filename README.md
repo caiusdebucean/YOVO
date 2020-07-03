@@ -1,8 +1,8 @@
 # YOVO: You Only Voxelize Once
-This is my Bachelor's Thesis at UPT, called **YOVO: You Only Voxelize Once** - 3D Object Reconstruction from a single 2D image. My thesis supervisor was Dr. Eng. Conf. Calin-Adrian Popa.
+This is my Bachelor's Thesis at UPT, called **YOVO: You Only Voxelize Once** - a State-of-the-Art* 3D Object Reconstruction from a single 2D image. My thesis supervisor was Dr. Eng. Conf. Calin-Adrian Popa.
 
 The nomenclature **_YOVO: You Only Voxelize Once_** derives from the fact that it only uses one input image in order to reconstruct a 3D voxelized representation of the presented object. It is inspired by [Pix2Vox](https://github.com/hzxie/Pix2Vox) and reinvents the Autoencoder module, introducing multi-level feature extraction, leading to multiple volume reconstructions at differente levels of abstractions. Moreover, using a MobileNetV2 backbone, [Mish](https://arxiv.org/abs/1908.08681) activations, [Dropblock](https://arxiv.org/abs/1810.12890) regularization, [Ranger](https://medium.com/@lessw/new-deep-learning-optimizer-ranger-synergistic-combination-of-radam-lookahead-for-the-best-of-2dc83f79a48d) optimizer, **YOVO** overcomes the SotA on the ShapeNet subset _Data3D-R2N2_, currently* held by Pix2Vox-A. 
-(* _March 2020_)
+(* _as of March 2020_)
 
 
 <div style="text-align:center"><img src="https://i.imgur.com/OC22r87.png"/width = 100%></div>
@@ -15,6 +15,7 @@ The YOVO architecture comes in 3 variants:
 In-depth details are presented after the _How to Run_ section.
 
 ## Results
+
 All three variants of **YOVO** manage to overcome the SotA results of *Pix2Vox-A*.
 
 <div style="text-align:center"><img src="https://i.imgur.com/vcWk5e2.png"/width = 60%></div>
@@ -29,7 +30,6 @@ The [ShapeNet](https://www.shapenet.org/) dataset is used to sample the *Data 3D
 - ShapeNet rendering images: [Renderings](http://cvgl.stanford.edu/data2/ShapeNetRendering.tgz)
 - ShapeNet voxelized models: [3D voxelized models](http://cvgl.stanford.edu/data2/ShapeNetVox32.tgz)
 
-
 ## Prerequisites
 
 ####  Pretrained weights
@@ -41,7 +41,6 @@ The [ShapeNet](https://www.shapenet.org/) dataset is used to sample the *Data 3D
 
 ```
 git clone https://github.com/caiusdebucean/YOVO.git
-
 ```
 
 #### Install Python Denpendencies
