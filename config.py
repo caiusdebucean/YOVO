@@ -136,7 +136,6 @@ __C.TEST                                    = edict()
 __C.TEST.RANDOM_BG_COLOR_RANGE              = [[240, 240], [240, 240], [240, 240]]
 __C.TEST.VOXEL_THRESH                       = [.2, .3, .4, .5]
 __C.TEST.VIEW_KAOLIN                        = True  # Rendering during training with kaolin. This should be done locally, not through ssh
-__C.TEST.N_VIEW                             = 1 # How many images should we save and render at test/validation time
 __C.TEST.SAVE_RENDERED_IMAGE                = True # Save the input preprocessed image containing the object
 __C.TEST.SAVE_GIF                           = True # Save GIF of 360 rotating volume
 __C.TEST.NO_OF_RENDERS                      = 1 # How many examples to be saved for visualization
